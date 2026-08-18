@@ -1,0 +1,24 @@
+{
+  "name": "SkillRun - Learn by Building",
+  "short_name": "SkillRun",
+  "description": "Learn to code by building real projects. Choose a mission, learn what you need, and unlock your next skill.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "../skillrun-logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "../skillrun-logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ]
+}

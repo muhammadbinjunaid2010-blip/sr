@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charSet="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="styles/fonts.css"/>
+<link rel="stylesheet" href="styles/main.css"/>
+<link rel="stylesheet" href="styles/brand.css"/>
+<title>SkillRun - Learn technology by building with it</title>
+<meta name="description" content="SkillRun turns programming and technology into missions. Learn what you need, use it immediately, complete the challenge, and unlock what comes next."/>
+<meta name="theme-color" content="#0a0a0a"/>
+<link rel="icon" href="skillrun-icon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="skillrun-logo.jpg"/>
+</head>
+<body class="manrope_d9dd7f6a-module__WQkY-q__variable hagrid_5eee8a36-module__OfsgEG__variable font-sans antialiased">
+<main class="flex flex-col min-h-screen">
+
+<!-- ===== Header — floating glassmorphism navbar ===== -->
+<header class="fixed top-0 left-0 right-0 z-[1000] px-3 md:px-6 pt-3 pointer-events-none transition-all duration-300">
+  <div class="container mx-auto pointer-events-none">
+    <div class="sr-glass-nav pointer-events-auto flex items-center justify-between h-16 rounded-2xl px-4 md:px-5">
+      <a class="flex items-center gap-2 flex-shrink-0" href="index.html">
+        <img alt="SkillRun" width="120" height="36" decoding="async" data-nimg="1" class="h-9 w-auto" src="skillrun-logo.svg"/>
+      </a>
+      <nav class="hidden md:flex items-center gap-1">
+        <a class="px-4 py-2 text-sm font-medium text-foreground/70 rounded-full transition-all duration-200 hover:text-primary hover:bg-primary/8" style="font-size:0.8125rem" href="index.html#how-it-works">How It Works</a>
+        <a class="px-4 py-2 text-sm font-medium text-foreground/70 rounded-full transition-all duration-200 hover:text-primary hover:bg-primary/8" style="font-size:0.8125rem" href="index.html#missions">Missions</a>
+        <a class="px-4 py-2 text-sm font-medium text-foreground/70 rounded-full transition-all duration-200 hover:text-primary hover:bg-primary/8" style="font-size:0.8125rem" href="index.html#why-skillrun">Why SkillRun</a>
+        <a class="px-4 py-2 text-sm font-medium text-foreground/70 rounded-full transition-all duration-200 hover:text-primary hover:bg-primary/8" style="font-size:0.8125rem" href="index.html#download">Download</a>
+        <a class="px-4 py-2 text-sm font-medium text-foreground/70 rounded-full transition-all duration-200 hover:text-primary hover:bg-primary/8" style="font-size:0.8125rem" href="index.html#faq">FAQ</a>
+      </nav>
+      <div class="hidden md:flex items-center gap-3">
+        <a class="sr-btn sr-btn-green h-9 px-5 text-sm" href="app/index.html">Get Started</a>
+      </div>
+      <button id="menu-btn" class="md:hidden flex flex-col gap-1.5 p-2 rounded-lg transition-colors hover:bg-white/5" aria-label="Toggle menu" aria-expanded="false">
+        <span class="block w-5 h-0.5 bg-foreground transition-all duration-300"></span>
+        <span class="block w-5 h-0.5 bg-foreground transition-all duration-300"></span>
+        <span class="block w-5 h-0.5 bg-foreground transition-all duration-300"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile menu (glass) -->
+<div id="mobile-menu" class="hidden md:hidden fixed left-3 right-3 z-[999]" style="top:76px">
+  <nav class="sr-glass-nav flex flex-col rounded-2xl px-4 py-4 gap-1">
+    <a class="px-4 py-2 text-sm font-medium text-foreground/70 rounded-full hover:text-primary hover:bg-primary/8" style="font-size:0.8125rem" href="index.html#how-it-works">How It Works</a>
+    <a class="px-4 py-2 text-sm font-medium text-foreground/70 rounded-full hover:text-primary hover:bg-primary/8" style="font-size:0.8125rem" href="index.html#missions">Missions</a>
+    <a class="px-4 py-2 text-sm font-medium text-foreground/70 rounded-full hover:text-primary hover:bg-primary/8" style="font-size:0.8125rem" href="index.html#why-skillrun">Why SkillRun</a>
+    <a class="px-4 py-2 text-sm font-medium text-foreground/70 rounded-full hover:text-primary hover:bg-primary/8" style="font-size:0.8125rem" href="index.html#download">Download</a>
+    <a class="px-4 py-2 text-sm font-medium text-foreground/70 rounded-full hover:text-primary hover:bg-primary/8" style="font-size:0.8125rem" href="index.html#faq">FAQ</a>
+    <a class="sr-btn sr-btn-green h-10 px-5 text-sm justify-center mt-2" href="app/index.html">Get Started</a>
+  </nav>
+</div>
+
+<!-- ===== 1. Hero — Leaderboard-style cards (Parchi composition) ===== -->
+<section class="relative w-full min-h-screen flex flex-col items-center justify-start pt-20 pb-12 overflow-hidden bg-background">
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/5 rounded-full blur-[120px]"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/5 rounded-full blur-[120px]"></div>
+    <div class="absolute inset-0 opacity-[0.02]" style="background-image:radial-gradient(#000 1px, transparent 1px);background-size:40px 40px"></div>
+  </div>
+
+  <div class="container relative z-10 px-4 mx-auto flex flex-col items-center">
+    <div class="text-center mb-6">
+      <p class="sr-eyebrow mb-5">SkillRun</p>
+      <h1 class="text-5xl md:text-7xl font-heading font-extrabold tracking-tight text-foreground leading-[1.1]">Learn technology<br/>by <span class="sr-gradient-text italic">building</span> with it.</h1>
+    </div>
+
+    <div class="text-center mb-10 max-w-2xl">
+      <p class="text-lg md:text-xl text-muted-foreground font-sans leading-relaxed">SkillRun turns programming and technology into missions. Learn what you need, use it immediately, complete the challenge, and unlock what comes next.</p>
+    </div>
+
+    <div class="flex flex-row gap-4 mb-20">
+      <a class="sr-btn sr-btn-green h-12 px-8 text-sm" href="app/index.html">Start Learning &#128640;</a>
+      <a class="sr-btn sr-btn-outline h-12 px-8 text-sm" href="index.html#how-it-works">See How It Works</a>
+    </div>
+
+    <!-- Desktop: Leaderboard + Rewards cards -->
+    <div class="relative hidden md:block" style="width:800px;height:380px">
+      <!-- Left floating card: skill progress -->
+      <div class="absolute select-none" style="left:-40px;top:50%;transform:translateY(-50%);width:210px;height:132px;perspective:900px;z-index:15">
+        <div class="w-full h-full rounded-2xl relative overflow-hidden" style="transform-style:preserve-3d;background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 6px 32px rgba(22,163,74,0.38), 0 2px 8px rgba(0,0,0,0.14);animation:skillrun-card-pulse 2.8s ease-in-out infinite">
+          <div class="absolute inset-0 pointer-events-none z-[1]" style="background-image:radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);background-size:18px 18px"></div>
+          <div class="absolute inset-0 rounded-2xl pointer-events-none z-[4]" style="background:radial-gradient(ellipse 60% 40% at 25% 25%, rgba(255,255,255,0.22) 0%, transparent 65%)"></div>
+          <div class="absolute top-0 left-0 right-0 flex items-center px-3 gap-2 z-[3]" style="height:34px;background:rgba(0,0,0,0.18);border-bottom:1px solid rgba(255,255,255,0.1)">
+            <div class="flex-shrink-0 flex items-center justify-center rounded-full" style="width:20px;height:20px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25)">
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1L10 3.5V7.5L5.5 10L1 7.5V3.5Z" stroke="rgba(255,255,255,0.8)" stroke-width="0.9" fill="none"></path></svg>
+            </div>
+            <span style="font-size:8px;letter-spacing:0.16em;color:rgba(255,255,255,0.7);font-family:var(--font-sans);text-transform:uppercase">Skill Card</span>
+          </div>
+          <div class="absolute flex items-center justify-center rounded-md z-[3]" style="top:42px;left:12px;width:38px;height:48px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18)">
+            <span style="font-size:18px">&#127793;</span>
+          </div>
+          <div class="absolute flex flex-col gap-1.5 z-[3]" style="top:46px;left:60px">
+            <div class="rounded" style="width:88px;height:7px;background:rgba(255,255,255,0.22)"></div>
+            <div class="rounded" style="width:64px;height:6px;background:rgba(255,255,255,0.22)"></div>
+            <div class="rounded" style="width:76px;height:6px;background:rgba(255,255,255,0.22);margin-top:2px"></div>
+          </div>
+          <div class="absolute rounded z-[3]" style="bottom:12px;left:12px;width:24px;height:17px;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.28)"></div>
+        </div>
+      </div>
+
+      <!-- Center: Campus Top Builders leaderboard + Leaderboard Rewards cards -->
+      <div class="absolute" style="left:50%;top:50%;transform:translate(-50%, -50%);width:320px;z-index:10">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 transform rotate-2 hover:rotate-0 transition-transform duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="font-heading font-bold text-lg text-foreground">Campus Top Builders</h4>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-medal w-5 h-5 text-yellow-500"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"></path><path d="M11 12 5.12 2.2"></path><path d="m13 12 5.88-9.8"></path><path d="M8 7h8"></path><circle cx="12" cy="17" r="5"></circle><path d="M12 18v-2h-.5"></path></svg>
+          </div>
+          <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+            <div class="sr-leader-rank sr-leader-rank-gold">#1</div>
+            <div class="flex-1">
+              <div class="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+              <div class="h-2 w-16 bg-gray-100 rounded"></div>
+            </div>
+            <div class="font-bold text-primary text-sm font-sans">4500 XP</div>
+          </div>
+          <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+            <div class="sr-leader-rank sr-leader-rank-gray">#2</div>
+            <div class="flex-1">
+              <div class="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+              <div class="h-2 w-16 bg-gray-100 rounded"></div>
+            </div>
+            <div class="font-bold text-primary text-sm font-sans">4000 XP</div>
+          </div>
+          <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+            <div class="sr-leader-rank sr-leader-rank-gray">#3</div>
+            <div class="flex-1">
+              <div class="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+              <div class="h-2 w-16 bg-gray-100 rounded"></div>
+            </div>
+            <div class="font-bold text-primary text-sm font-sans">3500 XP</div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="sr-leader-rank sr-leader-rank-gray">#4</div>
+            <div class="flex-1">
+              <div class="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+              <div class="h-2 w-16 bg-gray-100 rounded"></div>
+            </div>
+            <div class="font-bold text-muted-foreground text-sm font-sans">1200 XP</div>
+          </div>
+        </div>
+        <div class="sr-rewards-card rounded-2xl p-6 text-white transform -rotate-1 hover:rotate-0 transition-transform duration-300 translate-x-12 -mt-10">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-6 h-6"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+            </div>
+            <div>
+              <h4 class="font-heading font-bold text-lg">Leaderboard Rewards</h4>
+              <p class="text-xs text-white/80 font-sans">Top Builder 2026</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right floating chips -->
+      <div class="absolute flex flex-col gap-2.5 pointer-events-none" style="left:calc(50% + 210px);top:50%;transform:translateY(-50%);z-index:5">
+        <div class="flex items-center gap-1.5 rounded-full shadow-sm whitespace-nowrap sr-float" style="padding:5px 11px 5px 8px;background:#ffffff;border:0.5px solid rgba(0,0,0,0.09);--tilt:2deg">
+          <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:#30d05c"></span>
+          <span style="font-size:11px;font-weight:500;color:#111">Personal Website</span>
+          <span style="font-size:10px;color:#666">+40 XP</span>
+        </div>
+        <div class="flex items-center gap-1.5 rounded-full shadow-sm whitespace-nowrap sr-float-slow" style="padding:5px 11px 5px 8px;background:#ffffff;border:0.5px solid rgba(0,0,0,0.09);--tilt:-1deg">
+          <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:#4dd8ff"></span>
+          <span style="font-size:11px;font-weight:500;color:#111">Quiz Game</span>
+          <span style="font-size:10px;color:#666">In progress</span>
+        </div>
+        <div class="flex items-center gap-1.5 rounded-full shadow-sm whitespace-nowrap sr-float" style="padding:5px 11px 5px 8px;background:#ffffff;border:0.5px solid rgba(0,0,0,0.09);--tilt:1deg">
+          <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:#ff5ca8"></span>
+          <span style="font-size:11px;font-weight:500;color:#111">Calculator</span>
+          <span style="font-size:10px;color:#666">Locked</span>
+        </div>
+        <div class="flex items-center gap-1.5 rounded-full shadow-sm whitespace-nowrap sr-float-slow" style="padding:5px 11px 5px 8px;background:#ffffff;border:0.5px solid rgba(0,0,0,0.09);--tilt:-2deg">
+          <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:#a78bfa"></span>
+          <span style="font-size:11px;font-weight:500;color:#111">Todo App</span>
+          <span style="font-size:10px;color:#666">Locked</span>
+        </div>
+        <div class="flex items-center gap-1.5 rounded-full shadow-sm whitespace-nowrap sr-float" style="padding:5px 11px 5px 8px;background:#ffffff;border:0.5px solid rgba(0,0,0,0.09);--tilt:3deg">
+          <span class="w-2 h-2 rounded-full flex-shrink-0" style="background:#ffd166"></span>
+          <span style="font-size:11px;font-weight:500;color:#111">Weather App</span>
+          <span style="font-size:10px;color:#666">Locked</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile: leaderboard card only -->
+    <div class="relative block md:hidden w-full max-w-[340px]">
+      <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 -z-10 rounded-full w-4/5 h-14" style="background:rgba(22,163,74,0.16);filter:blur(40px)"></div>
+      <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h4 class="font-heading font-bold text-lg text-foreground">Campus Top Builders</h4>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-medal w-5 h-5 text-yellow-500"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"></path><path d="M11 12 5.12 2.2"></path><path d="m13 12 5.88-9.8"></path><path d="M8 7h8"></path><circle cx="12" cy="17" r="5"></circle><path d="M12 18v-2h-.5"></path></svg>
+        </div>
+        <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100">
+          <div class="sr-leader-rank sr-leader-rank-gold">#1</div>
+          <div class="flex-1">
+            <div class="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+            <div class="h-2 w-16 bg-gray-100 rounded"></div>
+          </div>
+          <div class="font-bold text-primary text-sm font-sans">4500 XP</div>
+        </div>
+        <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100">
+          <div class="sr-leader-rank sr-leader-rank-gray">#2</div>
+          <div class="flex-1">
+            <div class="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+            <div class="h-2 w-16 bg-gray-100 rounded"></div>
+          </div>
+          <div class="font-bold text-primary text-sm font-sans">4000 XP</div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="sr-leader-rank sr-leader-rank-gray">#3</div>
+          <div class="flex-1">
+            <div class="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+            <div class="h-2 w-16 bg-gray-100 rounded"></div>
+          </div>
+          <div class="font-bold text-primary text-sm font-sans">3500 XP</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Ticker ===== -->
+<section class="sr-ticker w-full" aria-hidden="true">
+  <div class="sr-ticker-track">
+    <span class="sr-ticker-item"><span class="dot" style="background:#30d05c"></span>HTML</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#4dd8ff"></span>CSS</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#ff5ca8"></span>JavaScript</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#a78bfa"></span>APIs</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#ffd166"></span>Backend</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#30d05c"></span>Electronics</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#4dd8ff"></span>Robotics</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#ff5ca8"></span>AI</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#30d05c"></span>HTML</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#4dd8ff"></span>CSS</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#ff5ca8"></span>JavaScript</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#a78bfa"></span>APIs</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#ffd166"></span>Backend</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#30d05c"></span>Electronics</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#4dd8ff"></span>Robotics</span>
+    <span class="sr-ticker-item"><span class="dot" style="background:#ff5ca8"></span>AI</span>
+  </div>
+</section>
+
+<!-- ===== 2. This is only the beginning — editorial + stats band ===== -->
+<section class="w-full overflow-hidden bg-background">
+  <div class="sr-editorial px-6 pb-14 pt-16 md:px-14 md:pb-16 md:pt-20">
+    <div class="container px-0 mx-auto">
+      <div class="relative overflow-hidden">
+        <div class="pointer-events-none absolute -bottom-20 -right-16 h-72 w-72 rounded-full border-[56px] border-white/[0.05]"></div>
+        <p class="mb-5 flex items-center gap-3 font-sans text-[9px] uppercase tracking-[0.22em] text-white/40">
+          <span class="inline-block h-px w-7 bg-white/30"></span>SkillRun Is Growing
+        </p>
+        <h2 class="mb-10 max-w-3xl font-heading text-[clamp(52px,8vw,96px)] font-extrabold leading-[0.92] tracking-[-0.04em] text-foreground">This is only the<br/><span class="text-primary">beginning.</span></h2>
+        <div class="flex flex-wrap items-end justify-between gap-6">
+          <p class="max-w-lg text-[15px] leading-[1.85] text-muted-foreground">SkillRun is built to expand with you &mdash; from your first HTML tag to full systems. Zero lectures, zero costs, one mission at a time.</p>
+          <span class="flex-shrink-0 rounded-sm bg-primary px-5 py-3 font-sans text-[10px] font-bold uppercase tracking-[0.12em] text-white">Missions &middot; not lectures</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container px-0 mx-auto">
+    <div class="sr-stats-band grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 divide-y md:divide-y-0">
+      <div class="flex flex-col items-center px-4 py-10 text-center md:px-14 md:py-14">
+        <div class="num text-[clamp(40px,5.5vw,62px)]">5<sup class="align-super text-[0.4em] text-white/60">+</sup></div>
+        <div class="label mt-3">Missions available</div>
+      </div>
+      <div class="flex flex-col items-center px-4 py-10 text-center md:px-14 md:py-14">
+        <div class="num text-[clamp(40px,5.5vw,62px)]">3</div>
+        <div class="label mt-3">Technologies taught</div>
+      </div>
+      <div class="flex flex-col items-center px-4 py-10 text-center md:px-14 md:py-14">
+        <div class="num text-[clamp(40px,5.5vw,62px)]">0</div>
+        <div class="label mt-3">Lectures. Zero.</div>
+      </div>
+      <div class="flex flex-col items-center px-4 py-10 text-center md:px-14 md:py-14">
+        <div class="num text-[clamp(40px,5.5vw,62px)]">100<sup class="align-super text-[0.4em] text-white/60">%</sup></div>
+        <div class="label mt-3">Free to use</div>
+      </div>
+    </div>
+
+    <div class="mt-10 mb-14 flex justify-center">
+      <div class="inline-flex items-center gap-3 bg-card rounded-full border border-border shadow-sm px-6 py-3">
+        <span style="font-size:13px;color:#a1a1aa;font-weight:600">Why it matters</span>
+        <span style="font-size:13px;color:#e5e7eb">|</span>
+        <span class="skillrun-stat-number" style="font-size:20px">100% free</span>
+        <span style="font-size:13px;color:#a1a1aa">&mdash; that&rsquo;s all it takes to start building.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3. What is SkillRun — editorial numbered cards + mission statement ===== -->
+<section id="what-is" class="w-full py-14 md:py-20 bg-background">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-14">
+      <div class="space-y-2">
+        <p class="sr-eyebrow mb-3">What is SkillRun?</p>
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-heading text-foreground">Learn. Build. Complete. <span class="sr-gradient-text">Unlock.</span></h2>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 divide-y divide-border border-y border-border sm:grid-cols-2 lg:grid-cols-4 sm:divide-x sm:divide-y-0 mb-14">
+      <div class="sr-num-card group relative overflow-hidden bg-white px-10 py-11 md:px-9">
+        <span class="mb-5 block font-sans text-[10px] tracking-[0.14em] text-muted-foreground/50">01</span>
+        <h3 class="mb-3 font-heading text-xl font-extrabold leading-[1.2] tracking-[-0.01em] text-foreground">Learn</h3>
+        <p class="text-sm leading-[1.85] text-muted-foreground">Learn the specific skill you need &mdash; nothing more.</p>
+        <span class="mt-6 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold bg-primary/10 text-primary">Done</span>
+      </div>
+      <div class="sr-num-card group relative overflow-hidden bg-white px-10 py-11 md:px-9">
+        <span class="mb-5 block font-sans text-[10px] tracking-[0.14em] text-muted-foreground/50">02</span>
+        <h3 class="mb-3 font-heading text-xl font-extrabold leading-[1.2] tracking-[-0.01em] text-foreground">Build</h3>
+        <p class="text-sm leading-[1.85] text-muted-foreground">Use it inside a real project or challenge.</p>
+        <span class="mt-6 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold bg-primary/10 text-primary">Active</span>
+      </div>
+      <div class="sr-num-card group relative overflow-hidden bg-white px-10 py-11 md:px-9">
+        <span class="mb-5 block font-sans text-[10px] tracking-[0.14em] text-muted-foreground/50">03</span>
+        <h3 class="mb-3 font-heading text-xl font-extrabold leading-[1.2] tracking-[-0.01em] text-foreground">Complete</h3>
+        <p class="text-sm leading-[1.85] text-muted-foreground">Solve the mission yourself, checked instantly.</p>
+        <span class="mt-6 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold bg-muted text-muted-foreground">Next</span>
+      </div>
+      <div class="sr-num-card group relative overflow-hidden bg-white px-10 py-11 md:px-9">
+        <span class="mb-5 block font-sans text-[10px] tracking-[0.14em] text-muted-foreground/50">04</span>
+        <h3 class="mb-3 font-heading text-xl font-extrabold leading-[1.2] tracking-[-0.01em] text-foreground">Unlock</h3>
+        <p class="text-sm leading-[1.85] text-muted-foreground">Your progress opens new skills and projects.</p>
+        <span class="mt-6 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold bg-muted text-muted-foreground">Later</span>
+      </div>
+    </div>
+
+    <!-- Mission statement + why it matters (Parchi split panel) -->
+    <div class="grid min-h-[260px] grid-cols-1 md:grid-cols-2 rounded-3xl overflow-hidden shadow-xl">
+      <div class="flex flex-col justify-between gap-8 sr-mission-block px-10 py-12 md:px-14">
+        <div>
+          <div class="-mb-3 font-sans text-[72px] leading-none text-white/20">&ldquo;</div>
+          <p class="sr-mission-quote font-heading font-extrabold italic leading-[1.35] tracking-[-0.01em] text-white">SkillRun doesn&rsquo;t teach you technology just so you know it. It teaches you <span style="color:#bbf7d0">so you can use it.</span></p>
+        </div>
+        <p class="font-sans text-[10px] uppercase tracking-[0.14em] text-white/40">&mdash; SkillRun Mission Statement</p>
+      </div>
+      <div class="flex flex-col justify-center bg-secondary/40 px-8 py-12 md:px-14">
+        <p class="mb-8 text-center font-sans text-[10px] uppercase tracking-[0.16em] text-white/40 md:text-left">Why it matters</p>
+        <div class="grid grid-cols-2 gap-8 md:flex md:flex-col md:gap-7">
+          <div class="flex flex-col items-center text-center md:items-start md:text-left">
+            <div class="font-heading text-[clamp(28px,4vw,52px)] font-extrabold leading-none tracking-[-0.04em] text-foreground">0<span class="text-primary"> lectures</span></div>
+            <div class="mt-2 max-w-[140px] text-[11px] leading-tight tracking-[0.02em] text-white/55 md:max-w-none md:text-[12px]">Every concept appears exactly when you need it</div>
+          </div>
+          <div class="flex flex-col items-center text-center md:items-start md:text-left">
+            <div class="font-heading text-[clamp(28px,4vw,52px)] font-extrabold leading-none tracking-[-0.04em] text-foreground">100<span class="text-primary">% free</span></div>
+            <div class="mt-2 max-w-[140px] text-[11px] leading-tight tracking-[0.02em] text-white/55 md:max-w-none md:text-[12px]">That&rsquo;s all it takes to start building</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. Why SkillRun — Parchi features + leaderboard cards ===== -->
+<section id="why-skillrun" class="w-full py-6 md:py-12 lg:py-16 bg-primary relative overflow-hidden">
+  <div class="container px-4 md:px-6 mx-auto relative z-10">
+    <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+      <div class="flex flex-col justify-center space-y-4">
+        <div class="space-y-2">
+          <div class="inline-block rounded-lg bg-white/10 px-3 py-1 text-sm mb-2 border border-white/20" style="color:#bbf7d0">Why SkillRun?</div>
+          <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-heading text-white">Learning that makes you <span style="color:#bbf7d0">build.</span></h2>
+          <p class="max-w-[600px] text-white/80 md:text-xl/relaxed">SkillRun gamifies your learning. Compete on leaderboards, earn XP, and unlock elite levels.</p>
+        </div>
+        <div class="grid gap-6 mt-8 text-white">
+          <div class="flex items-start gap-4">
+            <div class="bg-white/10 p-3 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hammer w-6 h-6"><path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"></path><path d="m18 15 4-4"></path><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 18 9V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h4a2 2 0 0 1 1.5.75L13 16"></path><path d="M8 3v3"></path><path d="M5 6h6"></path></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg">Learn by doing</h3>
+              <p class="text-white/70">Concepts appear exactly when you need them &mdash; not a chapter before you&rsquo;ll ever touch them.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="bg-white/10 p-3 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket w-6 h-6" style="color:#bbf7d0"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg">Missions, not lectures</h3>
+              <p class="text-white/70">Your path is made of challenges. Every mission ends with code you wrote, checked in real time.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="bg-white/10 p-3 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trophy w-6 h-6 text-white"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg">Real-time feedback</h3>
+              <p class="text-white/70">SkillRun checks your code instantly. Pass, earn XP, unlock what&rsquo;s next. No waiting for a teacher.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mx-auto flex w-full max-w-[500px] flex-col items-center justify-center space-y-6 lg:max-w-none">
+        <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl border border-gray-100 p-6 transform rotate-2 hover:rotate-0 transition-transform duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="font-heading font-bold text-lg">Campus Top Savers</h4>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-medal w-5 h-5 text-yellow-500"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"></path><path d="M11 12 5.12 2.2"></path><path d="m13 12 5.88-9.8"></path><path d="M8 7h8"></path><circle cx="12" cy="17" r="5"></circle><path d="M12 18v-2h-.5"></path></svg>
+          </div>
+          <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+            <div class="sr-leader-rank sr-leader-rank-gold">#1</div>
+            <div class="flex-1">
+              <div class="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+              <div class="h-2 w-16 bg-gray-100 rounded"></div>
+            </div>
+            <div class="font-bold text-primary text-sm font-sans">Rs. 4500</div>
+          </div>
+          <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+            <div class="sr-leader-rank sr-leader-rank-gray">#2</div>
+            <div class="flex-1">
+              <div class="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+              <div class="h-2 w-16 bg-gray-100 rounded"></div>
+            </div>
+            <div class="font-bold text-primary text-sm font-sans">Rs. 4000</div>
+          </div>
+          <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+            <div class="sr-leader-rank sr-leader-rank-gray">#3</div>
+            <div class="flex-1">
+              <div class="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+              <div class="h-2 w-16 bg-gray-100 rounded"></div>
+            </div>
+            <div class="font-bold text-primary text-sm font-sans">Rs. 3500</div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="sr-leader-rank sr-leader-rank-gray">#4</div>
+            <div class="flex-1">
+              <div class="h-2 w-24 bg-gray-200 rounded mb-1"></div>
+              <div class="h-2 w-16 bg-gray-100 rounded"></div>
+            </div>
+            <div class="font-bold text-muted-foreground text-sm font-sans">Rs. 1200</div>
+          </div>
+        </div>
+        <div class="w-full max-w-sm sr-rewards-card rounded-2xl p-6 text-white transform -rotate-1 hover:rotate-0 transition-transform duration-300 translate-x-12 -mt-10">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-6 h-6"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+            </div>
+            <div>
+              <h4 class="font-heading font-bold text-lg">Leaderboard Rewards</h4>
+              <p class="text-xs text-white/80 font-sans">Top Saver 2024</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4b. Why SkillRun — detail rows with inspiration-style cards ===== -->
+<section class="w-full py-14 md:py-20 bg-background">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col gap-10 lg:gap-14">
+      <div class="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+        <div class="flex justify-center order-1 lg:order-1">
+          <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl border border-gray-100 p-6 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+            <div class="flex items-center justify-between mb-4">
+              <h4 class="font-heading font-bold text-lg">Learn by doing</h4>
+              <span class="skillrun-ui-chip bg-primary/10 text-primary">STEP 1 &middot; LEARN</span>
+            </div>
+            <div class="rounded-xl bg-muted border border-border p-4 text-left mb-3">
+              <div class="text-muted-foreground mb-1" style="font-size:11px">A tag wraps content:</div>
+              <div class="rounded-lg bg-black/20 px-3 py-2.5 font-mono text-left" style="font-size:12px;color:#16a34a">&lt;h1&gt;Hello World&lt;/h1&gt;</div>
+            </div>
+            <div class="rounded-xl bg-muted border border-border p-4">
+              <div style="font-size:11px;color:#a1a1aa;font-weight:700">YOUR TURN</div>
+              <div style="font-size:13px;color:#f5f5f5;font-weight:600;margin-top:2px">Write an &lt;h2&gt; with your name.</div>
+            </div>
+            <span class="skillrun-ui-chip bg-primary text-primary-foreground self-start mt-4">Try it</span>
+          </div>
+        </div>
+        <div class="flex flex-col justify-center space-y-4 order-2 lg:order-2">
+          <h3 class="text-2xl font-bold font-heading">Learn by doing</h3>
+          <p class="text-muted-foreground">Don&rsquo;t spend hours memorizing syntax. Use each concept while building. Concepts appear exactly when you need them &mdash; not a chapter before you&rsquo;ll ever touch them.</p>
+        </div>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+        <div class="flex flex-col justify-center space-y-4 order-2 lg:order-1">
+          <h3 class="text-2xl font-bold font-heading">Missions, not lectures</h3>
+          <p class="text-muted-foreground">Your learning path is made of challenges that require you to actually do something. Every mission ends with code you wrote, checked by SkillRun in real time.</p>
+        </div>
+        <div class="flex justify-center order-1 lg:order-2">
+          <div class="sr-panel-dark w-full max-w-sm p-4 relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-full h-10 bg-gray-800 flex items-center px-4 gap-2">
+              <div class="w-3 h-3 rounded-full bg-red-500"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <div class="mt-10 p-4">
+              <div style="font-size:11px;color:#a1a1aa;font-weight:700">MISSION 2 &middot; QUIZ</div>
+              <div style="font-size:15px;font-weight:800;color:#f5f5f5;margin-top:2px">Build a quiz game</div>
+              <div class="rounded-lg bg-black/30 border border-white/5 p-3 mt-3">
+                <div style="font-size:10px;color:#a1a1aa">Store questions, show one, check the answer:</div>
+                <div class="rounded bg-black/40 px-2 py-2 font-mono text-left mt-2" style="font-size:11px;color:#7bf1a8">const q = {...}</div>
+              </div>
+              <div class="rounded-lg bg-primary/15 border border-primary/40 p-3 mt-3">
+                <div style="font-size:10px;color:#f5f5f5;font-weight:700">Challenge</div>
+                <div style="font-size:10px;color:#a1a1aa;margin-top:2px">Make it show a score at the end.</div>
+              </div>
+            </div>
+            <div class="absolute bottom-4 right-4 sr-dash-pill">SkillRun Editor</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+        <div class="flex justify-center order-1 lg:order-1">
+          <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl border border-gray-100 p-6 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+            <div class="flex items-center justify-between mb-4">
+              <h4 class="font-heading font-bold text-lg">Build real things</h4>
+              <span class="skillrun-ui-chip bg-primary/10 text-primary">LIVE RESULT</span>
+            </div>
+            <div class="rounded-xl bg-muted border border-border p-4 text-left mb-3">
+              <div style="font-size:16px;font-weight:800;color:#f5f5f5">&lt;h1&gt;Sara&rsquo;s Page&lt;/h1&gt;</div>
+              <div style="font-size:12px;color:#a1a1aa;margin-top:4px">You just wrote a real webpage.</div>
+            </div>
+            <div class="rounded-xl bg-primary/5 border border-primary/30 p-4">
+              <div class="flex items-center justify-between">
+                <span style="font-size:11px;color:#a1a1aa">Preview</span>
+                <span class="skillrun-ui-chip bg-primary/10 text-primary">Works</span>
+              </div>
+            </div>
+            <span class="skillrun-ui-chip bg-primary text-primary-foreground self-start mt-4">Completed &middot; +40 XP</span>
+          </div>
+        </div>
+        <div class="flex flex-col justify-center space-y-4 order-2 lg:order-2">
+          <h3 class="text-2xl font-bold font-heading">Build real things</h3>
+          <p class="text-muted-foreground">Your progress should result in things you can show, use, and eventually build in the real world &mdash; a personal website, a game, a tool that does what you need.</p>
+        </div>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+        <div class="flex flex-col justify-center space-y-4 order-2 lg:order-1">
+          <h3 class="text-2xl font-bold font-heading">Your skills grow with you</h3>
+          <p class="text-muted-foreground">Start with simple web development and eventually move toward more advanced technology &mdash; APIs, backend, even electronics and AI.</p>
+        </div>
+        <div class="flex justify-center order-1 lg:order-2">
+          <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl border border-gray-100 p-6 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+            <div class="flex items-center justify-between mb-4">
+              <h4 class="font-heading font-bold text-lg">Skill Tree</h4>
+              <span class="skillrun-ui-chip bg-primary/10 text-primary">PROGRESS</span>
+            </div>
+            <div class="flex flex-col gap-2.5">
+              <div class="flex items-center gap-2">
+                <span class="skillrun-ui-chip bg-primary text-primary-foreground">HTML</span>
+                <span style="font-size:11px;color:#a1a1aa">&rarr;</span>
+                <span class="skillrun-ui-chip bg-primary text-primary-foreground">CSS</span>
+                <span style="font-size:11px;color:#a1a1aa">&rarr;</span>
+                <span class="skillrun-ui-chip bg-primary/10 text-primary">JS</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span style="font-size:11px;color:#a1a1aa">&rarr;</span>
+                <span class="skillrun-ui-chip bg-muted text-muted-foreground">APIs</span>
+                <span style="font-size:11px;color:#a1a1aa">&rarr;</span>
+                <span class="skillrun-ui-chip bg-muted text-muted-foreground">Backend</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span style="font-size:11px;color:#a1a1aa">&rarr;</span>
+                <span class="skillrun-ui-chip bg-muted text-muted-foreground">Electronics</span>
+                <span style="font-size:11px;color:#a1a1aa">&rarr;</span>
+                <span class="skillrun-ui-chip bg-muted text-muted-foreground">AI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5. How SkillRun Works ===== -->
+<section id="how-it-works" class="w-full py-14 md:py-20 bg-muted border-y border-border">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+      <div class="space-y-2">
+        <p class="sr-eyebrow mb-3">How SkillRun Works</p>
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-heading text-foreground">Four steps from zero to <span class="sr-gradient-text">building.</span></h2>
+      </div>
+    </div>
+
+    <div class="skillrun-grid-wide">
+      <div class="sr-num-card flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+        <div class="num skillrun-num-feature" style="font-family:'Manrope',sans-serif;font-weight:800;line-height:1;color:rgba(22,163,74,0.16);font-size:clamp(40px,5vw,56px);letter-spacing:-0.03em">01</div>
+        <h3 class="text-xl font-bold font-heading">Choose your path</h3>
+        <p class="text-sm text-muted-foreground">Start with Web Development.</p>
+      </div>
+      <div class="sr-num-card flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+        <div class="num skillrun-num-feature" style="font-family:'Manrope',sans-serif;font-weight:800;line-height:1;color:rgba(22,163,74,0.16);font-size:clamp(40px,5vw,56px);letter-spacing:-0.03em">02</div>
+        <h3 class="text-xl font-bold font-heading">Enter a mission</h3>
+        <p class="text-sm text-muted-foreground">SkillRun gives you a goal to accomplish.</p>
+      </div>
+      <div class="sr-num-card flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+        <div class="num skillrun-num-feature" style="font-family:'Manrope',sans-serif;font-weight:800;line-height:1;color:rgba(22,163,74,0.16);font-size:clamp(40px,5vw,56px);letter-spacing:-0.03em">03</div>
+        <h3 class="text-xl font-bold font-heading">Learn what you need</h3>
+        <p class="text-sm text-muted-foreground">Concepts are introduced when you need them.</p>
+      </div>
+      <div class="sr-num-card flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+        <div class="num skillrun-num-feature" style="font-family:'Manrope',sans-serif;font-weight:800;line-height:1;color:rgba(22,163,74,0.16);font-size:clamp(40px,5vw,56px);letter-spacing:-0.03em">04</div>
+        <h3 class="text-xl font-bold font-heading">Build and progress</h3>
+        <p class="text-sm text-muted-foreground">Complete the mission, earn progress, and unlock what&rsquo;s next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6. Inside SkillRun — Partner Dashboard style ===== -->
+<section id="inside" class="w-full py-14 md:py-20 bg-background">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+      <div class="space-y-2">
+        <p class="sr-eyebrow mb-3">Inside SkillRun</p>
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-heading text-foreground">See what learning inside SkillRun <span class="sr-gradient-text">actually looks like.</span></h2>
+        <p class="max-w-[700px] mx-auto text-muted-foreground md:text-lg/relaxed">This is the real experience &mdash; not a catalogue of projects.</p>
+      </div>
+    </div>
+
+    <div class="mx-auto w-full max-w-3xl mb-12">
+      <div class="sr-panel-dark aspect-video relative overflow-hidden group">
+        <div class="absolute top-0 left-0 w-full h-10 bg-gray-800 flex items-center px-4 gap-2">
+          <div class="w-3 h-3 rounded-full bg-red-500"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <div class="w-3 h-3 rounded-full bg-green-500"></div>
+        </div>
+        <div class="mt-10 flex gap-4 h-full p-6">
+          <div class="w-1/4 bg-gray-800/60 rounded-lg h-3/4">
+            <div class="p-4 flex flex-col gap-3">
+              <div style="font-size:9px;color:#a1a1aa;font-weight:700">MISSIONS</div>
+              <div class="h-8 bg-gray-800/50 rounded-lg"></div>
+              <div class="h-8 bg-primary/25 rounded-lg border border-primary/30"></div>
+              <div class="h-8 bg-gray-800/50 rounded-lg"></div>
+              <div class="h-8 bg-gray-800/50 rounded-lg"></div>
+            </div>
+          </div>
+          <div class="w-3/4 flex flex-col gap-4">
+            <div class="flex gap-4">
+              <div class="flex-1 h-24 bg-primary/20 rounded-lg border border-primary/30 p-3">
+                <div style="font-size:9px;color:#fff;font-weight:700">Personal Website</div>
+                <div class="mt-2 skillrun-ui-bar"><div class="skillrun-ui-bar-fill" style="width:100%"></div></div>
+                <div style="font-size:8px;color:#30d05c;font-weight:700;margin-top:2px">COMPLETED &middot; +40 XP</div>
+              </div>
+              <div class="flex-1 h-24 bg-secondary/10 rounded-lg border border-secondary/30 p-3">
+                <div style="font-size:9px;color:#fff;font-weight:700">Quiz Game</div>
+                <div class="mt-2 skillrun-ui-bar"><div class="skillrun-ui-bar-fill" style="width:60%"></div></div>
+                <div style="font-size:8px;color:#a1a1aa;font-weight:700;margin-top:2px">IN PROGRESS</div>
+              </div>
+              <div class="flex-1 h-24 bg-gray-800 rounded-lg p-3">
+                <div style="font-size:9px;color:#a1a1aa;font-weight:700">Calculator</div>
+                <div class="mt-2 skillrun-ui-bar"><div class="skillrun-ui-bar-fill" style="width:0%"></div></div>
+                <div style="font-size:8px;color:#a1a1aa;font-weight:700;margin-top:2px">LOCKED</div>
+              </div>
+            </div>
+            <div class="w-full h-28 bg-gray-800 rounded-lg p-4 flex items-center justify-between">
+              <div>
+                <div style="font-size:10px;color:#a1a1aa;font-weight:700">LEVEL 2 &middot; 160 XP</div>
+                <div class="mt-2 w-56 skillrun-ui-bar"><div class="skillrun-ui-bar-fill" style="width:60%"></div></div>
+              </div>
+              <span class="skillrun-ui-chip bg-primary/10 text-primary">HTML &rarr; CSS</span>
+            </div>
+          </div>
+        </div>
+        <div class="absolute bottom-6 right-6 sr-dash-pill">SkillRun Dashboard</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+      <div class="flex flex-col gap-4">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 transform -rotate-1 hover:rotate-0 transition-transform duration-300 flex-1">
+          <div style="font-size:11px;color:#a1a1aa;font-weight:700">MISSION &middot; PERSONAL WEBSITE</div>
+          <div style="font-size:15px;font-weight:800;color:#f5f5f5;margin-top:4px">Build a personal page</div>
+          <div class="rounded-xl bg-muted border border-border p-3 mt-3">
+            <div style="font-size:10px;color:#a1a1aa;font-weight:700">THE GOAL</div>
+            <div style="font-size:12px;color:#f5f5f5;margin-top:2px">A webpage with your name, a heading, and one paragraph.</div>
+          </div>
+          <div class="rounded-xl bg-muted border border-border p-3 mt-3">
+            <div style="font-size:10px;color:#a1a1aa;font-weight:700">YOU&rsquo;LL LEARN</div>
+            <div style="font-size:12px;color:#16a34a;margin-top:2px">h1, p, the structure of a page</div>
+          </div>
+          <span class="skillrun-ui-chip bg-primary text-primary-foreground self-start mt-4">Start mission</span>
+        </div>
+        <div style="font-size:12px;color:#a1a1aa;font-weight:600;text-align:center">Mission screen</div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 transform rotate-1 hover:rotate-0 transition-transform duration-300 flex-1">
+          <div class="flex items-center justify-between">
+            <div style="font-size:11px;color:#a1a1aa;font-weight:700">EDITOR</div>
+            <span class="skillrun-ui-chip bg-primary/10 text-primary">HTML</span>
+          </div>
+          <div class="rounded-xl bg-black/20 p-3 font-mono text-left leading-relaxed mt-3" style="font-size:12px;color:#16a34a">
+            &lt;h1&gt;Sara&lt;/h1&gt;<br/>
+            &lt;p&gt;I build things.&lt;/p&gt;
+          </div>
+          <div class="rounded-xl bg-black/20 p-3 font-mono text-left leading-relaxed mt-3" style="font-size:12px;color:#a1a1aa">
+            &lt;h2&gt; ___ &lt;/h2&gt;
+          </div>
+          <span class="skillrun-ui-chip bg-primary text-primary-foreground self-start mt-4">Run &middot; Check</span>
+        </div>
+        <div style="font-size:12px;color:#a1a1aa;font-weight:600;text-align:center">Code editor</div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 transform -rotate-1 hover:rotate-0 transition-transform duration-300 flex-1">
+          <div style="font-size:11px;color:#a1a1aa;font-weight:700">LIVE RESULT</div>
+          <div class="rounded-xl bg-muted border border-border p-4 text-left mt-3">
+            <div style="font-size:18px;font-weight:800;color:#f5f5f5">Sara</div>
+            <div style="font-size:13px;color:#a1a1aa;margin-top:4px">I build things.</div>
+          </div>
+          <div class="rounded-xl bg-primary/5 border border-primary/30 p-3 mt-3">
+            <div class="flex items-center justify-between">
+              <span style="font-size:11px;color:#f5f5f5;font-weight:700">Check passed</span>
+              <span class="skillrun-ui-chip bg-primary text-primary-foreground">+40 XP</span>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#a1a1aa;font-weight:600;text-align:center">Live result</div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 transform rotate-1 hover:rotate-0 transition-transform duration-300 flex-1">
+          <div style="font-size:11px;color:#a1a1aa;font-weight:700">COMPLETED</div>
+          <div class="rounded-xl bg-primary/10 border border-primary/30 p-4 text-center mt-3">
+            <div style="font-size:24px">&#127881;</div>
+            <div style="font-size:14px;font-weight:800;color:#f5f5f5;margin-top:4px">Mission complete!</div>
+            <div style="font-size:11px;color:#a1a1aa;margin-top:2px">Personal Website &middot; +40 XP</div>
+          </div>
+          <div class="rounded-xl bg-muted border border-border p-3 mt-3">
+            <div class="flex items-center justify-between">
+              <span style="font-size:11px;color:#a1a1aa">Next unlocked</span>
+              <span class="skillrun-ui-chip bg-primary/10 text-primary">Quiz Game</span>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#a1a1aa;font-weight:600;text-align:center">Completed mission</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7. The Mission System ===== -->
+<section id="missions" class="w-full py-14 md:py-20 bg-muted border-y border-border">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+      <div class="space-y-2">
+        <p class="sr-eyebrow mb-3">The Mission System</p>
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-heading text-foreground">Not a course. A <span class="sr-gradient-text">series of challenges.</span></h2>
+      </div>
+    </div>
+
+    <div class="skillrun-grid-wide mb-12">
+      <div class="sr-num-card flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+        <span class="skillrun-ui-chip bg-primary/10 text-primary self-start">The problem</span>
+        <div style="font-size:13px;color:#f5f5f5;font-weight:700">&ldquo;Build this.&rdquo;</div>
+        <p class="text-sm text-muted-foreground">A mission gives you a clear goal.</p>
+      </div>
+      <div class="sr-num-card flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+        <span class="skillrun-ui-chip bg-primary/10 text-primary self-start">The knowledge</span>
+        <div style="font-size:13px;color:#f5f5f5;font-weight:700">&ldquo;Here&rsquo;s what you need to know.&rdquo;</div>
+        <p class="text-sm text-muted-foreground">SkillRun gives you exactly that.</p>
+      </div>
+      <div class="sr-num-card flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+        <span class="skillrun-ui-chip bg-primary/10 text-primary self-start">The practice</span>
+        <div style="font-size:13px;color:#f5f5f5;font-weight:700">&ldquo;Now build it yourself.&rdquo;</div>
+        <p class="text-sm text-muted-foreground">You put it into practice.</p>
+      </div>
+      <div class="sr-num-card flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+        <span class="skillrun-ui-chip bg-primary/10 text-primary self-start">The unlock</span>
+        <div style="font-size:13px;color:#f5f5f5;font-weight:700">&ldquo;Ready for the next level?&rdquo;</div>
+        <p class="text-sm text-muted-foreground">Your success unlocks the next challenge.</p>
+      </div>
+    </div>
+
+    <div class="flex justify-center">
+      <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl border border-gray-100 p-6 transform rotate-2 hover:rotate-0 transition-transform duration-300">
+        <div class="flex items-center justify-between mb-4">
+          <h4 class="font-heading font-bold text-lg">Mission &middot; Todo App</h4>
+          <span class="skillrun-ui-chip bg-primary text-primary-foreground">Continue</span>
+        </div>
+        <div style="font-size:15px;font-weight:800;color:#f5f5f5">Build a working to-do list</div>
+        <div class="flex flex-col gap-3 mt-4">
+          <div class="rounded-xl bg-muted border border-border p-3">
+            <div style="font-size:10px;color:#a1a1aa;font-weight:700">STEP 1 &middot; LEARN</div>
+            <div style="font-size:12px;color:#f5f5f5;margin-top:2px">Arrays and .push() in 3 minutes.</div>
+          </div>
+          <div class="rounded-xl bg-muted border border-border p-3">
+            <div style="font-size:10px;color:#a1a1aa;font-weight:700">STEP 2 &middot; BUILD</div>
+            <div style="font-size:12px;color:#f5f5f5;margin-top:2px">Add, complete, and remove tasks.</div>
+          </div>
+          <div class="rounded-xl bg-primary/5 border border-primary/30 p-3">
+            <div style="font-size:10px;color:#f5f5f5;font-weight:700">STEP 3 &middot; COMPLETE</div>
+            <div style="font-size:12px;color:#16a34a;margin-top:2px">Pass the check to unlock the next mission.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 8. Your Progress ===== -->
+<section id="progress" class="w-full py-14 md:py-20 bg-background">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+      <div class="space-y-2">
+        <p class="sr-eyebrow mb-3">Your Progress</p>
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-heading text-foreground">Every skill becomes a tool for your <span class="sr-gradient-text">next build.</span></h2>
+        <p class="max-w-[700px] mx-auto text-muted-foreground md:text-lg/relaxed">A clear path from your first tag to building complete systems.</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-border shadow-sm p-8 md:p-12 mb-12">
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <span class="skillrun-ui-chip bg-primary text-primary-foreground" style="font-size:12px">Beginner</span>
+        <span style="font-size:12px;color:#a1a1aa">&rarr;</span>
+        <span class="skillrun-ui-chip bg-primary text-primary-foreground" style="font-size:12px">HTML</span>
+        <span style="font-size:12px;color:#a1a1aa">&rarr;</span>
+        <span class="skillrun-ui-chip bg-primary text-primary-foreground" style="font-size:12px">CSS</span>
+        <span style="font-size:12px;color:#a1a1aa">&rarr;</span>
+        <span class="skillrun-ui-chip bg-primary/10 text-primary" style="font-size:12px">JavaScript</span>
+        <span style="font-size:12px;color:#a1a1aa">&rarr;</span>
+        <span class="skillrun-ui-chip bg-muted text-muted-foreground" style="font-size:12px">APIs</span>
+        <span style="font-size:12px;color:#a1a1aa">&rarr;</span>
+        <span class="skillrun-ui-chip bg-muted text-muted-foreground" style="font-size:12px">Backend</span>
+        <span style="font-size:12px;color:#a1a1aa">&rarr;</span>
+        <span class="skillrun-ui-chip bg-muted text-muted-foreground" style="font-size:12px">Full Stack</span>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-3">
+      <span style="font-size:12px;color:#a1a1aa">Eventually this expands into:</span>
+    </div>
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+      <span class="skillrun-ui-chip bg-primary/10 text-primary" style="font-size:12px">Web Development</span>
+      <span style="font-size:12px;color:#a1a1aa">&rarr;</span>
+      <span class="skillrun-ui-chip bg-muted text-muted-foreground" style="font-size:12px">Robotics</span>
+      <span style="font-size:12px;color:#a1a1aa">&rarr;</span>
+      <span class="skillrun-ui-chip bg-muted text-muted-foreground" style="font-size:12px">Electronics</span>
+      <span style="font-size:12px;color:#a1a1aa">&rarr;</span>
+      <span class="skillrun-ui-chip bg-muted text-muted-foreground" style="font-size:12px">AI</span>
+      <span style="font-size:12px;color:#a1a1aa">&rarr;</span>
+      <span class="skillrun-ui-chip bg-muted text-muted-foreground" style="font-size:12px">Hardware</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 9. What You Can Build ===== -->
+<section id="build" class="w-full py-14 md:py-20 bg-muted border-y border-border">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+      <div class="space-y-2">
+        <p class="sr-eyebrow mb-3">What You Can Build</p>
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-heading text-foreground">&ldquo;Okay, but what will I actually <span class="sr-gradient-text">be able to do?&rdquo;</span></h2>
+      </div>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+      <div class="flex flex-col gap-6">
+        <div class="sr-num-card flex flex-col gap-2 bg-white rounded-2xl border border-border shadow-sm p-6 transition-all duration-300 hover:shadow-lg">
+          <span class="skillrun-ui-chip bg-primary/10 text-primary self-start">Start</span>
+          <div style="font-size:15px;font-weight:800;color:#f5f5f5">&ldquo;I don&rsquo;t know HTML.&rdquo;</div>
+          <p class="text-sm text-muted-foreground">Zero experience is the starting point.</p>
+        </div>
+        <div class="sr-num-card flex flex-col gap-2 bg-white rounded-2xl border border-border shadow-sm p-6 transition-all duration-300 hover:shadow-lg">
+          <span class="skillrun-ui-chip bg-primary/10 text-primary self-start">Learn</span>
+          <div style="font-size:15px;font-weight:800;color:#f5f5f5">Build your first webpage.</div>
+          <p class="text-sm text-muted-foreground">Your first mission is a page you wrote.</p>
+        </div>
+        <div class="sr-num-card flex flex-col gap-2 bg-white rounded-2xl border border-border shadow-sm p-6 transition-all duration-300 hover:shadow-lg">
+          <span class="skillrun-ui-chip bg-primary/10 text-primary self-start">Progress</span>
+          <div style="font-size:15px;font-weight:800;color:#f5f5f5">Make it interactive.</div>
+          <p class="text-sm text-muted-foreground">Add behavior with JavaScript.</p>
+        </div>
+        <div class="sr-num-card flex flex-col gap-2 bg-white rounded-2xl border border-border shadow-sm p-6 transition-all duration-300 hover:shadow-lg">
+          <span class="skillrun-ui-chip bg-primary/10 text-primary self-start">Advance</span>
+          <div style="font-size:15px;font-weight:800;color:#f5f5f5">Connect it to real data.</div>
+          <p class="text-sm text-muted-foreground">Work with APIs and backend services.</p>
+        </div>
+        <div class="flex flex-col gap-2 bg-primary rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+          <span class="skillrun-ui-chip bg-white text-primary self-start">Eventually</span>
+          <div style="font-size:15px;font-weight:800;color:#ffffff">Build complete applications.</div>
+          <p class="text-sm text-white/80">Web, then electronics, robotics, and connected projects.</p>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl border border-gray-100 p-6 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="font-heading font-bold text-lg">The Journey</h4>
+            <span class="skillrun-ui-chip bg-primary/10 text-primary">GOAL</span>
+          </div>
+          <div class="flex flex-col gap-3">
+            <div class="rounded-xl bg-muted border border-border p-3">
+              <div class="flex items-center justify-between">
+                <span style="font-size:12px;font-weight:800;color:#16a34a">Web</span>
+                <span class="skillrun-ui-chip bg-primary/10 text-primary">first</span>
+              </div>
+              <div style="font-size:10px;color:#a1a1aa;margin-top:2px">HTML &middot; CSS &middot; JavaScript</div>
+            </div>
+            <div class="rounded-xl bg-muted border border-border p-3">
+              <div class="flex items-center justify-between">
+                <span style="font-size:12px;font-weight:800;color:#a1a1aa">Electronics</span>
+                <span class="skillrun-ui-chip bg-muted text-muted-foreground">next</span>
+              </div>
+              <div style="font-size:10px;color:#a1a1aa;margin-top:2px">Arduino &middot; ESP32 &middot; sensors</div>
+            </div>
+            <div class="rounded-xl bg-muted border border-border p-3">
+              <div class="flex items-center justify-between">
+                <span style="font-size:12px;font-weight:800;color:#a1a1aa">Robotics</span>
+                <span class="skillrun-ui-chip bg-muted text-muted-foreground">later</span>
+              </div>
+              <div style="font-size:10px;color:#a1a1aa;margin-top:2px">connected hardware projects</div>
+            </div>
+            <div class="rounded-xl bg-primary/5 border border-primary/30 p-3">
+              <div class="flex items-center justify-between">
+                <span style="font-size:12px;font-weight:800;color:#16a34a">Connected projects</span>
+                <span class="skillrun-ui-chip bg-primary text-primary-foreground">goal</span>
+              </div>
+              <div style="font-size:10px;color:#a1a1aa;margin-top:2px">Web + electronics + robotics</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10. Who Is SkillRun For? ===== -->
+<section id="who" class="w-full py-14 md:py-20 bg-background">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+      <div class="space-y-2">
+        <p class="sr-eyebrow mb-3">Who Is SkillRun For?</p>
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-heading text-foreground">Made for people who want to <span class="sr-gradient-text">make things.</span></h2>
+      </div>
+    </div>
+
+    <div class="skillrun-grid-wide">
+      <div class="flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-0.5">
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        </div>
+        <h3 class="text-xl font-bold font-heading">Beginners</h3>
+        <p class="text-sm text-muted-foreground">Never coded before? Start from the beginning.</p>
+      </div>
+      <div class="flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-0.5">
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+        </div>
+        <h3 class="text-xl font-bold font-heading">Students</h3>
+        <p class="text-sm text-muted-foreground">Turn what you&rsquo;re learning into projects you can actually demonstrate.</p>
+      </div>
+      <div class="flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-0.5">
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+        </div>
+        <h3 class="text-xl font-bold font-heading">Makers</h3>
+        <p class="text-sm text-muted-foreground">Move beyond software and eventually build with electronics and hardware.</p>
+      </div>
+      <div class="flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-0.5">
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        </div>
+        <h3 class="text-xl font-bold font-heading">Developers</h3>
+        <p class="text-sm text-muted-foreground">Keep expanding your skills through increasingly difficult projects.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11. SkillRun Is Growing ===== -->
+<section id="growing" class="w-full py-14 md:py-20 bg-muted border-y border-border">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+      <div class="space-y-2">
+        <p class="sr-eyebrow mb-3">SkillRun Is Growing</p>
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-heading text-foreground">This is only the <span class="sr-gradient-text">beginning.</span></h2>
+      </div>
+    </div>
+
+    <div class="skillrun-grid-wide">
+      <div class="flex flex-col gap-3 bg-primary rounded-2xl shadow-lg p-8 transition-all duration-300 hover:shadow-xl">
+        <span class="skillrun-ui-chip bg-white text-primary self-start">Today</span>
+        <h3 class="text-xl font-bold font-heading text-white">Web Development</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="skillrun-ui-chip bg-white/20 text-white">HTML</span>
+          <span class="skillrun-ui-chip bg-white/20 text-white">CSS</span>
+          <span class="skillrun-ui-chip bg-white/20 text-white">JavaScript</span>
+        </div>
+      </div>
+      <div class="sr-num-card flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+        <span class="skillrun-ui-chip bg-primary/10 text-primary self-start">Next</span>
+        <h3 class="text-xl font-bold font-heading">Programming &amp; Full Stack</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="skillrun-ui-chip bg-muted text-muted-foreground">APIs</span>
+          <span class="skillrun-ui-chip bg-muted text-muted-foreground">Backend</span>
+          <span class="skillrun-ui-chip bg-muted text-muted-foreground">Databases</span>
+        </div>
+      </div>
+      <div class="sr-num-card flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+        <span class="skillrun-ui-chip bg-primary/10 text-primary self-start">Coming later</span>
+        <h3 class="text-xl font-bold font-heading">Electronics &amp; Robotics</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="skillrun-ui-chip bg-muted text-muted-foreground">Arduino</span>
+          <span class="skillrun-ui-chip bg-muted text-muted-foreground">ESP32</span>
+          <span class="skillrun-ui-chip bg-muted text-muted-foreground">Sensors</span>
+          <span class="skillrun-ui-chip bg-muted text-muted-foreground">Robotics</span>
+        </div>
+      </div>
+      <div class="sr-num-card flex flex-col gap-3 bg-white rounded-2xl border border-border shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+        <span class="skillrun-ui-chip bg-primary/10 text-primary self-start">The long-term vision</span>
+        <h3 class="text-xl font-bold font-heading">AI + Hardware + Real-World Projects</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="skillrun-ui-chip bg-muted text-muted-foreground">AI</span>
+          <span class="skillrun-ui-chip bg-muted text-muted-foreground">Hardware</span>
+          <span class="skillrun-ui-chip bg-muted text-muted-foreground">Real-world builds</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 12. CTA — Parchi style ===== -->
+<section class="w-full py-14 md:py-20 bg-background">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="relative overflow-hidden rounded-3xl bg-primary px-6 py-16 md:py-20 text-center">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="sr-blob sr-blob-purple w-[320px] h-[320px] top-[-15%] left-[-5%]"></div>
+        <div class="sr-blob sr-blob-cyan w-[280px] h-[280px] bottom-[-15%] right-[-5%]"></div>
+      </div>
+      <h2 class="relative text-4xl md:text-6xl font-heading font-extrabold tracking-tight text-white leading-[1.05]">Stop watching tutorials.<br/>Start building. &#128640;</h2>
+      <p class="relative mt-4 max-w-[520px] mx-auto text-white/80 md:text-lg/relaxed">SkillRun is built for people who want to turn technology skills into things they can actually make.</p>
+      <div class="relative mt-8 flex flex-row gap-4 justify-center">
+        <a class="sr-btn sr-btn-dark h-12 px-8 text-sm" href="app/index.html">Start Learning</a>
+        <a class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm transition-all hover:scale-105 h-12 rounded-md px-8 bg-white/10 text-white font-bold border border-white/40" href="index.html#inside">See the App</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 13. Download / Install SkillRun ===== -->
+<section id="download" class="w-full py-14 md:py-20 bg-muted border-y border-border">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+      <div class="space-y-2">
+        <p class="sr-eyebrow mb-3">Download SkillRun</p>
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-heading text-foreground">Select your system to get <span class="sr-gradient-text">installing.</span></h2>
+      </div>
+    </div>
+
+    <div class="flex justify-center mb-8">
+      <div class="inline-flex flex-wrap justify-center gap-2 bg-white rounded-2xl border border-border p-2 shadow-sm">
+        <button type="button" data-os="android" class="os-tab inline-flex items-center justify-center gap-2 text-sm h-10 rounded-xl px-6 font-bold bg-primary text-primary-foreground transition-all hover:scale-105">Android</button>
+        <button type="button" data-os="ios" class="os-tab inline-flex items-center justify-center gap-2 text-sm h-10 rounded-xl px-6 font-bold text-foreground/70 transition-all hover:text-primary">iOS</button>
+        <button type="button" data-os="windows" class="os-tab inline-flex items-center justify-center gap-2 text-sm h-10 rounded-xl px-6 font-bold text-foreground/70 transition-all hover:text-primary">Windows</button>
+      </div>
+    </div>
+
+    <div data-os-panel="android" class="os-panel max-w-2xl mx-auto bg-white rounded-2xl border border-border shadow-sm p-8 md:p-10">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold font-heading">Install SkillRun on Android</h3>
+          <p class="text-sm text-muted-foreground">Chrome on your phone or tablet</p>
+        </div>
+      </div>
+      <ol class="flex flex-col gap-4 text-sm">
+        <li class="flex gap-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">1</span>
+          <p class="text-muted-foreground leading-relaxed">Open SkillRun at <a class="text-primary font-bold hover:underline" href="app/index.html">skillrun.com</a> in <strong class="text-foreground">Chrome</strong>.</p>
+        </li>
+        <li class="flex gap-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">2</span>
+          <p class="text-muted-foreground leading-relaxed">Tap the <strong class="text-foreground">&ldquo;3 dots&rdquo;</strong> menu (top right), then tap <strong class="text-primary">&ldquo;Install app&rdquo;</strong> or <strong class="text-primary">&ldquo;Add to Home screen&rdquo;</strong>.</p>
+        </li>
+        <li class="flex gap-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">3</span>
+          <p class="text-muted-foreground leading-relaxed">Tap <strong class="text-primary">&ldquo;Install&rdquo;</strong>. SkillRun opens as its own app &mdash; full screen, no browser.</p>
+        </li>
+        <li class="flex gap-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">4</span>
+          <p class="text-muted-foreground leading-relaxed">Find the SkillRun icon on your home screen and start building.</p>
+        </li>
+      </ol>
+    </div>
+
+    <div data-os-panel="ios" class="os-panel hidden max-w-2xl mx-auto bg-white rounded-2xl border border-border shadow-sm p-8 md:p-10">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"></path></svg>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold font-heading">Install SkillRun on iPhone / iPad</h3>
+          <p class="text-sm text-muted-foreground">Safari on your device</p>
+        </div>
+      </div>
+      <ol class="flex flex-col gap-4 text-sm">
+        <li class="flex gap-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">1</span>
+          <p class="text-muted-foreground leading-relaxed">Open SkillRun at <a class="text-primary font-bold hover:underline" href="app/index.html">skillrun.com</a> in <strong class="text-foreground">Safari</strong>.</p>
+        </li>
+        <li class="flex gap-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">2</span>
+          <p class="text-muted-foreground leading-relaxed">Tap the <strong class="text-foreground">Share button</strong> (square with an arrow, at the bottom).</p>
+        </li>
+        <li class="flex gap-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">3</span>
+          <p class="text-muted-foreground leading-relaxed">Tap <strong class="text-primary">&ldquo;Add to Home Screen&rdquo;</strong>, then <strong class="text-primary">&ldquo;Add&rdquo;</strong>.</p>
+        </li>
+        <li class="flex gap-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">4</span>
+          <p class="text-muted-foreground leading-relaxed">SkillRun now runs as its own app on your home screen &mdash; full screen, no browser.</p>
+        </li>
+      </ol>
+    </div>
+
+    <div data-os-panel="windows" class="os-panel hidden max-w-2xl mx-auto bg-white rounded-2xl border border-border shadow-sm p-8 md:p-10">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold font-heading">Install SkillRun on Windows</h3>
+          <p class="text-sm text-muted-foreground">Download and install as a desktop app</p>
+        </div>
+      </div>
+      <ol class="flex flex-col gap-4 text-sm">
+        <li class="flex gap-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">1</span>
+          <p class="text-muted-foreground leading-relaxed">Download the installer:</p>
+        </li>
+      </ol>
+      <div class="mt-2 mb-6">
+        <a class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm transition-all hover:scale-105 h-12 rounded-md px-8 bg-primary text-primary-foreground font-bold" href="desktop/dist/SkillRun%20Setup%201.0.0.exe">Download for Windows</a>
+      </div>
+      <ol class="flex flex-col gap-4 text-sm">
+        <li class="flex gap-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">2</span>
+          <p class="text-muted-foreground leading-relaxed">Open the downloaded file. <strong class="text-foreground">Microsoft Defender may say &ldquo;Windows protected your PC&rdquo;</strong> &mdash; this is normal for a new unsigned app. Click <strong class="text-primary">&ldquo;More info&rdquo;</strong>, then <strong class="text-primary">&ldquo;Run anyway&rdquo;</strong>.</p>
+        </li>
+        <li class="flex gap-3">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">3</span>
+          <p class="text-muted-foreground leading-relaxed">Follow the installer. SkillRun opens as a full desktop app &mdash; no browser needed.</p>
+        </li>
+      </ol>
+      <div class="mt-6 rounded-xl border border-dashed border-primary/40 bg-primary/5 p-4 text-sm text-muted-foreground leading-relaxed">
+        <strong class="text-primary">Heads-up:</strong> the green warning about &ldquo;harm your PC&rdquo; is Microsoft&rsquo;s standard notice for any app that isn&rsquo;t code-signed yet. It&rsquo;s safe &mdash; just pick <strong class="text-foreground">More info &rarr; Run anyway</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 14. FAQ — Parchi accordion style ===== -->
+<section id="faq" class="w-full py-14 md:py-20 bg-white">
+  <div class="container px-4 md:px-6 mx-auto max-w-3xl">
+    <div class="flex flex-col items-center justify-center space-y-4 text-center mb-10">
+      <div class="space-y-2">
+        <p class="sr-eyebrow mb-3">FAQ</p>
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-heading text-foreground">Questions, <span class="sr-gradient-text">answered.</span></h2>
+        <p class="text-muted-foreground md:text-lg">Everything you need to know about SkillRun.</p>
+      </div>
+    </div>
+
+    <div class="w-full">
+      <details class="sr-faq border-b last:border-b-0 group">
+        <summary class="py-5 text-left font-bold text-lg font-heading text-foreground">Do I need programming experience?
+          <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </summary>
+        <p class="pb-5 text-sm text-muted-foreground">No. SkillRun is designed to start from the beginning.</p>
+      </details>
+      <details class="sr-faq border-b last:border-b-0 group">
+        <summary class="py-5 text-left font-bold text-lg font-heading text-foreground">Is SkillRun free?
+          <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </summary>
+        <p class="pb-5 text-sm text-muted-foreground">Yes. SkillRun is completely free.</p>
+      </details>
+      <details class="sr-faq border-b last:border-b-0 group">
+        <summary class="py-5 text-left font-bold text-lg font-heading text-foreground">What can I learn?
+          <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </summary>
+        <p class="pb-5 text-sm text-muted-foreground">Currently Web Development &mdash; HTML, CSS, and JavaScript. Additional technology paths are planned.</p>
+      </details>
+      <details class="sr-faq border-b last:border-b-0 group">
+        <summary class="py-5 text-left font-bold text-lg font-heading text-foreground">Do I need to install anything?
+          <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </summary>
+        <p class="pb-5 text-sm text-muted-foreground">On your phone, install SkillRun as an app from Chrome or Safari (see the Download section). On Windows, download and run the desktop installer. No browser is used while you learn.</p>
+      </details>
+      <details class="sr-faq border-b last:border-b-0 group">
+        <summary class="py-5 text-left font-bold text-lg font-heading text-foreground">Can I use SkillRun on my phone?
+          <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </summary>
+        <p class="pb-5 text-sm text-muted-foreground">Yes. On Android and iOS, install SkillRun as an app from Chrome or Safari. It runs full screen, just like a native app.</p>
+      </details>
+      <details class="sr-faq border-b last:border-b-0 group">
+        <summary class="py-5 text-left font-bold text-lg font-heading text-foreground">Will SkillRun teach robotics?
+          <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </summary>
+        <p class="pb-5 text-sm text-muted-foreground">That&rsquo;s part of the longer-term roadmap &mdash; electronics, robotics, AI, and connected hardware projects.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 15. Final CTA ===== -->
+<section class="w-full py-14 md:py-20 bg-primary relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="sr-blob sr-blob-green w-[360px] h-[360px] top-[-20%] left-[10%]"></div>
+    <div class="sr-blob sr-blob-pink w-[320px] h-[320px] bottom-[-20%] right-[10%] sr-float-slow"></div>
+  </div>
+  <div class="container px-4 md:px-6 mx-auto relative">
+    <div class="flex flex-col items-center justify-center space-y-6 text-center">
+      <h2 class="text-4xl md:text-6xl font-heading font-extrabold tracking-tight text-white leading-[1.05]">Your first skill is <span class="italic" style="color:#bbf7d0">waiting.</span></h2>
+      <a class="sr-btn sr-btn-dark h-12 px-8 text-sm" href="app/index.html">Start SkillRun &#9889;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer — Parchi style ===== -->
+<footer class="w-full py-8 bg-primary text-white">
+  <div class="container px-4 md:px-6 mx-auto">
+    <div class="grid gap-8 lg:grid-cols-4">
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <img alt="SkillRun" loading="lazy" width="160" height="38" decoding="async" data-nimg="1" class="h-9 w-auto" src="skillrun-logo.svg"/>
+        </div>
+        <p class="text-sm sr-on-primary-dim">Learn technology by building with it. Missions, not lectures.</p>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="font-bold text-lg sr-on-primary">SkillRun</h3>
+        <ul class="space-y-2 text-sm sr-on-primary-dim">
+          <li><a class="hover:text-white transition-colors" href="index.html#what-is">About SkillRun</a></li>
+          <li><a class="hover:text-white transition-colors" href="index.html#download">Download</a></li>
+          <li><a class="hover:text-white transition-colors" href="index.html#faq">FAQ</a></li>
+          <li><a class="hover:text-white transition-colors" href="index.html#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="font-bold text-lg sr-on-primary">Learn</h3>
+        <ul class="space-y-2 text-sm sr-on-primary-dim">
+          <li><a class="hover:text-white transition-colors" href="index.html#missions">Missions</a></li>
+          <li><a class="hover:text-white transition-colors" href="index.html#why-skillrun">Why SkillRun</a></li>
+          <li><a class="hover:text-white transition-colors" href="index.html#progress">Your Progress</a></li>
+          <li><a class="hover:text-white transition-colors" href="index.html#growing">SkillRun Is Growing</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="font-bold text-lg sr-on-primary">Get Started</h3>
+        <div class="flex flex-col gap-3">
+          <a class="sr-btn sr-btn-dark h-11 px-5 text-sm w-fit" href="app/index.html">Start Learning</a>
+          <a class="inline-flex items-center gap-2 text-sm sr-on-primary-dim hover:text-white transition-colors w-fit" href="index.html#inside">See the App &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/20 mt-8 pt-8 text-center text-sm sr-on-primary-dim">&copy; 2026 SkillRun. All rights reserved.</div>
+  </div>
+</footer>
+
+</main>
+
+<script>
+  (function () {
+    var btn = document.getElementById('menu-btn');
+    var menu = document.getElementById('mobile-menu');
+    if (btn && menu) {
+      btn.addEventListener('click', function () {
+        var open = menu.classList.toggle('hidden') === false;
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      var links = menu.querySelectorAll('a');
+      for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener('click', function () {
+          menu.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      }
+    }
+
+    var tabs = document.querySelectorAll('.os-tab');
+    var panels = document.querySelectorAll('.os-panel');
+    for (var t = 0; t < tabs.length; t++) {
+      tabs[t].addEventListener('click', function () {
+        var os = this.getAttribute('data-os');
+        for (var i = 0; i < tabs.length; i++) {
+          tabs[i].classList.remove('bg-primary', 'text-primary-foreground');
+          tabs[i].classList.add('text-foreground/70');
+        }
+        this.classList.add('bg-primary', 'text-primary-foreground');
+        this.classList.remove('text-foreground/70');
+        for (var j = 0; j < panels.length; j++) {
+          panels[j].classList.add('hidden');
+          if (panels[j].getAttribute('data-os-panel') === os) {
+            panels[j].classList.remove('hidden');
+          }
+        }
+      });
+    }
+
+    var revealEls = document.querySelectorAll('main section > .container > *');
+    if ('IntersectionObserver' in window && revealEls.length) {
+      for (var r = 0; r < revealEls.length; r++) {
+        revealEls[r].classList.add('reveal');
+      }
+      var io = new IntersectionObserver(function (entries) {
+        for (var e = 0; e < entries.length; e++) {
+          if (entries[e].isIntersecting) {
+            entries[e].target.classList.add('in');
+            io.unobserve(entries[e].target);
+          }
+        }
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      for (var r2 = 0; r2 < revealEls.length; r2++) {
+        io.observe(revealEls[r2]);
+      }
+    }
+  })();
+</script>
+</body>
+</html>

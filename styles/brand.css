@@ -1,0 +1,812 @@
+/* ============================================================
+   SkillRun brand theme — Clerk.com-inspired light redesign
+   Light, clean, refined: white surfaces, ink text, subtle
+   borders and shadows, green accent (brand #30D05C refined).
+   All content and sections remain unchanged.
+   ============================================================ */
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #f5f5f5;
+  --card: #141414;
+  --card-foreground: #f5f5f5;
+  --popover: #141414;
+  --popover-foreground: #f5f5f5;
+  --primary: #30d05c;
+  --primary-foreground: #06130a;
+  --secondary: #7bf1a8;
+  --secondary-foreground: #06130a;
+  --muted: #1a1a1a;
+  --muted-foreground: #a1a1aa;
+  --accent: #30d05c;
+  --accent-foreground: #06130a;
+  --destructive: #ff4d4f;
+  --destructive-foreground: #ffffff;
+  --border: #26262b;
+  --input: #26262b;
+  --ring: #30d05c;
+  --chart-1: #30d05c;
+  --chart-2: #7bf1a8;
+  --chart-3: #a78bfa;
+  --chart-4: #4dd8ff;
+  --chart-5: #ffd166;
+  --sidebar: #141414;
+  --sidebar-foreground: #f5f5f5;
+  --sidebar-primary: #30d05c;
+  --sidebar-primary-foreground: #06130a;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #f5f5f5;
+  --sidebar-border: #26262b;
+  --sidebar-ring: #30d05c;
+}
+
+::selection {
+  background: rgba(22, 163, 74, 0.18);
+  color: #0a0a0a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 84px;
+}
+
+/* Headings use the clean geometric sans (Manrope) for a refined
+   SaaS look; the chunky display face is retired. */
+.font-heading {
+  font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Card pulse animation (kept subtle) */
+@keyframes skillrun-card-pulse {
+  0%, 100% { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 0 0 0px rgba(22, 163, 74, 0.10); }
+  50%      { box-shadow: 0 8px 24px rgba(22, 163, 74, 0.14), 0 0 0 10px rgba(22, 163, 74, 0); }
+}
+
+.skillrun-card-pulse {
+  animation: skillrun-card-pulse 3s ease-in-out infinite;
+}
+
+/* Marquee (kept, subtle) */
+@keyframes skillrun-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.skillrun-marquee {
+  animation: skillrun-marquee var(--dur, 40s) linear infinite;
+}
+
+.skillrun-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Responsive auto-fit card grids */
+.skillrun-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.skillrun-grid-wide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Five-step "How SkillRun Works" layout */
+.skillrun-steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .skillrun-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .skillrun-steps {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Final CTA panel — dark ink like Clerk's CTA sections */
+.skillrun-cta {
+  background: linear-gradient(135deg, #0d0f12 0%, #14171c 100%);
+  box-shadow: 0 24px 60px rgba(10, 10, 12, 0.18);
+}
+
+.skillrun-cta-btn {
+  background: #ffffff;
+  color: #0a0a0a;
+  transition: background-color 0.2s ease;
+}
+
+.skillrun-cta-btn:hover {
+  background: #e8f5ee;
+}
+
+/* Monospace code blocks */
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+/* ---- Phone frames (app screens shown on the marketing site) ----
+   The app itself is dark-themed, so the screen stays dark; the
+   device bezel is a clean light silver. Scoped vars keep the
+   mockup cards/chips looking like the real app. */
+.skillrun-phone {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  border-radius: 2.5rem;
+  padding: 9px;
+  background: linear-gradient(145deg, #f0f1f3, #dfe1e5);
+  border: 1px solid #e2e4e8;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.16);
+}
+
+.skillrun-phone-screen {
+  position: relative;
+  border-radius: 1.9rem;
+  overflow: hidden;
+  background: #0d0d0d;
+  aspect-ratio: 9 / 18;
+  --background: #0d0d0d;
+  --card: #141414;
+  --card-foreground: #f5f5f5;
+  --border: #26262b;
+  --muted: #1a1a1a;
+  --muted-foreground: #a1a1aa;
+  --primary: #30d05c;
+  --primary-foreground: #06130a;
+  --accent: #30d05c;
+  --accent-foreground: #06130a;
+}
+
+.skillrun-phone-notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 84px;
+  height: 20px;
+  border-radius: 999px;
+  background: #1c1c20;
+  z-index: 2;
+}
+
+/* Generic mini-UI rows used inside phone mockups */
+.skillrun-ui-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.skillrun-ui-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.skillrun-ui-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: #1e1e22;
+  overflow: hidden;
+}
+
+.skillrun-ui-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #16a34a, #22c55e, #4ade80);
+}
+
+/* ---- FAQ accordion ---- */
+.faq-item {
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary .faq-icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(22, 163, 74, 0.10);
+  color: #16a34a;
+  font-weight: 800;
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.faq-item[open] summary .faq-icon {
+  transform: rotate(45deg);
+  background: #16a34a;
+  color: #ffffff;
+}
+
+/* ---- Stat blocks (big number + label) ---- */
+.skillrun-stat-number {
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #30d05c;
+}
+
+.skillrun-stat-label {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---- Numbered feature (01 / 02 / 03) ---- */
+.skillrun-num-feature .num {
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(22, 163, 74, 0.16);
+  font-size: clamp(40px, 5vw, 56px);
+  letter-spacing: -0.03em;
+}
+
+/* ---- Quote / mission statement block ---- */
+.skillrun-quote-mark {
+  color: rgba(22, 163, 74, 0.35);
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+}
+
+/* Hero ambient glow */
+.skillrun-glow {
+  background: radial-gradient(closest-side, rgba(34, 197, 94, 0.12), transparent);
+}
+
+/* OS selector tabs (Download section) */
+.os-tab {
+  cursor: pointer;
+}
+
+/* Small utility additions not present in main.css */
+.space-y-12 > * + * { margin-top: 3rem; }
+.space-y-10 > * + * { margin-top: 2.5rem; }
+.mt-16 { margin-top: 4rem; }
+.mb-16 { margin-bottom: 4rem; }
+.mb-24 { margin-bottom: 6rem; }
+.pt-24 { padding-top: 6rem; }
+.pb-16 { padding-bottom: 4rem; }
+.h-28 { height: 7rem; }
+.w-28 { width: 7rem; }
+.pt-9 { padding-top: 2.25rem; }
+.gap-12 { gap: 3rem; }
+.gap-10 { gap: 2.5rem; }
+
+.bg-primary-foreground { background-color: var(--primary-foreground); }
+
+.hover\:bg-primary\/10:hover { background-color: rgba(22, 163, 74, 0.10); }
+.hover\:bg-primary\/15:hover { background-color: rgba(22, 163, 74, 0.15); }
+.hover\:bg-primary\/8:hover { background-color: rgba(22, 163, 74, 0.08); }
+.hover\:border-primary\/40:hover { border-color: rgba(22, 163, 74, 0.40); }
+.hover\:scale-\[1\.02\]:hover { transform: scale(1.02); }
+.hover\:-translate-y-0\.5:hover { transform: translateY(-0.125rem); }
+
+/* ---- micro-utilities needed by the SkillRun layout ---- */
+.bg-background\/95 { background-color: rgba(255, 255, 255, 0.95); }
+.bg-black\/20 { background-color: rgba(0, 0, 0, 0.2); }
+.bg-primary\/5 { background-color: rgba(22, 163, 74, 0.05); }
+.bg-primary\/15 { background-color: rgba(22, 163, 74, 0.15); }
+.bg-primary-foreground\/40 { background-color: rgba(255, 255, 255, 0.4); }
+.bg-primary-foreground\/10 { background-color: rgba(255, 255, 255, 0.1); }
+.border-primary-foreground { border-color: var(--primary-foreground); }
+.border-primary-foreground\/40 { border-color: rgba(255, 255, 255, 0.4); }
+.text-primary-foreground\/70 { color: rgba(255, 255, 255, 0.7); }
+.text-primary-foreground\/80 { color: rgba(255, 255, 255, 0.8); }
+.leading-\[1\.05\] { line-height: 1.05; }
+
+.hover\:bg-primary-foreground\/10:hover { background-color: rgba(255, 255, 255, 0.1); }
+.hover\:bg-white\/10:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+/* negative offsets (floating chips + CTA decorations) */
+.-right-3 { right: -0.75rem; }
+.-bottom-4 { bottom: -1rem; }
+.-left-3 { left: -0.75rem; }
+.-right-2 { right: -0.5rem; }
+.-top-20 { top: -5rem; }
+.-left-16 { left: -4rem; }
+
+@media (min-width: 768px) {
+  .md\:-right-10 { right: -2.5rem; }
+  .md\:-right-8 { right: -2rem; }
+  .md\:-left-8 { left: -2rem; }
+  .md\:pb-8 { padding-bottom: 2rem; }
+  .md\:text-3xl { font-size: var(--text-3xl); line-height: var(--text-3xl--line-height); }
+  .md\:text-lg\/relaxed { font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+}
+
+@media (min-width: 1024px) {
+  .lg\:gap-14 { gap: 3.5rem; }
+}
+
+/* ============================================================
+   CLEAN & REFINED UPGRADE
+   Clerk.com-style surfaces: soft gradient text, pastel ambient
+   blobs, subtle floats, clean pill buttons, light ticker.
+   ============================================================ */
+
+:root {
+  --sr-pink: #f9a8d4;
+  --sr-purple: #c4b5fd;
+  --sr-yellow: #fde68a;
+  --sr-cyan: #67e8f9;
+  --sr-orange: #fdba74;
+}
+
+/* ---- Refined accent gradient text (static, no rainbow) ---- */
+.sr-gradient-text {
+  background: linear-gradient(90deg, #30d05c, #7bf1a8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- Soft ambient blobs (pastel, subtle) ---- */
+.sr-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.sr-blob-green { background: rgba(34, 197, 94, 0.18); }
+.sr-blob-pink { background: rgba(244, 114, 182, 0.14); }
+.sr-blob-purple { background: rgba(167, 139, 250, 0.16); }
+.sr-blob-cyan { background: rgba(103, 232, 249, 0.16); }
+.sr-blob-yellow { background: rgba(253, 230, 138, 0.22); }
+
+/* ---- Gentle float animation ---- */
+@keyframes sr-float {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-8px) rotate(var(--tilt, 0deg)); }
+}
+
+.sr-float { animation: sr-float 6s ease-in-out infinite; }
+.sr-float-slow { animation: sr-float 8s ease-in-out infinite; }
+
+/* ---- Wiggle on hover (kept, harmless) ---- */
+@keyframes sr-wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  25% { transform: rotate(3deg); }
+  50% { transform: rotate(-2deg); }
+  75% { transform: rotate(2deg); }
+}
+
+.sr-wiggle-hover:hover { animation: sr-wiggle 0.4s ease-in-out; }
+
+/* ---- Sticker / badge (light chips) ---- */
+.sr-sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+  padding: 6px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.sr-sticker-green { background: #e7f8ee; color: #15803d; border-color: rgba(22, 163, 74, 0.25); }
+.sr-sticker-pink { background: #fdf0f6; color: #db2777; border-color: rgba(244, 114, 182, 0.3); }
+.sr-sticker-purple { background: #f3f0fe; color: #7c3aed; border-color: rgba(167, 139, 250, 0.3); }
+.sr-sticker-yellow { background: #fef9e7; color: #b45309; border-color: rgba(253, 230, 138, 0.5); }
+.sr-sticker-cyan { background: #ecfdfd; color: #0e7490; border-color: rgba(103, 232, 249, 0.4); }
+
+/* ---- Subtle emoji sticker (decorative) ---- */
+.sr-emoji {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  line-height: 1;
+  user-select: none;
+  opacity: 0.85;
+  filter: drop-shadow(0 4px 10px rgba(15, 23, 42, 0.15));
+}
+
+/* ---- Buttons (clean, refined) ---- */
+.sr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.sr-btn:hover { transform: translateY(-1px); }
+
+.sr-btn-green {
+  background: linear-gradient(180deg, #35d968, #1ea74b);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.sr-btn-green:hover { box-shadow: 0 8px 20px rgba(22, 163, 74, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+
+.sr-btn-outline {
+  background: rgba(10, 10, 10, 0.35);
+  color: #30d05c;
+  border: 1px solid rgba(48, 208, 92, 0.4);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.sr-btn-outline:hover { background: rgba(48, 208, 92, 0.12); border-color: rgba(48, 208, 92, 0.6); }
+
+.sr-btn-dark {
+  background: #ffffff;
+  color: #0a0a0a;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.sr-btn-dark:hover { box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24); }
+
+/* ---- Ticker marquee strip (light, quiet) ---- */
+.sr-ticker {
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 1px solid #26262b;
+  border-bottom: 1px solid #26262b;
+  background: #0d0d0d;
+  padding: 14px 0;
+}
+
+.sr-ticker-track {
+  display: inline-flex;
+  gap: 2.5rem;
+  animation: sr-ticker-scroll 28s linear infinite;
+  padding-left: 2.5rem;
+}
+
+.sr-ticker:hover .sr-ticker-track { animation-play-state: paused; }
+
+@keyframes sr-ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.sr-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #9ca3af;
+}
+
+.sr-ticker-item .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+/* ---- Card hover (clean lift, no rotation) ---- */
+.sr-card-pop {
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sr-card-pop:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.10);
+}
+
+.sr-card-accent-green { border-color: rgba(22, 163, 74, 0.4); }
+.sr-card-accent-pink { border-color: rgba(244, 114, 182, 0.45); }
+.sr-card-accent-purple { border-color: rgba(167, 139, 250, 0.45); }
+.sr-card-accent-cyan { border-color: rgba(103, 232, 249, 0.5); }
+.sr-card-accent-yellow { border-color: rgba(253, 230, 138, 0.6); }
+
+/* ---- Section eyebrow badge ---- */
+.sr-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 6px 16px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(22, 163, 74, 0.08);
+  color: #15803d;
+  border: 1px solid rgba(22, 163, 74, 0.18);
+}
+
+/* ---- Headline accent ---- */
+.sr-headline-pop {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.sr-headline-pop:hover { transform: translateY(-2px); }
+
+/* ---- Hero phone glow (soft, static) ---- */
+.sr-phone-glow {
+  position: absolute;
+  inset: -30px;
+  border-radius: 9999px;
+  background: radial-gradient(closest-side, rgba(34, 197, 94, 0.22), rgba(103, 232, 249, 0.10), transparent 70%);
+  filter: blur(30px);
+  z-index: -1;
+}
+
+/* ---- App screen stat chips (pastel) ---- */
+.sr-chip-pink { background: rgba(244, 114, 182, 0.15); color: #db2777; }
+.sr-chip-cyan { background: rgba(103, 232, 249, 0.2); color: #0e7490; }
+.sr-chip-purple { background: rgba(167, 139, 250, 0.18); color: #7c3aed; }
+.sr-chip-yellow { background: rgba(253, 230, 138, 0.3); color: #b45309; }
+
+/* ---- Scroll reveal (subtle fade-up) ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ============================================================
+   PARCHI-INSPIRED UPGRADE
+   Floating glass navbar, leaderboard / rewards / dashboard
+   cards, editorial stats band, mission block, FAQ accordion.
+   ============================================================ */
+
+/* ---- Floating glassmorphism navbar ---- */
+.sr-glass-nav {
+  background: rgba(10, 10, 10, 0.78);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* ---- Generic white panel card (replaces phone screens) ---- */
+.sr-panel {
+  background: #141414;
+  border-radius: 1.25rem;
+  border: 1px solid #26262b;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  --background: #0a0a0a;
+  --card: #141414;
+  --card-foreground: #f5f5f5;
+  --border: #26262b;
+  --muted: #1a1a1a;
+  --muted-foreground: #a1a1aa;
+  --primary: #30d05c;
+  --primary-foreground: #06130a;
+  --accent: #30d05c;
+  --accent-foreground: #06130a;
+}
+
+/* Dark terminal-style panel (Partner Dashboard style) */
+.sr-panel-dark {
+  background: #111827;
+  border-radius: 1rem;
+  border: 1px solid #1f2937;
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.28);
+}
+
+/* ---- Leaderboard card (Campus Top Savers style) ---- */
+.sr-leader-rank {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.sr-leader-rank-gold { background: rgba(255, 209, 102, 0.14); color: #ffd166; }
+.sr-leader-rank-gray { background: rgba(161, 161, 170, 0.14); color: #a1a1aa; }
+
+/* ---- Rewards gradient card (Leaderboard Rewards style) ---- */
+.sr-rewards-card {
+  background: linear-gradient(120deg, #30d05c, #1b9e4a);
+  border-radius: 1.25rem;
+  box-shadow: 0 24px 48px rgba(48, 208, 92, 0.3);
+}
+
+/* ---- Editorial section band (About-style light band) ---- */
+.sr-editorial { background: rgba(12, 12, 12, 0.62); }
+.sr-editorial-heading {
+  font-size: clamp(48px, 7.5vw, 88px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
+/* ---- Stats band (bg-primary grid) ---- */
+.sr-stats-band { background: #30d05c; }
+.sr-stats-band .num {
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #ffffff;
+}
+.sr-stats-band .label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ---- Numbered editorial feature card (hover top bar) ---- */
+.sr-num-card {
+  position: relative;
+  overflow: hidden;
+}
+.sr-num-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: #30d05c;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.sr-num-card:hover::before { transform: scaleX(1); }
+
+/* ---- Mission statement block ---- */
+.sr-mission-block { background: #30d05c; }
+.sr-mission-quote {
+  font-size: clamp(26px, 3.4vw, 42px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+/* ---- Parchi-style FAQ accordion (border rows + chevron) ---- */
+.sr-faq summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.sr-faq summary::-webkit-details-marker { display: none; }
+.sr-faq summary .faq-chevron {
+  flex-shrink: 0;
+  color: #6b7280;
+  transition: transform 0.25s ease;
+}
+.sr-faq[open] summary .faq-chevron { transform: rotate(180deg); }
+
+/* ---- Parchi-style footer helpers ---- */
+.sr-on-primary { color: rgba(255, 255, 255, 0.92); }
+.sr-on-primary-dim { color: rgba(255, 255, 255, 0.62); }
+
+/* ---- Extra utilities referenced by the Parchi-style layout ---- */
+.text-white\/60 { color: rgba(255, 255, 255, 0.6); }
+.text-white\/70 { color: rgba(255, 255, 255, 0.7); }
+.text-white\/55 { color: rgba(255, 255, 255, 0.55); }
+.bg-white\/30 { background-color: rgba(255, 255, 255, 0.3); }
+.border-white\/\[0\.05\] { border-color: rgba(255, 255, 255, 0.05); }
+.hover\:bg-white\/5:hover { background-color: rgba(255, 255, 255, 0.05); }
+.text-black\/40 { color: rgba(0, 0, 0, 0.4); }
+.text-black\/50 { color: rgba(0, 0, 0, 0.5); }
+.bg-black\/30 { background-color: rgba(0, 0, 0, 0.3); }
+.bg-gray-800\/60 { background-color: rgba(31, 41, 55, 0.6); }
+.bg-primary\/25 { background-color: rgba(22, 163, 74, 0.25); }
+.border-primary\/40 { border-color: rgba(22, 163, 74, 0.4); }
+.border-white\/5 { border-color: rgba(255, 255, 255, 0.05); }
+.bottom-4 { bottom: 1rem; }
+.bottom-\[-15\%\] { bottom: -15%; }
+.bottom-\[-20\%\] { bottom: -20%; }
+.top-\[-15\%\] { top: -15%; }
+.top-\[-20\%\] { top: -20%; }
+.left-\[10\%\] { left: 10%; }
+.left-\[-5\%\] { left: -5%; }
+.right-\[10\%\] { right: 10%; }
+.right-\[-5\%\] { right: -5%; }
+.h-\[280px\] { height: 280px; }
+.h-\[320px\] { height: 320px; }
+.h-\[360px\] { height: 360px; }
+.w-\[320px\] { width: 320px; }
+.w-\[360px\] { width: 360px; }
+.w-56 { width: 14rem; }
+.max-w-\[340px\] { max-width: 340px; }
+.max-w-\[520px\] { max-width: 520px; }
+.max-w-\[700px\] { max-width: 700px; }
+.mb-14 { margin-bottom: 3.5rem; }
+.-mt-10 { margin-top: -2.5rem; }
+.-mt-2 { margin-top: -0.5rem; }
+.text-\[clamp\(40px\,5\.5vw\,62px\)\] { font-size: clamp(40px, 5.5vw, 62px); }
+
+/* Divide color + responsive reset for the stats band */
+.divide-white\/10 > :not(:last-child) { border-color: rgba(255, 255, 255, 0.1); }
+@media (min-width: 768px) {
+  .md\:divide-y-0 > :not(:last-child) { border-top-width: 0; border-bottom-width: 0; }
+  .md\:px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .md\:px-9 { padding-left: 2.25rem; padding-right: 2.25rem; }
+  .md\:py-14 { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+  .md\:p-10 { padding: 2.5rem; }
+}
+.hover\:scale-105:hover { transform: scale(1.05); }
+
+/* ---- Dashboard pill label (Partner Dashboard style) ---- */
+.sr-dash-pill {
+  background: #ffffff;
+  color: #30d05c;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 13px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
+}
+
+/* ============================================================
+   DARK MODE — app glow background + neon palette
+   Ports the app's phone-frame radial glow onto the website.
+   ============================================================ */
+body {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(48, 208, 92, 0.20), transparent 42%),
+    radial-gradient(circle at 82% 28%, rgba(77, 216, 255, 0.12), transparent 40%),
+    radial-gradient(circle at 55% 88%, rgba(48, 208, 92, 0.16), transparent 45%),
+    radial-gradient(circle at 88% 78%, rgba(167, 139, 250, 0.12), transparent 40%),
+    radial-gradient(circle at 6% 80%, rgba(255, 92, 168, 0.10), transparent 38%),
+    var(--background);
+}
+
+.bg-background { background-color: transparent; }
+
+.bg-white { background-color: #141414; }
+.bg-gray-100 { background-color: #1a1a1a; }
+.bg-gray-200 { background-color: #26262b; }
+.border-gray-100 { border-color: #26262b; }

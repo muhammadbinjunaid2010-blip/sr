@@ -1,0 +1,47 @@
+{
+  "name": "skillrun-desktop",
+  "version": "1.0.0",
+  "description": "SkillRun - Learn by building. Desktop app.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "author": "SkillRun",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.skillrun.desktop",
+    "productName": "SkillRun",
+    "files": [
+      "main.js"
+    ],
+    "extraResources": [
+      {
+        "from": "../app",
+        "to": "app"
+      },
+      {
+        "from": "../skillrun-logo.jpg",
+        "to": "skillrun-logo.jpg"
+      }
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  }
+}

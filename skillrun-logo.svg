@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="48" viewBox="0 0 200 48" role="img" aria-label="SkillRun">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1a1a"/>
+      <stop offset="1" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#30d05c"/>
+      <stop offset="1" stop-color="#7bf1a8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Tile / pill background (self-contained, works on any background) -->
+  <rect x="2" y="2" width="196" height="44" rx="14" fill="url(#tile)"/>
+  <rect x="2" y="2" width="196" height="44" rx="14" fill="none" stroke="#26262b"/>
+
+  <!-- Mark: level-up staircase (build) -->
+  <path d="M13 35 H19 V30 H25 V25 H31 V21 H35" fill="none" stroke="url(#neon)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Mark: play button fused to the top step (run) -->
+  <path d="M36 16 L46 23 L36 30 Z" fill="url(#neon)"/>
+
+  <!-- Spark: XP / unlock accent -->
+  <circle cx="43" cy="11" r="1.8" fill="#7bf1a8"/>
+
+  <!-- Wordmark -->
+  <text x="58" y="31" font-family="Hagrid, 'Hagrid Fallback', ui-sans-serif, system-ui, sans-serif" font-weight="800" font-size="25" letter-spacing="-0.4" fill="#f5f5f5">SkillRun</text>
+</svg>

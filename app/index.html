@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillRun - Learn by Building</title>
+  <meta name="description" content="SkillRun app - learn to code by building. 10 missions, real skills.">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="../skillrun-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body data-page="dashboard">
+
+  <div class="app-shell">
+
+    <header class="app-header">
+      <div class="container">
+        <a class="logo" href="index.html" aria-label="SkillRun home">
+          <img src="../skillrun-logo.svg" alt="SkillRun logo">
+          <span class="logo-text">SkillRun</span>
+        </a>
+        <div class="header-right">
+          <a class="header-avatar" data-header-avatar href="?tab=profile" aria-label="Profile">S</a>
+          <span class="xp-chip" data-xp-chip>Lv 1</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <div class="container">
+        <div id="view"></div>
+      </div>
+    </main>
+
+    <nav class="tab-bar" aria-label="Main navigation">
+      <button class="tab" data-tab="home" type="button">
+        <span class="tab-icon">🏠</span><span>Home</span>
+      </button>
+      <button class="tab" data-tab="learn" type="button">
+        <span class="tab-icon">📚</span><span>Learn</span>
+      </button>
+      <button class="tab" data-tab="practice" type="button">
+        <span class="tab-icon">⚡</span><span>Practice</span>
+      </button>
+      <button class="tab" data-tab="projects" type="button">
+        <span class="tab-icon">🛠️</span><span>Projects</span>
+      </button>
+      <button class="tab" data-tab="leaderboard" type="button">
+        <span class="tab-icon">🏆</span><span>Leaderboard</span>
+      </button>
+      <button class="tab" data-tab="profile" type="button">
+        <span class="tab-icon">👤</span><span>Profile</span>
+      </button>
+    </nav>
+
+    <div class="onboarding" id="onboarding" style="display:none">
+      <div class="ob-card">
+        <div id="onboard-body"></div>
+      </div>
+    </div>
+
+    <div class="install-banner" id="install-banner" style="display:none">
+      <span>Install SkillRun on your phone</span>
+      <button type="button" onclick="window.__SkillRunInstall && __SkillRunInstall()">Install</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+  </div>
+
+  <script src="js/missions.js"></script>
+  <script src="js/missions-js.js"></script>
+  <script src="js/missions-web.js"></script>
+  <script src="js/missions-web2.js"></script>
+  <script src="js/python-eval.js"></script>
+  <script src="js/missions-python.js"></script>
+  <script src="js/electronics.js"></script>
+  <script src="js/missions-electronics.js"></script>
+  <script src="js/missions-portfolio.js"></script>
+  <script src="js/paths.js"></script>
+  <script src="js/practice-data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/app-install.js"></script>
+</body>
+</html>

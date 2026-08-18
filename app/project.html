@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project - SkillRun</title>
+  <meta name="description" content="SkillRun project workspace - combine your skills.">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="../skillrun-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body data-page="project">
+
+  <div class="app-shell">
+
+    <header class="app-header">
+      <div class="container">
+        <a class="logo" href="index.html" aria-label="SkillRun missions">
+          <img src="../skillrun-logo.svg" alt="SkillRun logo">
+          <span class="logo-text">SkillRun</span>
+        </a>
+        <div class="header-right">
+          <span class="xp-chip" data-xp-chip>Lv 1</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <div class="container container-narrow">
+        <div class="workspace-top">
+          <span class="workspace-title" id="ws-title">Project</span>
+          <a class="link-btn" href="index.html">Exit</a>
+        </div>
+        <div id="ws-content"></div>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <div class="container">SkillRun - learn by building.</div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="cover-overlay" id="cover-overlay" style="display:none">
+      <div class="cover-card" id="cover-card"></div>
+    </div>
+
+  </div>
+
+  <script src="js/missions.js"></script>
+  <script src="js/missions-js.js"></script>
+  <script src="js/missions-web.js"></script>
+  <script src="js/missions-web2.js"></script>
+  <script src="js/python-eval.js"></script>
+  <script src="js/missions-python.js"></script>
+  <script src="js/electronics.js"></script>
+  <script src="js/missions-electronics.js"></script>
+  <script src="js/missions-portfolio.js"></script>
+  <script src="js/paths.js"></script>
+  <script src="js/practice-data.js"></script>
+  <script src="js/workspace.js"></script>
+</body>
+</html>
