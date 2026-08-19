@@ -8,7 +8,6 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = __dirname;
-const APP = path.join(ROOT, "app");
 const PORT = process.env.PORT || 3000;
 
 const MIME = {
@@ -51,8 +50,9 @@ const server = http.createServer(function (req, res) {
   }
 
   let rel = url === "/" ? "/index.html" : url;
-  let filePath = path.normalize(path.join(APP, rel));
-  if (!filePath.startsWith(APP)) {
+  try { rel = decodeURIComponent(rel); } catch (e) {}
+  let filePath = path.normalize(path.join(ROOT, rel));
+  if (!filePath.startsWith(ROOT)) {
     res.statusCode = 403;
     res.end("forbidden");
     return;
