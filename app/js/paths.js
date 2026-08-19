@@ -36,13 +36,22 @@ function setSelectedCourse(p, id) {
 /* ---------------- Series ---------------- */
 
 var SERIES = [
-  { id: "web-runner",       pathId: "web",         order: 1, icon: '<path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 5l-2 14"/>', title: "Web Runner",           desc: "10 missions from your first HTML page to a full application." },
-  { id: "code-to-internet", pathId: "web",         order: 2, icon: '<path d="M12 3a9 9 0 1 0 9 9h-9V3z"/><path d="M12 12l6-6M12 12h9"/>', title: "From Code to Internet", desc: "17 missions + boss. Take a project live: Git, GitHub, Vercel, SEO and analytics.", unlockSeries: "web-runner" },
-  { id: "speed-runner",     pathId: "web",         order: 3, icon: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6M22 6l-3-3M6 2l-4 4M18 2l4 4M2 13h2M20 13h2"/>', title: "Speed Runner",         desc: "Practice series. Beat the clock on tiny challenges." },
-  { id: "bug-hunter",       pathId: "web",         order: 4, icon: '<rect x="8" y="6" width="8" height="14" rx="4"/><path d="M19 7l-3 3M5 7l3 3M12 3v3M2 13h2M20 13h2M8 21v-2M16 21v-2M8 6V4M16 6V4"/>', title: "Bug Hunter",           desc: "Practice series. Fix broken code like a pro." },
-  { id: "builder",          pathId: "web",         order: 5, icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>', title: "Builder",              desc: "Practice series. Ship small builds from scratch." },
-  { id: "programmer",       pathId: "programming", order: 1, icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>', title: "Programmer",           desc: "Python, from print to classes, files and real automation." },
-  { id: "circuit-runner",   pathId: "electronics", order: 1, icon: '<path d="M2 12h4l2-6 4 12 2-6h6"/>', title: "Circuit Runner",       desc: "Power, breadboards, sensors and Arduino builds." }
+  { id: "w1-webpage",   pathId: "web", order: 1,  icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/>', title: "Your First Webpage",   desc: "From a blank page to your first website.", start: true },
+  { id: "w2-toolbox",   pathId: "web", order: 2,  icon: '<path d="M4 7h16M4 12h16M4 17h16"/>', title: "HTML Toolbox",          desc: "Lists, links, images, text, tables and semantic structure.", unlockSeries: "w1-webpage" },
+  { id: "w3-forms",     pathId: "web", order: 3,  icon: '<path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/>', title: "Forms",                 desc: "Labels, inputs, buttons, selects and a real contact page.", unlockSeries: "w2-toolbox" },
+  { id: "w4-css",       pathId: "web", order: 4,  icon: '<path d="M4 20l16-16M14 4h6v6M4 10v10M10 4H4v6"/>', title: "CSS",                    desc: "Style, colors, spacing, flexbox and responsive layouts.", unlockSeries: "w3-forms" },
+  { id: "w5-js",        pathId: "web", order: 5,  icon: '<path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 5l-2 14"/>', title: "JavaScript",            desc: "Buttons, variables, functions, conditions, DOM and validation.", unlockSeries: "w4-css" },
+  { id: "w6-data",      pathId: "web", order: 6,  icon: '<path d="M3 5h18M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5M8 3v4M16 3v4M3 13h18"/>', title: "Real Website Data",    desc: "Send forms and store submissions with Web3Forms, Google Sheets and Apps Script.", unlockSeries: "w5-js" },
+  { id: "w7-git",       pathId: "web", order: 7,  icon: '<path d="M6 3v12M6 15a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM18 3v8M18 11a4 4 0 0 1 0 8"/>', title: "Git & GitHub",          desc: "Terminal, files, commits, repos, push and pull.", unlockSeries: "w6-data" },
+  { id: "w8-online",    pathId: "web", order: 8,  icon: '<path d="M3 17l9-13 9 13H3z"/><path d="M12 9v4M12 17h.01"/>', title: "Put It Online",        desc: "Deploy with Vercel and take your project from local to live.", unlockSeries: "w7-git" },
+  { id: "w9-seo",       pathId: "web", order: 9,  icon: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/>', title: "Get Found",            desc: "SEO, metadata, sitemap, robots.txt and Search Console.", unlockSeries: "w8-online" },
+  { id: "w10-analytics",pathId: "web", order: 10, icon: '<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-6"/>', title: "Understand Your Visitors", desc: "Google Analytics: visitors, sessions, pages and events.", unlockSeries: "w9-seo" },
+  { id: "w11-launch",   pathId: "web", order: 11, icon: '<path d="M20 6L9 17l-5-5"/>', title: "Build & Launch",         desc: "The final course boss: build and ship a complete website.", unlockSeries: "w10-analytics" },
+  { id: "speed-runner", pathId: "web", order: 12, icon: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6M22 6l-3-3M6 2l-4 4M18 2l4 4M2 13h2M20 13h2"/>', title: "Speed Runner",         desc: "Practice series. Beat the clock on tiny challenges." },
+  { id: "bug-hunter",   pathId: "web", order: 13, icon: '<rect x="8" y="6" width="8" height="14" rx="4"/><path d="M19 7l-3 3M5 7l3 3M12 3v3M2 13h2M20 13h2M8 21v-2M16 21v-2M8 6V4M16 6V4"/>', title: "Bug Hunter",           desc: "Practice series. Fix broken code like a pro." },
+  { id: "builder",      pathId: "web", order: 14, icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>', title: "Builder",              desc: "Practice series. Ship small builds from scratch." },
+  { id: "programmer",   pathId: "programming", order: 1, icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>', title: "Programmer",           desc: "Python, from print to classes, files and real automation." },
+  { id: "circuit-runner",pathId: "electronics", order: 1, icon: '<path d="M2 12h4l2-6 4 12 2-6h6"/>', title: "Circuit Runner",       desc: "Power, breadboards, sensors and Arduino builds." }
 ];
 
 function seriesOf(id) {
@@ -108,6 +117,46 @@ function courseSkillNames(pathId) {
 
 function allMissions() {
   return MISSIONS.slice();
+}
+
+/* Course-relative mission number. Missions are numbered per course, so the
+   first Programmer mission is "Mission 1", not its global position. */
+function missionCourseNum(m) {
+  var meta = MISSION_META[m.id] || {};
+  var series = meta.series ? seriesOf(meta.series) : null;
+  var pathId = series ? series.pathId : (m.pathId || "web");
+  var ids = pathMissions(pathId);
+  for (var i = 0; i < ids.length; i++) {
+    if (ids[i] === m.id) { return i + 1; }
+  }
+  return m.num || 1;
+}
+
+/* Skill names that belong to a course, in mission order. Used to keep the
+   profile skill bar scoped to the course the learner picked. */
+function courseSkills(pathId) {
+  var out = [];
+  for (var i = 0; i < MISSIONS.length; i++) {
+    var m = MISSIONS[i];
+    var meta = MISSION_META[m.id] || {};
+    var series = meta.series ? seriesOf(meta.series) : null;
+    if (series && series.pathId === pathId && m.skill && out.indexOf(m.skill) === -1) {
+      out.push(m.skill);
+    }
+  }
+  return out;
+}
+
+function courseSkillOrder(pathId) {
+  var skills = courseSkills(pathId);
+  var out = [];
+  for (var i = 0; i < SKILL_ORDER.length; i++) {
+    if (skills.indexOf(SKILL_ORDER[i]) !== -1) { out.push(SKILL_ORDER[i]); }
+  }
+  for (var j = 0; j < skills.length; j++) {
+    if (out.indexOf(skills[j]) === -1) { out.push(skills[j]); }
+  }
+  return out;
 }
 
 /* ---------------- Mission kinds & meta ---------------- */
@@ -280,4 +329,41 @@ function xpThisMonth(p) {
 function defaultRunnerName() {
   var n = 102 + Math.floor(Math.random() * 898);
   return "SpeedRunner" + (n < 1000 ? "0" : "") + n;
+}
+
+/* ---------------- Daily token budget ---------------- */
+
+/* You earn XP ("tokens") but only up to a daily budget. Returning on the next
+   consecutive day raises the budget a little, so streaks have a real payoff. */
+
+var TOKEN_BASE_BUDGET = 100;
+var TOKEN_STREAK_BONUS = 25;
+var TOKEN_MAX_BUDGET = 250;
+
+function tokenToday(p) {
+  var t = isoDateStr();
+  if (!p.tokens) { p.tokens = { budget: TOKEN_BASE_BUDGET, used: 0, day: "" }; }
+  if (p.tokens.day === t) { return p.tokens; }
+  var consecutive = p.tokens.day === isoDateStr(new Date(Date.now() - 86400000));
+  p.tokens.budget = consecutive
+    ? Math.min(TOKEN_MAX_BUDGET, (p.tokens.budget || TOKEN_BASE_BUDGET) + TOKEN_STREAK_BONUS)
+    : TOKEN_BASE_BUDGET;
+  p.tokens.day = t;
+  p.tokens.used = 0;
+  return p.tokens;
+}
+
+/* Cap an XP award against today's budget. Returns how much was actually
+   granted and tracks the used amount on p.tokens. */
+function tokenCap(p, amount) {
+  var tk = tokenToday(p);
+  var remaining = Math.max(0, tk.budget - tk.used);
+  var granted = Math.min(amount, remaining);
+  tk.used += granted;
+  return granted;
+}
+
+function tokenStatus(p) {
+  var tk = tokenToday(p);
+  return { budget: tk.budget, used: tk.used, remaining: Math.max(0, tk.budget - tk.used), next: tk.budget + TOKEN_STREAK_BONUS };
 }

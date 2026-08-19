@@ -17,7 +17,16 @@ registerMissions([
     meta: { kind: "normal", series: "code-to-internet", order: 1 },
     briefing: {
       objective: "Create a repository, add files, and commit your first change.",
-      body: "Git is how developers track their code over time. A repository (repo) holds your files and the full history of every change. A commit saves a snapshot you can always return to. This mission builds a tiny model of exactly that: a repo with files and a commit log."
+      body: "Git is how developers track their code over time. A repository (repo) holds your files and the full history of every change. A commit saves a snapshot you can always return to. This mission builds a tiny model of exactly that: a repo with files and a commit log.",
+      terminal: [
+        "mkdir my-site && cd my-site",
+        "git init",
+        "echo \"# Hello\" > readme.md",
+        "git add .",
+        "git commit -m \"first commit\"",
+        "",
+        "# your repo lives at github.com/YOU/my-site"
+      ]
     },
     challenges: [
       {
@@ -94,7 +103,16 @@ registerMissions([
     meta: { kind: "normal", series: "code-to-internet", order: 2 },
     briefing: {
       objective: "Create branches, switch between them, and merge changes.",
-      body: "Branches let you try new ideas without breaking the working version. The main branch is the safe line; feature branches are experiments. This mission models branches as saved copies of your files."
+      body: "Branches let you try new ideas without breaking the working version. The main branch is the safe line; feature branches are experiments. This mission models branches as saved copies of your files.",
+      terminal: [
+        "git branch feature   # create a branch",
+        "git checkout feature # switch to it",
+        "# edit files...",
+        "git checkout main",
+        "git merge feature",
+        "",
+        "# try `git branch -a` to list every branch"
+      ]
     },
     challenges: [
       {
@@ -171,7 +189,15 @@ registerMissions([
     meta: { kind: "normal", series: "code-to-internet", order: 3 },
     briefing: {
       objective: "Explore a repo's history and undo mistakes.",
-      body: "The commit log is the repo's memory. You can read it, check what's changed since the last commit, and travel back in time to fix mistakes."
+      body: "The commit log is the repo's memory. You can read it, check what's changed since the last commit, and travel back in time to fix mistakes.",
+      terminal: [
+        "git log --oneline   # read the history",
+        "git status          # what changed since last commit",
+        "git diff            # see the exact edits",
+        "git reset --hard HEAD~1  # undo the last commit",
+        "",
+        "# undo just one file: git checkout -- file.txt"
+      ]
     },
     challenges: [
       {
@@ -248,7 +274,14 @@ registerMissions([
     meta: { kind: "normal", series: "code-to-internet", order: 4 },
     briefing: {
       objective: "Push commits to a remote repository on GitHub.",
-      body: "A remote is a copy of your repo living somewhere else - like GitHub. Pushing sends your commits up so the code is online, backed up, and shareable."
+      body: "A remote is a copy of your repo living somewhere else - like GitHub. Pushing sends your commits up so the code is online, backed up, and shareable.",
+      terminal: [
+        "git remote add origin git@github.com:YOU/my-site.git",
+        "git push -u origin main",
+        "git clone git@github.com:YOU/my-site.git  # copy it anywhere",
+        "",
+        "# your public page: https://github.com/YOU/my-site"
+      ]
     },
     challenges: [
       {
@@ -323,7 +356,14 @@ registerMissions([
     meta: { kind: "normal", series: "code-to-internet", order: 5 },
     briefing: {
       objective: "Model issues: create, close, and count open work.",
-      body: "Issues are how teams track bugs and ideas. Each has a title and an open/closed state."
+      body: "Issues are how teams track bugs and ideas. Each has a title and an open/closed state.",
+      terminal: [
+        "gh issue create --title \"button broken\"",
+        "gh issue close 12",
+        "gh issue list --state=open",
+        "",
+        "# issues live on the repo page: github.com/YOU/my-site/issues"
+      ]
     },
     challenges: [
       {
@@ -399,7 +439,15 @@ registerMissions([
     meta: { kind: "normal", series: "code-to-internet", order: 6 },
     briefing: {
       objective: "Deploy a project to Vercel and manage environment variables.",
-      body: "Vercel turns a repo into a live website. You connect your repo, it builds, and you get a public URL. Secrets like API keys live in environment variables, not in your code."
+      body: "Vercel turns a repo into a live website. You connect your repo, it builds, and you get a public URL. Secrets like API keys live in environment variables, not in your code.",
+      terminal: [
+        "npm i -g vercel",
+        "vercel            # deploy the current folder",
+        "vercel --prod     # ship to production",
+        "vercel env add API_KEY   # add a secret",
+        "",
+        "# every deploy gets a URL like my-site.vercel.app"
+      ]
     },
     challenges: [
       {

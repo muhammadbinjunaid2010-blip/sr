@@ -40,6 +40,7 @@
       if (!Array.isArray(p.cleanMissions)) { p.cleanMissions = []; }
       if (typeof p.dailyDone !== "number") { p.dailyDone = 0; }
       if (typeof p.mysteryDone !== "number") { p.mysteryDone = 0; }
+      if (!p.tokens) { p.tokens = { budget: TOKEN_BASE_BUDGET, used: 0, day: "" }; }
       if (!Array.isArray(p.xpLog)) {
         p.xpLog = p.xp > 0 ? [{ d: isoDateStr(), xp: p.xp }] : [];
       }
@@ -69,6 +70,7 @@
       cleanMissions: [],
       dailyDone: 0,
       mysteryDone: 0,
+      tokens: { budget: TOKEN_BASE_BUDGET, used: 0, day: "" },
       xpLog: []
     };
   }
@@ -149,6 +151,7 @@
   }
 
   function awardXp(p, amount) {
+    amount = tokenCap(p, amount);
     p.xp += amount;
     skillrunRecordXp(p, amount);
     bumpStreak(p);
@@ -249,6 +252,14 @@
     return Math.round((p.doneMissions.length / all.length) * 100);
   }
 
+  function tokenPillHtml(p) {
+    var ts = tokenStatus(p);
+    var cls = "stat-pill stat-pill-token";
+    if (ts.remaining === 0) { cls += " maxed"; }
+    return '<span class="' + cls + '" title="Daily token limit' + (ts.remaining === 0 ? ' reached — come back tomorrow' : '') + '">' +
+      svgIcon('<path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>') + ' ' + ts.remaining + ' / ' + ts.budget + '</span>';
+  }
+
   function renderHome(root) {
     var p = load();
     var lvl = levelOf(p.xp);
@@ -267,6 +278,7 @@
           '<span class="stat-pill">' + p.xp + ' XP</span>' +
           '<span class="stat-pill">' + svgIcon(ICON_FLAME) + ' ' + p.streak.count + '</span>' +
           '<span class="stat-pill">' + svgIcon(ICON_STAR) + ' ' + mast + '%</span>' +
+          tokenPillHtml(p) +
         '</div>' +
         '<div class="bar"><div class="bar-fill" style="width:' + levelPct(p.xp) + '%"></div></div>' +
         '<div class="bar-caption">' + p2 + ' / ' + XP_PER_LEVEL + ' XP to Level ' + (lvl + 1) + '</div>' +
@@ -280,7 +292,7 @@
       var m = cur.mission;
       var progress = missionProgress(p, m.id);
       html += '<a class="continue-card" href="mission.html?id=' + m.id + '">' +
-        '<div class="continue-num">Mission ' + m.num + '</div>' +
+        '<div class="continue-num">Mission ' + missionCourseNum(m) + '</div>' +
         '<h3>' + esc(m.title) + '</h3>' +
         '<p>' + esc(m.tagline) + '</p>' +
         '<div class="continue-progress"><div class="bar"><div class="bar-fill" style="width:' + progress.pct + '%"></div></div>' +
@@ -291,23 +303,19 @@
       html += '<div class="card card-done"><h3>All missions complete!</h3><p>You finished every SkillRun mission. Check your Profile.</p></div>';
     }
 
-    html += '<div class="sec-title"><h2>Pick your course</h2><p>3 courses, 1 hero. Switch anytime - progress is saved per course.</p></div>';
-    html += '<div class="course-grid">';
+    html += '<div class="sec-title"><h2>Your Courses</h2><p>3 courses, 1 hero. Tap a course to switch or explore.</p></div>';
+    html += '<div class="course-mini-list">';
     for (var c = 0; c < PATHS.length; c++) {
       var path = PATHS[c];
       var cp = courseProgress(p, path.id);
-      var done = cp.done;
-      var pct = cp.pct;
       var active = course.id === path.id;
-      html += '<button class="course-card course-' + path.accent + (active ? ' active' : '') + '" data-course="' + path.id + '" type="button">' +
-        '<div class="course-emoji">' + svgIcon(path.icon) + '</div>' +
-        '<div class="course-body">' +
-          '<div class="course-top"><h3>' + esc(path.title) + '</h3>' +
-            (active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-muted">' + (done ? done + ' done' : 'Start') + '</span>') + '</div>' +
-          '<p>' + esc(path.desc) + '</p>' +
-          '<div class="bar"><div class="bar-fill" style="width:' + pct + '%"></div></div>' +
-          '<span class="course-meta">' + done + ' / ' + cp.total + ' missions</span>' +
-        '</div>' +
+      html += '<button class="course-mini course-' + path.accent + (active ? ' active' : '') + '" data-course="' + path.id + '" type="button">' +
+        '<span class="course-mini-icon">' + svgIcon(path.icon) + '</span>' +
+        '<span class="course-mini-body"><strong>' + esc(path.title) + '</strong>' +
+          '<span>' + cp.done + ' / ' + cp.total + ' missions &middot; ' + cp.pct + '%</span>' +
+          '<span class="bar"><span class="bar-fill" style="width:' + cp.pct + '%"></span></span></span>' +
+        (active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-muted">Tap</span>') +
+        '<span class="course-mini-go">' + svgIcon('<path d="M9 6l6 6-6 6"/>') + '</span>' +
       '</button>';
     }
     html += '</div>';
@@ -325,10 +333,17 @@
     var courseBtns = root.querySelectorAll("[data-course]");
     for (var cb = 0; cb < courseBtns.length; cb++) {
       courseBtns[cb].addEventListener("click", function () {
-        setSelectedCourse(p, this.getAttribute("data-course"));
-        save(p);
-        renderHome(root);
-        toast("Course switched!");
+        openOverlay("Your Courses", coursesOverlayHtml(p));
+        var switches = document.querySelectorAll(".co-switch");
+        for (var s = 0; s < switches.length; s++) {
+          switches[s].addEventListener("click", function () {
+            setSelectedCourse(p, this.getAttribute("data-switch"));
+            save(p);
+            closeOverlay();
+            renderHome(root);
+            toast("Course switched!");
+          });
+        }
       });
     }
 
@@ -372,7 +387,7 @@
       return '<a class="mission-card" href="mission.html?id=' + m.id + '">' +
         '<div class="mission-icon">' + svgIcon(m.icon) + '</div>' +
         '<div class="mission-body">' +
-          '<div class="mission-top"><span class="mission-num">Mission ' + m.num + '</span>' +
+          '<div class="mission-top"><span class="mission-num">Mission ' + missionCourseNum(m) + '</span>' +
             (done ? '<span class="badge badge-green">Complete</span>' : kindBadge || '<span class="badge badge-green">Go</span>') + '</div>' +
           '<h3>' + esc(m.title) + '</h3>' +
           '<p>' + esc(m.tagline) + '</p>' +
@@ -385,7 +400,7 @@
     return '<div class="mission-card locked">' +
       '<div class="mission-icon"><span class="lock">' + svgIcon(ICON_LOCK) + '</span></div>' +
       '<div class="mission-body">' +
-        '<div class="mission-top"><span class="mission-num">Mission ' + m.num + '</span>' + kindBadge + '</div>' +
+        '<div class="mission-top"><span class="mission-num">Mission ' + missionCourseNum(m) + '</span>' + kindBadge + '</div>' +
         '<h3>' + esc(m.title) + '</h3>' +
         '<p>' + esc(m.tagline) + '</p>' +
         '<div class="lock-note">' + lockReason(p, m) + '</div>' +
@@ -462,35 +477,17 @@
   function renderLearn(root) {
     var p = load();
     var sel = selectedCourseId(p);
-    var html = '<div class="page-head"><h1>Learn</h1><p>Pick a path, follow a series, complete missions in order.</p></div>';
+    var course = pathOf(sel);
+    var cp = courseProgress(p, sel);
+    var html = '<div class="page-head"><h1>Learn</h1><p>' + esc(course.title) + ' &middot; ' + cp.done + ' / ' + cp.total + ' missions &middot; ' + cp.pct + '%</p></div>';
 
-    html += '<div class="learn-overall"><span>' + p.doneMissions.length + ' / ' + allMissions().length + ' missions</span>' +
-      '<div class="bar"><div class="bar-fill" style="width:' + homeProgressPct(p) + '%"></div></div></div>';
+    html += '<div class="learn-overall"><span>' + cp.done + ' / ' + cp.total + ' missions in ' + esc(course.title) + '</span>' +
+      '<div class="bar"><div class="bar-fill" style="width:' + cp.pct + '%"></div></div></div>';
 
-    html += '<div class="course-pills">';
-    for (var c = 0; c < PATHS.length; c++) {
-      var pc = courseProgress(p, PATHS[c].id);
-      html += '<button class="course-pill course-' + PATHS[c].accent + (sel === PATHS[c].id ? ' active' : '') + '" data-course="' + PATHS[c].id + '" type="button">' +
-        svgIcon(PATHS[c].icon) + ' ' + esc(PATHS[c].title) +
-        '<span class="course-pill-meta">' + pc.done + ' / ' + pc.total + '</span></button>';
-    }
-    html += '</div>';
-
-    for (var i = 0; i < PATHS.length; i++) {
-      if (PATHS[i].id === sel) { html += renderPathSection(p, PATHS[i]); }
-    }
+    html += renderPathSection(p, course);
 
     root.innerHTML = html;
     renderHeaderChip(p);
-
-    var pills = root.querySelectorAll(".course-pill[data-course]");
-    for (var b = 0; b < pills.length; b++) {
-      pills[b].addEventListener("click", function () {
-        setSelectedCourse(p, this.getAttribute("data-course"));
-        save(p);
-        renderLearn(root);
-      });
-    }
   }
 
   /* ============================================================
@@ -579,17 +576,9 @@
   function renderProjects(root) {
     var p = load();
     var sel = selectedCourseId(p);
-    var html = '<div class="page-head"><h1>Projects</h1><p>Projects combine the skills you\'ve learned. Each one unlocks when you own all its skills.</p></div>';
-
-    html += '<div class="course-pills">';
-    for (var c = 0; c < PATHS.length; c++) {
-      var pCount = PROJECTS.filter(function (pr) { return (pr.pathId || "web") === PATHS[c].id; }).length;
-      var pDone = PROJECTS.filter(function (pr) { return (pr.pathId || "web") === PATHS[c].id && isDoneProject(p, pr.id); }).length;
-      html += '<button class="course-pill course-' + PATHS[c].accent + (sel === PATHS[c].id ? ' active' : '') + '" data-course="' + PATHS[c].id + '" type="button">' +
-        svgIcon(PATHS[c].icon) + ' ' + esc(PATHS[c].title) +
-        '<span class="course-pill-meta">' + pDone + ' / ' + pCount + '</span></button>';
-    }
-    html += '</div>';
+    var course = pathOf(sel);
+    var pCount = PROJECTS.filter(function (pr) { return (pr.pathId || "web") === sel; }).length;
+    var html = '<div class="page-head"><h1>Projects</h1><p>' + esc(course.title) + ' projects &middot; each unlocks when you own all its skills.</p></div>';
 
     var shown = 0;
     for (var i = 0; i < PROJECTS.length; i++) {
@@ -635,15 +624,6 @@
 
     root.innerHTML = html;
     renderHeaderChip(p);
-
-    var pills = root.querySelectorAll(".course-pill[data-course]");
-    for (var b = 0; b < pills.length; b++) {
-      pills[b].addEventListener("click", function () {
-        setSelectedCourse(p, this.getAttribute("data-course"));
-        save(p);
-        renderProjects(root);
-      });
-    }
   }
 
   /* ============================================================
@@ -680,6 +660,7 @@
       '<div class="stat"><strong>' + p.doneProjects.length + '</strong><span>Projects</span></div>' +
       '<div class="stat"><strong>' + overallMastery(p) + '%</strong><span>Mastery</span></div>' +
       '<div class="stat"><strong>' + xpThisWeek(p) + '</strong><span>Week XP</span></div>' +
+      '<div class="stat"><strong>' + tokenStatus(p).remaining + '</strong><span>Tokens left</span></div>' +
     '</div>';
 
     root.innerHTML = html;
@@ -743,11 +724,12 @@
       htmlRest += '</div>';
     }
 
-    htmlRest += '<div class="sec-title"><h2>Mastery</h2><p>Per-skill mastery. Finish missions clean (no hints, no solutions) to push it higher.</p></div>';
+    htmlRest += '<div class="sec-title"><h2>Skill Bar</h2><p>Mastery in ' + esc(pathOf(sel).title) + '. Finish missions clean (no hints, no solutions) to push it higher.</p></div>';
     htmlRest += '<div class="mastery-list">';
     var anyMastery = false;
-    for (var sk = 0; sk < SKILL_ORDER.length; sk++) {
-      var skill = SKILL_ORDER[sk];
+    var skillOrder = courseSkillOrder(sel);
+    for (var sk = 0; sk < skillOrder.length; sk++) {
+      var skill = skillOrder[sk];
       var mt = masteryOf(p, skill);
       var mtotal = missionSkillTotal(skill);
       if (mtotal === 0) { continue; }
@@ -758,36 +740,22 @@
         '<span class="mastery-pct">' + mt + '%</span>' +
       '</div>';
     }
-    if (!anyMastery) { htmlRest += '<div class="card muted-card">Complete missions to grow your mastery.</div>'; }
+    if (!anyMastery) { htmlRest += '<div class="card muted-card">Complete ' + esc(pathOf(sel).title) + ' missions to grow your mastery.</div>'; }
     htmlRest += '</div>';
 
-    htmlRest += '<div class="sec-title"><h2>Achievements</h2></div>';
-    var achGroups = {};
-    for (var ai = 0; ai < ACHIEVEMENTS.length; ai++) {
-      var grp = ACHIEVEMENTS[ai].group || "Other";
-      if (!achGroups[grp]) { achGroups[grp] = []; }
-      achGroups[grp].push(ACHIEVEMENTS[ai]);
-    }
-    for (var g = 0; g < ACHIEVEMENT_GROUPS.length; g++) {
-      var grpKey = ACHIEVEMENT_GROUPS[g];
-      var list = achGroups[grpKey] || [];
-      if (!list.length) { continue; }
-      var gotInGroup = 0;
-      for (var gi = 0; gi < list.length; gi++) { if (hasAchievement(p, list[gi].id)) { gotInGroup++; } }
-      htmlRest += '<div class="ach-group"><div class="ach-group-head"><h3>' + esc(grpKey) + '</h3>' +
-        '<span class="ach-count">' + gotInGroup + ' / ' + list.length + ' unlocked</span></div><div class="achievements">';
-      for (var aj = 0; aj < list.length; aj++) {
-        var ach = list[aj];
-        var got = hasAchievement(p, ach.id);
-        htmlRest += '<div class="ach ach-' + esc(ach.rarity || "common") + (got ? ' got' : '') + '">' +
-          '<div class="ach-emoji">' + svgIcon(ICON_TROPHY) + '</div>' +
-          '<div><h3>' + esc(ach.title) + '</h3><p>' + esc(ach.desc) + '</p></div>' +
-          (got ? '<span class="badge badge-green">Unlocked</span>' : '<span class="badge badge-muted">' + esc(ach.rarity || "common") + '</span>') +
-        '</div>';
-      }
-      htmlRest += '</div></div>';
-    }
-    htmlRest += '</div>';
+    htmlRest += '<div class="sec-title"><h2>Achievements</h2><p>Collect all ' + ACHIEVEMENTS.length + ' by completing missions and challenges.</p></div>';
+    var achGot = 0;
+    for (var ai = 0; ai < ACHIEVEMENTS.length; ai++) { if (hasAchievement(p, ACHIEVEMENTS[ai].id)) { achGot++; } }
+    var achPct = ACHIEVEMENTS.length ? Math.round((achGot / ACHIEVEMENTS.length) * 100) : 0;
+    htmlRest += '<button class="ach-summary-card" id="ach-summary" type="button">' +
+      '<span class="ach-summary-icon">' + svgIcon(ICON_TROPHY) + '</span>' +
+      '<span class="ach-summary-body">' +
+        '<span class="ach-summary-top"><strong>Achievements</strong><span class="badge badge-green">' + achGot + ' / ' + ACHIEVEMENTS.length + ' unlocked</span></span>' +
+        '<span class="bar"><span class="bar-fill" style="width:' + achPct + '%"></span></span>' +
+        '<span class="ach-summary-hint">Tap to view all ' + ACHIEVEMENTS.length + ' achievements</span>' +
+      '</span>' +
+      '<span class="ach-summary-go">&rarr;</span>' +
+    '</button>';
 
     var wrap = document.createElement("div");
     wrap.innerHTML = htmlRest;
@@ -809,6 +777,13 @@
 
     htmlRest += '<button class="btn-ghost" id="reset-btn">Reset progress</button>';
     wrap.innerHTML += htmlRest;
+
+    var achSummary = document.getElementById("ach-summary");
+    if (achSummary) {
+      achSummary.addEventListener("click", function () {
+        openOverlay("Achievements", achievementsOverlayHtml(p));
+      });
+    }
 
     var resetBtn = document.getElementById("reset-btn");
     if (resetBtn) {
@@ -979,6 +954,98 @@
      TAB SWITCHING
      ============================================================ */
 
+  function openOverlay(title, bodyHtml) {
+    var overlay = document.getElementById("app-overlay");
+    var titleEl = document.getElementById("app-overlay-title");
+    var body = document.getElementById("app-overlay-body");
+    if (!overlay || !body) { return; }
+    if (titleEl) { titleEl.textContent = title; }
+    body.innerHTML = bodyHtml;
+    overlay.style.display = "flex";
+  }
+
+  function closeOverlay() {
+    var overlay = document.getElementById("app-overlay");
+    if (overlay) { overlay.style.display = "none"; }
+  }
+
+  function wireOverlay() {
+    var overlay = document.getElementById("app-overlay");
+    var close = document.getElementById("app-overlay-close");
+    if (!overlay) { return; }
+    if (close) {
+      close.addEventListener("click", function () { closeOverlay(); });
+    }
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) { closeOverlay(); }
+    });
+  }
+
+  function achievementsOverlayHtml(p) {
+    var html = '<div class="ach-ov-head"><span>' + p.achievements.length + ' / ' + ACHIEVEMENTS.length + ' unlocked</span>' +
+      '<div class="bar"><div class="bar-fill" style="width:' + (ACHIEVEMENTS.length ? Math.round((p.achievements.length / ACHIEVEMENTS.length) * 100) : 0) + '%"></div></div></div>';
+    var achGroups = {};
+    for (var ai = 0; ai < ACHIEVEMENTS.length; ai++) {
+      var grp = ACHIEVEMENTS[ai].group || "Other";
+      if (!achGroups[grp]) { achGroups[grp] = []; }
+      achGroups[grp].push(ACHIEVEMENTS[ai]);
+    }
+    for (var g = 0; g < ACHIEVEMENT_GROUPS.length; g++) {
+      var grpKey = ACHIEVEMENT_GROUPS[g];
+      var list = achGroups[grpKey] || [];
+      if (!list.length) { continue; }
+      var gotInGroup = 0;
+      for (var gi = 0; gi < list.length; gi++) { if (hasAchievement(p, list[gi].id)) { gotInGroup++; } }
+      html += '<div class="ach-group"><div class="ach-group-head"><h3>' + esc(grpKey) + '</h3>' +
+        '<span class="ach-count">' + gotInGroup + ' / ' + list.length + ' unlocked</span></div><div class="achievements">';
+      for (var aj = 0; aj < list.length; aj++) {
+        var ach = list[aj];
+        var got = hasAchievement(p, ach.id);
+        html += '<div class="ach ach-' + esc(ach.rarity || "common") + (got ? ' got' : '') + '">' +
+          '<div class="ach-emoji">' + svgIcon(ICON_TROPHY) + '</div>' +
+          '<div><h3>' + esc(ach.title) + '</h3><p>' + esc(ach.desc) + '</p></div>' +
+          (got ? '<span class="badge badge-green">Unlocked</span>' : '<span class="badge badge-muted">' + esc(ach.rarity || "common") + '</span>') +
+        '</div>';
+      }
+      html += '</div></div>';
+    }
+    return html;
+  }
+
+  function coursesOverlayHtml(p) {
+    var sel = selectedCourseId(p);
+    var activePath = pathOf(sel);
+    var html = '<div class="co-intro">Available now &middot; switch anytime, progress is saved per course.</div>';
+    for (var c = 0; c < PATHS.length; c++) {
+      var path = PATHS[c];
+      var cp = courseProgress(p, path.id);
+      var isActive = activePath.id === path.id;
+      html += '<div class="co-row course-' + path.accent + '">' +
+        '<span class="co-icon">' + svgIcon(path.icon) + '</span>' +
+        '<span class="co-body"><strong>' + esc(path.title) + '</strong>' +
+          '<span>' + esc(path.desc) + '</span>' +
+          '<span class="bar"><span class="bar-fill" style="width:' + cp.pct + '%"></span></span>' +
+          '<span class="co-meta">' + cp.done + ' / ' + cp.total + ' missions &middot; ' + cp.pct + '%</span></span>' +
+        (isActive
+          ? '<span class="badge badge-green">Active</span>'
+          : '<button class="btn-small co-switch" data-switch="' + path.id + '" type="button">Switch</button>') +
+      '</div>';
+    }
+    var future = [
+      { icon: ICON_USER, title: "Community", desc: "Share builds and remix others." },
+      { icon: ICON_CROWN, title: "Marketplace", desc: "Trade and sell what you build." },
+      { icon: ICON_LIGHT, title: "AI + Hardware", desc: "Robotics, AI and real-world builds." }
+    ];
+    html += '<div class="co-upcoming"><h3>Upcoming</h3>';
+    for (var f = 0; f < future.length; f++) {
+      html += '<div class="future-item">' + svgIcon(future[f].icon) +
+        '<div><h3>' + esc(future[f].title) + '</h3><p>' + esc(future[f].desc) + '</p></div>' +
+        '<span class="badge badge-muted">Later</span></div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
   var TAB_RENDER = {
     home: renderHome,
     learn: renderLearn,
@@ -1141,6 +1208,7 @@
     var page = document.body.getAttribute("data-page");
     if (page !== "mission" && page !== "practice" && page !== "project") {
       setupTabs();
+      wireOverlay();
       var p = load();
       if (p.onboarded) {
         var tab = getQueryParam("tab");

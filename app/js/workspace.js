@@ -14,6 +14,29 @@
   var current = null;   // { kind, mission, practiceItem, project, step, challengeIdx, isBuild }
   var lastResult = null;
 
+  /* VS Code-like HTML tag autocomplete for the beginner editor. */
+  var TAG_SUGGEST = {
+    "h1": "<h1></h1>", "h2": "<h2></h2>", "h3": "<h3></h3>", "p": "<p></p>",
+    "div": "<div></div>", "span": "<span></span>", "head": "<head></head>",
+    "body": "<body></body>", "title": "<title></title>", "html": "<html></html>",
+    "a": '<a href=""></a>', "ul": "<ul></ul>", "ol": "<ol></ol>", "li": "<li></li>",
+    "table": "<table></table>", "tr": "<tr></tr>", "th": "<th></th>", "td": "<td></td>",
+    "form": "<form></form>", "label": '<label for=""></label>',
+    "textarea": "<textarea></textarea>", "select": "<select></select>",
+    "option": "<option></option>", "button": "<button></button>",
+    "header": "<header></header>", "nav": "<nav></nav>", "main": "<main></main>",
+    "section": "<section></section>", "article": "<article></article>",
+    "aside": "<aside></aside>", "footer": "<footer></footer>",
+    "strong": "<strong></strong>", "b": "<b></b>", "em": "<em></em>", "i": "<i></i>",
+    "s": "<s></s>", "sub": "<sub></sub>", "sup": "<sup></sup>",
+    "style": "<style></style>", "script": "<script></script>"
+  };
+  var TAG_VOID = {
+    "br": "<br>", "hr": "<hr>", "img": '<img src="" alt="">',
+    "input": '<input type="">', "meta": "<meta>", "link": '<link rel="stylesheet" href="">'
+  };
+  var allTagNames = Object.keys(TAG_SUGGEST).concat(Object.keys(TAG_VOID));
+
   function load() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
@@ -27,9 +50,10 @@
       if (!Array.isArray(p.skills)) { p.skills = []; }
       if (!Array.isArray(p.achievements)) { p.achievements = []; }
       if (!p.streak) { p.streak = { count: 0, lastDate: "" }; }
+      if (!p.tokens) { p.tokens = { budget: TOKEN_BASE_BUDGET, used: 0, day: "" }; }
       return p;
     } catch (e) {
-      return { xp: 0, doneMissions: [], doneChallenges: {}, doneBuilds: [], donePractice: [], doneProjects: [], skills: [], achievements: [], streak: { count: 0, lastDate: "" } };
+      return { xp: 0, doneMissions: [], doneChallenges: {}, doneBuilds: [], donePractice: [], doneProjects: [], skills: [], achievements: [], streak: { count: 0, lastDate: "" }, tokens: { budget: TOKEN_BASE_BUDGET, used: 0, day: "" } };
     }
   }
 
@@ -120,13 +144,15 @@
   }
 
   function grantAchievements(p) {
-    var newly = evalAchievements(p);
-    for (var i = 0; i < newly.length; i++) {
-      if (unlockAchievement(p, newly[i])) {
-        toast("Achievement: " + achievementTitle(newly[i]));
-      }
+    var newly = [];
+    var got = evalAchievements(p);
+    for (var i = 0; i < got.length; i++) {
+      if (unlockAchievement(p, got[i])) { newly.push(achievementTitle(got[i])); }
     }
-    if (newly.length) { save(p); }
+    if (newly.length) {
+      save(p);
+      celebrateAchievements(newly);
+    }
   }
 
   function achievementTitle(id) {
@@ -197,6 +223,51 @@
     if (cover) { cover.style.display = "none"; }
   }
 
+  /* ---------------- achievement celebration (confetti) ---------------- */
+
+  function celebrateAchievements(titles) {
+    var el = document.getElementById("ach-celebrate");
+    if (!el || !titles || !titles.length) { return; }
+    var titleEl = document.getElementById("ach-celebrate-title");
+    if (titleEl) {
+      titleEl.innerHTML = "<strong>" + esc(titles[0]) + "</strong>" +
+        (titles.length > 1 ? '<br><span class="ach-more">+ ' + (titles.length - 1) + ' more</span>' : "");
+    }
+    var confetti = document.getElementById("confetti");
+    if (confetti) {
+      confetti.innerHTML = "";
+      var colors = ["#30d05c", "#4dd8ff", "#ff5ca8", "#ffd166", "#a78bfa", "#ff7a59"];
+      for (var i = 0; i < 48; i++) {
+        var piece = document.createElement("span");
+        piece.className = "confetti-piece";
+        piece.style.left = (Math.random() * 100) + "%";
+        piece.style.background = colors[i % colors.length];
+        piece.style.animationDelay = (Math.random() * 0.7) + "s";
+        piece.style.animationDuration = (1.4 + Math.random() * 1.2) + "s";
+        piece.style.transform = "rotate(" + (Math.random() * 360) + "deg)";
+        confetti.appendChild(piece);
+      }
+    }
+    el.style.display = "flex";
+  }
+
+  function wireCelebration() {
+    var el = document.getElementById("ach-celebrate");
+    var ok = document.getElementById("ach-celebrate-ok");
+    if (ok) {
+      ok.addEventListener("click", function () { if (el) { el.style.display = "none"; } });
+    }
+    if (el) {
+      el.addEventListener("click", function (e) { if (e.target === el) { el.style.display = "none"; } });
+    }
+  }
+
+  function tokenLimitToast(p) {
+    if (tokenStatus(p).remaining === 0) {
+      toast("Daily token limit reached! Come back tomorrow — your streak raises the limit.");
+    }
+  }
+
   function showConsole(logs) {
     var consoleEl = document.getElementById("console");
     if (!consoleEl) { return; }
@@ -250,7 +321,7 @@
     current = { kind: "mission", mission: mission, step: "briefing", challengeIdx: 0, isBuild: false, missionClean: true };
 
     var headerTitle = document.getElementById("ws-title");
-    if (headerTitle) { headerTitle.textContent = "Mission " + mission.num; }
+    if (headerTitle) { headerTitle.textContent = "Mission " + missionCourseNum(mission); }
     renderHeaderChip(p);
 
     var meta = missionMetaOf(mission.id);
@@ -261,11 +332,25 @@
         esc(meta.revisit.join(", ")) + '. Solid recall = higher mastery.</div>';
     }
 
+    var terminalHtml = "";
+    if (mission.terminal && mission.terminal.length) {
+      var lines = mission.terminal.map(function (l) {
+        return l.charAt(0) === "#" ? '<span class="term-comment">' + esc(l) + '</span>' : esc(l);
+      }).join("\n");
+      terminalHtml =
+        '<div class="terminal-box">' +
+          '<div class="terminal-label">' + svgIcon('<path d="M4 17l6-5-6-5M12 19h8"/>') + ' REAL TERMINAL</div>' +
+          '<pre>' + lines + '</pre>' +
+          '<p class="terminal-tip">' + svgIcon('<path d="M12 9v4M12 17h.01"/>') + ' Your repo lives at <strong>github.com/YOU/your-repo</strong>. Open any repo in a free online editor: go to github.com/YOU/repo and press <strong>.</strong> (dot) — it opens github.dev. If SkillRun were <strong>gitdev.com</strong>, this would be the same idea: your code, edited right in the browser.</p>' +
+          (mission.terminalLink ? '<a class="terminal-link" href="' + esc(mission.terminalLink) + '" target="_blank" rel="noopener">' + esc(mission.terminalLinkLabel || "Get Free AI Agents to Practice →") + '</a>' : '') +
+        '</div>';
+    }
+
     var el = document.getElementById("ws-content");
     el.innerHTML =
       '<div class="ws-briefing">' +
         '<div class="ws-icon">' + svgIcon(mission.icon) + '</div>' +
-        '<div class="ws-tag">MISSION ' + mission.num + ' · ' + esc(mission.skill) + kindTag + '</div>' +
+        '<div class="ws-tag">MISSION ' + missionCourseNum(mission) + ' · ' + esc(mission.skill) + kindTag + '</div>' +
         '<h1>' + esc(mission.title) + '</h1>' +
         '<p class="ws-tagline">' + esc(mission.tagline) + '</p>' +
         '<div class="brief-box">' +
@@ -274,6 +359,7 @@
           '<h3>The Plan</h3>' +
           '<p>' + esc(mission.briefing.body) + '</p>' +
         '</div>' +
+        (terminalHtml) +
         (spacedNote) +
         '<div class="mission-parts">' +
           '<div class="part"><span class="part-emoji">' + svgIcon('<path d="M2 4h20v14H2z"/><path d="M2 8h20"/><path d="M7 14h10"/>') + '</span><strong>Learn</strong><small>' + mission.challenges.length + ' lessons</small></div>' +
@@ -336,6 +422,7 @@
         '<div class="instruction-card">' +
           '<h3>Your task</h3>' +
           '<p>' + esc(ch.instructions) + '</p>' +
+          (ch.target ? '<div class="target-box"><div class="target-chrome"><span class="target-dot"></span><span class="target-dot"></span><span class="target-dot"></span><span class="target-url">your-page.html</span></div><div class="target-screen">' + ch.target + '</div></div>' : '') +
         '</div>' +
         (ch.example ? '<div class="example-card"><h3>Example</h3><pre>' + esc(ch.example) + '</pre></div>' : '') +
         '<button class="btn-primary btn-block" data-goto="learning">Learn how →</button>' +
@@ -400,6 +487,7 @@
       '<div class="build-card">' +
         '<h3>Build it from scratch</h3>' +
         '<p>No step-by-step. Use everything you learned. Your code is checked automatically.</p>' +
+        (build.target ? '<div class="target-box"><div class="target-chrome"><span class="target-dot"></span><span class="target-dot"></span><span class="target-dot"></span><span class="target-url">your-page.html</span></div><div class="target-screen">' + build.target + '</div></div>' : '') +
         '<pre class="build-prompt">' + esc(build.prompt) + '</pre>' +
       '</div>' +
       '<div class="editor-toolbar">' +
@@ -478,7 +566,94 @@
   function setupEditor(mission, task, isBuild) {
     var editor = document.getElementById("editor");
 
+    /* ---- VS Code-like tag autocomplete (HTML missions only) ---- */
+    var suggestBox = null;
+    var activeSuggest = null;
+
+    function makeSuggestBox() {
+      if (suggestBox) { return suggestBox; }
+      suggestBox = document.createElement("div");
+      suggestBox.className = "editor-suggest";
+      suggestBox.style.display = "none";
+      editor.parentNode.insertBefore(suggestBox, editor.nextSibling);
+      return suggestBox;
+    }
+    function hideSuggest() {
+      activeSuggest = null;
+      if (suggestBox) { suggestBox.style.display = "none"; }
+    }
+    function suggestionFor(token) {
+      if (TAG_VOID[token]) { return { text: TAG_VOID[token], caret: TAG_VOID[token].length }; }
+      if (TAG_SUGGEST[token]) {
+        var full = TAG_SUGGEST[token];
+        return { text: full, caret: full.indexOf(">") + 1 };
+      }
+      return null;
+    }
+    function updateSuggest() {
+      if (mission.type !== "html") { hideSuggest(); return; }
+      var pos = editor.selectionStart;
+      var before = editor.value.substring(0, pos);
+      var m = before.match(/([a-zA-Z][a-zA-Z0-9]*)$/);
+      if (!m) { hideSuggest(); return; }
+      var token = m[1];
+      var lower = token.toLowerCase();
+      if (allTagNames.indexOf(lower) === -1) { hideSuggest(); return; }
+      var prev = before[m.index - 1] || "";
+      if (prev !== "<" && prev !== "" && prev !== " " && prev !== "\n" && prev !== "\t" && prev !== '"') { hideSuggest(); return; }
+      var s = suggestionFor(lower);
+      if (!s) { hideSuggest(); return; }
+      activeSuggest = { tokenStart: m.index, tokenEnd: pos, token: token, text: s.text, caret: s.caret, prevLt: prev === "<" };
+      var box = makeSuggestBox();
+      box.innerHTML = '<span class="suggest-kind">' + (TAG_VOID[lower] ? 'void element' : 'tag') + '</span><code>' + esc(s.text) + '</code><small>press Tab or Enter</small>';
+      box.style.display = "flex";
+    }
+    function applySuggest() {
+      if (!activeSuggest) { return false; }
+      var a = activeSuggest;
+      var value = editor.value;
+      var before = value.substring(0, a.tokenStart);
+      var after = value.substring(a.tokenEnd);
+      var insert, caret;
+      if (a.prevLt) {
+        var inner = a.text;
+        insert = a.token + inner.substring(a.token.length);
+        caret = a.tokenStart + a.token.length + 1;
+      } else {
+        insert = a.text;
+        caret = a.tokenStart + a.caret;
+      }
+      editor.value = before + insert + after;
+      editor.selectionStart = editor.selectionEnd = caret;
+      hideSuggest();
+      return true;
+    }
+
+    editor.addEventListener("input", updateSuggest);
+    editor.addEventListener("blur", hideSuggest);
+
+    var SKELETON = "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n\n</body>\n</html>";
+    function insertSkeleton() {
+      var start = editor.selectionStart;
+      var end = editor.selectionEnd;
+      var before = editor.value.substring(0, start);
+      var after = editor.value.substring(end);
+      editor.value = before + SKELETON + after;
+      var bodyOpen = before.length + SKELETON.indexOf("<body>") + "<body>".length + 1;
+      editor.selectionStart = editor.selectionEnd = bodyOpen;
+      updateSuggest();
+      toast("HTML skeleton inserted: html > head + body.");
+    }
+
     editor.addEventListener("keydown", function (e) {
+      if (e.shiftKey && (e.key === "!" || e.key === "1")) {
+        e.preventDefault();
+        if (mission.type === "html") { insertSkeleton(); return; }
+      }
+      if (activeSuggest && (e.key === "Tab" || e.key === "Enter")) {
+        e.preventDefault();
+        if (applySuggest()) { return; }
+      }
       if (e.key === "Tab") {
         e.preventDefault();
         var start = editor.selectionStart;
@@ -491,7 +666,10 @@
     var reset = document.getElementById("btn-reset");
     if (reset) {
       reset.addEventListener("click", function () {
-        if (confirm("Reset the code to the starter version?")) { editor.value = task.starter; }
+        if (confirm("Reset the code to the starter version?")) {
+          editor.value = task.starter;
+          hideSuggest();
+        }
       });
     }
 
@@ -653,11 +831,12 @@
       "<\/script>";
 
     var checkScript = "<script>window.__SkillRunCheck = " + checkLit + ";<\/script>";
+    var srcScript = "<script>window.__SkillRunSource = " + JSON.stringify(code) + ";<\/script>";
 
     var doc;
     if (mission.type === "html") {
       var body = safe.replace(/<\/body/gi, "").replace(/<\/html/gi, "").replace(/<\/head/gi, "");
-      doc = '<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{font-family:sans-serif;padding:16px}</style></head><body>' + body + checkScript + controller + "</body></html>";
+      doc = '<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{font-family:sans-serif;padding:16px}</style></head><body>' + body + srcScript + checkScript + controller + "</body></html>";
     } else {
       doc = '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body><script>' + safe + "<\/script>" + checkScript + controller + "</body></html>";
     }
@@ -806,6 +985,7 @@
         if (current.isBuild) {
           if (p.doneBuilds.indexOf(mission.id) === -1) {
             p.doneBuilds.push(mission.id);
+            earned = tokenCap(p, earned);
             p.xp += earned;
             skillrunRecordXp(p, earned);
             unlockAchievement(p, "first-build");
@@ -818,6 +998,7 @@
           if (!list) { list = []; p.doneChallenges[mission.id] = list; }
           if (list.indexOf(ch.id) === -1) {
             list.push(ch.id);
+            earned = tokenCap(p, earned);
             p.xp += earned;
             skillrunRecordXp(p, earned);
             var firstRun = p.doneMissions.length === 0;
@@ -893,6 +1074,7 @@
         }
 
         if (newXp) { toast("+" + earned + " XP"); }
+        if (newXp) { tokenLimitToast(p); }
         if (newXp) { postScore(); }
         renderHeaderChip(p);
       } else if (current.kind === "practice") {
@@ -946,7 +1128,7 @@
     var earned = newXp ? 0 : earnedXp(item.xp, state);
     if (p.donePractice.indexOf(item.id) === -1) {
       p.donePractice.push(item.id);
-      earned = earnedXp(item.xp, state);
+      earned = tokenCap(p, earnedXp(item.xp, state));
       p.xp += earned;
       skillrunRecordXp(p, earned);
       bumpStreak(p);
@@ -971,6 +1153,7 @@
       '</div>',
       "pass");
     if (newXp) { toast("+" + earned + " XP"); }
+    if (newXp) { tokenLimitToast(p); }
     if (newXp) { postScore(); }
     renderHeaderChip(p);
   }
@@ -982,7 +1165,7 @@
     if (p.doneProjects.indexOf(proj.id) === -1) {
       p.doneProjects.push(proj.id);
       var state = { hints: current.hintsUsed || 0, solution: !!current.solutionUsed, focus: !!current.focusLost };
-      earned = earnedXp(proj.xp, state);
+      earned = tokenCap(p, earnedXp(proj.xp, state));
       p.xp += earned;
       skillrunRecordXp(p, earned);
       bumpStreak(p);
@@ -1002,6 +1185,7 @@
       '</div>',
       "pass");
     if (newXp) { toast("+" + earned + " XP"); }
+    if (newXp) { tokenLimitToast(p); }
     if (newXp) { postScore(); }
     renderHeaderChip(p);
   }
@@ -1117,6 +1301,7 @@
      ============================================================ */
 
   function boot() {
+    wireCelebration();
     var page = document.body.getAttribute("data-page");
     if (page === "mission") {
       renderMission();

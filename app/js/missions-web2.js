@@ -616,6 +616,94 @@ registerMissions([
   },
 
   {
+    id: "ai-agent-cli",
+    num: 28,
+    title: "AI Agent Terminal",
+    tagline: "Direct an AI agent from the terminal and review its work.",
+    skill: "Backend",
+    xp: 190,
+    type: "js",
+    icon: '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M7 9l3 2-3 2M12 13h5M10 21h4"/>',
+    meta: { kind: "normal", series: "code-to-internet", order: 19 },
+    briefing: {
+      objective: "Direct an AI agent from the terminal: give it a task, run it, and review the diff before committing.",
+      body: "AI agents are like fast junior developers you control from the terminal. You type a task, they read your repo, edit files, and hand you a diff. Your job is to review before you commit. This mission models that loop: a repo, an agent that writes code, and your review gate.",
+      terminal: [
+        "npm i -g @agent/cli      # install a CLI agent",
+        "cd my-site",
+        "agent \"add a navbar\"    # the agent reads your repo and edits files",
+        "git diff                 # review every change it made",
+        "git commit -m \"agent: add navbar\"",
+        "",
+        "# free agents let you practice exactly this workflow"
+      ],
+      terminalLink: "https://freebuff.com/?ref=ref-f2f77e07-fee5-4b8d-a9a9-ffe710ff3c5a",
+      terminalLinkLabel: "Get Free AI Agents to Practice →"
+    },
+    challenges: [
+      {
+        id: "ch1",
+        title: "Assign a task",
+        instructions: "Write assignTask(agent, task) that sets agent.task = task and returns the agent.",
+        learning: "You steer the agent with a plain-English task. The agent remembers it in agent.task.",
+        example: "function assignTask(agent, task) {\n  agent.task = task;\n  return agent;\n}",
+        starter: "function assignTask(agent, task) {\n  // remember the task on the agent\n  return agent;\n}",
+        test: "function t() {\n  var a = { repo: { files: {}, commits: [] }, edits: [] };\n  assignTask(a, 'add a navbar');\n  if (a.task !== 'add a navbar') return { passed: false, message: 'Should store the task on agent.task.' };\n  return { passed: true, message: 'Agent is on the job!' };\n}",
+        hints: [
+          "Set agent.task = task.",
+          "Return the agent.",
+          "One line."
+        ],
+        solution: "function assignTask(agent, task) {\n  agent.task = task;\n  return agent;\n}"
+      },
+      {
+        id: "ch2",
+        title: "Let it write",
+        instructions: "Write agentRun(agent, file, content) that records an edit { file, content } in agent.edits and writes content into agent.repo.files[file]. Returns the agent.",
+        learning: "The agent stages changes into agent.edits and the working files, but nothing is committed yet - you still get to review.",
+        example: "function agentRun(agent, file, content) {\n  agent.edits.push({ file: file, content: content });\n  agent.repo.files[file] = content;\n  return agent;\n}",
+        starter: "function agentRun(agent, file, content) {\n  // record the edit and write it to the repo files\n  return agent;\n}",
+        test: "function t() {\n  var a = { repo: { files: {}, commits: [] }, edits: [] };\n  agentRun(a, 'nav.js', 'console.log(1)');\n  if (!a.edits || a.edits.length !== 1 || a.edits[0].file !== 'nav.js') return { passed: false, message: 'Should record the edit in agent.edits.' };\n  if (a.repo.files['nav.js'] !== 'console.log(1)') return { passed: false, message: 'Should write the file into agent.repo.files.' };\n  if (a.repo.commits.length !== 0) return { passed: false, message: 'Nothing should be committed yet - you still review.' };\n  return { passed: true, message: 'The agent wrote code but left it for review!' };\n}",
+        hints: [
+          "Init agent.edits if missing.",
+          "push { file, content } and set repo.files[file].",
+          "Do not touch commits."
+        ],
+        solution: "function agentRun(agent, file, content) {\n  agent.edits.push({ file: file, content: content });\n  agent.repo.files[file] = content;\n  return agent;\n}"
+      },
+      {
+        id: "ch3",
+        title: "Review & commit",
+        instructions: "Write reviewCommit(agent, ok) that commits every recorded edit if ok is true (one commit per edit, message 'agent: ' + agent.task), and clears agent.edits either way. Returns agent.repo.",
+        learning: "Reviewing is the human's job. Accept and the changes become commits; reject and the edits are dropped without touching the history.",
+        example: "function reviewCommit(agent, ok) {\n  if (ok && agent.repo) {\n    for (var i = 0; i < agent.edits.length; i++) {\n      commit(agent.repo, 'agent: ' + agent.task);\n    }\n  }\n  agent.edits = [];\n  return agent.repo;\n}",
+        starter: "function reviewCommit(agent, ok) {\n  // if ok, commit each edit; clear edits either way\n  return agent.repo;\n}",
+        test: "function t() {\n  var r = initRepo();\n  addFile(r, 'index.html', '<h1>v1</h1>');\n  var a = { repo: r, edits: [], task: 'add footer' };\n  agentRun(a, 'footer.html', '<footer>OK</footer>');\n  reviewCommit(a, true);\n  if (r.commits.length !== 1 || r.commits[0].msg !== 'agent: add footer') return { passed: false, message: 'Accepting should commit each edit with \"agent: <task>\" message.' };\n  if (r.files['footer.html'] !== '<footer>OK</footer>') return { passed: false, message: 'Accepted files should stay in the repo.' };\n  if (a.edits.length !== 0) return { passed: false, message: 'edits should clear after review.' };\n  var r2 = initRepo();\n  addFile(r2, 'a.txt', 'x');\n  var a2 = { repo: r2, edits: [], task: 'add spam' };\n  agentRun(a2, 'spam.txt', 'bad');\n  reviewCommit(a2, false);\n  if (r2.commits.length !== 0) return { passed: false, message: 'Rejecting should commit nothing.' };\n  return { passed: true, message: 'You approved good code and rejected the rest!' };\n}",
+        hints: [
+          "If ok, loop edits and commit(agent.repo, 'agent: ' + agent.task).",
+          "Clear agent.edits no matter what.",
+          "Return agent.repo."
+        ],
+        solution: "function reviewCommit(agent, ok) {\n  if (ok && agent.repo) {\n    for (var i = 0; i < agent.edits.length; i++) {\n      commit(agent.repo, 'agent: ' + agent.task);\n    }\n  }\n  agent.edits = [];\n  return agent.repo;\n}"
+      },
+    ],
+    build: {
+      title: "Build It Yourself",
+      prompt: "Write agentFlow() that: creates a repo, adds 'index.html' = '<h1>Home</h1>', creates an agent with that repo, assigns task 'add footer', runs the agent on 'footer.html' = '<footer>SkillRun</footer>', reviews with ok, and returns the repo - which must contain footer.html and exactly one commit.",
+      starter: "function agentFlow() {\n  // repo + agent + task + run + review\n  return null;\n}",
+      test: "function t() {\n  var r = agentFlow();\n  if (!r || !r.files) return { passed: false, message: 'Should return a repo.' };\n  if (r.files['footer.html'] !== '<footer>SkillRun</footer>') return { passed: false, message: 'The agent change should be in the repo.' };\n  if (r.commits.length !== 1) return { passed: false, message: 'Exactly one commit after reviewing one edit.' };\n  return { passed: true, message: 'You ran an AI agent, reviewed it, and shipped it. Now do it for real!' };\n}",
+      hints: [
+        "initRepo, addFile index.html.",
+        "agent = { repo: r, edits: [], task: '' }; assignTask; agentRun.",
+        "reviewCommit(agent, true) then return r."
+      ],
+      solution: "function agentFlow() {\n  var r = initRepo();\n  addFile(r, 'index.html', '<h1>Home</h1>');\n  var agent = { repo: r, edits: [], task: '' };\n  assignTask(agent, 'add footer');\n  agentRun(agent, 'footer.html', '<footer>SkillRun</footer>');\n  reviewCommit(agent, true);\n  return r;\n}",
+      unlock: "AI Workflows"
+    },
+    unlock: "AI Workflows"
+  },
+
+  {
     id: "ship-it-boss",
     num: 29,
     title: "Ship It",
@@ -624,7 +712,7 @@ registerMissions([
     xp: 300,
     type: "js",
     icon: '<path d="M20 6L9 17l-5-5"/>',
-    meta: { kind: "boss", series: "code-to-internet", order: 19, focusLock: true, hintCap: 1 },
+    meta: { kind: "boss", series: "code-to-internet", order: 20, focusLock: true, hintCap: 1 },
     briefing: {
       objective: "Ship a real site: repo, commit, push, deploy, SEO, sitemap, robots and analytics.",
       body: "This is the boss of From Code to Internet. You will chain everything you built into one pipeline: a repo with commits, a push to a remote, a deploy with a custom domain, SEO head tags, robots.txt, a sitemap, and analytics. Minimal hints. Focus. Ship it."
