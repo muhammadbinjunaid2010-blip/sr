@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    SkillRun app logic (V1)
    - onboarding with 3 starting points
    - 5-tab app: Home, Learn, Practice, Projects, Profile
@@ -243,12 +243,12 @@
     html += '<div class="player-row">' +
       '<div class="avatar' + (p.avatar ? ' has-img' : '') + '">' + (p.avatar ? '<img src="' + esc(p.avatar) + '" alt="">' : esc(displayName(p)).charAt(0).toUpperCase()) + '</div>' +
       '<div class="player-info">' +
-        '<h1>Hey ' + esc(displayName(p)) + ' <span class="wave">👋</span></h1>' +
+        '<h1>Hey ' + esc(displayName(p)) + ' <span class="wave">??</span></h1>' +
         '<div class="player-stats">' +
           '<span class="stat-pill">Lv ' + lvl + '</span>' +
           '<span class="stat-pill">' + p.xp + ' XP</span>' +
-          '<span class="stat-pill">🔥 ' + p.streak.count + '</span>' +
-          '<span class="stat-pill">🎯 ' + mast + '%</span>' +
+          '<span class="stat-pill">?? ' + p.streak.count + '</span>' +
+          '<span class="stat-pill">?? ' + mast + '%</span>' +
         '</div>' +
         '<div class="bar"><div class="bar-fill" style="width:' + levelPct(p.xp) + '%"></div></div>' +
         '<div class="bar-caption">' + p2 + ' / ' + XP_PER_LEVEL + ' XP to Level ' + (lvl + 1) + '</div>' +
@@ -267,13 +267,13 @@
         '<p>' + esc(m.tagline) + '</p>' +
         '<div class="continue-progress"><div class="bar"><div class="bar-fill" style="width:' + progress.pct + '%"></div></div>' +
         '<span class="continue-label">' + progress.done + ' / ' + progress.total + ' parts done</span></div>' +
-        '<div class="continue-go">Continue →</div>' +
+        '<div class="continue-go">Continue ?</div>' +
         '</a>';
     } else {
-      html += '<div class="card card-done"><h3>All missions complete! 🎉</h3><p>You finished every SkillRun mission. Check your Profile.</p></div>';
+      html += '<div class="card card-done"><h3>All missions complete! ??</h3><p>You finished every SkillRun mission. Check your Profile.</p></div>';
     }
 
-    html += '<div class="sec-title"><h2>Pick your course</h2><p>3 courses, 1 hero. Switch anytime — progress is saved per course.</p></div>';
+    html += '<div class="sec-title"><h2>Pick your course</h2><p>3 courses, 1 hero. Switch anytime � progress is saved per course.</p></div>';
     html += '<div class="course-grid">';
     for (var c = 0; c < PATHS.length; c++) {
       var path = PATHS[c];
@@ -296,10 +296,10 @@
     html += '</div>';
 
     html += '<div class="quick-links">' +
-      '<a class="quick-link" href="?tab=learn">📚 Learn</a>' +
-      '<a class="quick-link" href="?tab=practice">⚡ Practice</a>' +
-      '<a class="quick-link" href="?tab=leaderboard">🏆 Leaderboard</a>' +
-      '<a class="quick-link" href="?tab=profile">👤 Profile</a>' +
+      '<a class="quick-link" href="?tab=learn">?? Learn</a>' +
+      '<a class="quick-link" href="?tab=practice">? Practice</a>' +
+      '<a class="quick-link" href="?tab=leaderboard">?? Leaderboard</a>' +
+      '<a class="quick-link" href="?tab=profile">?? Profile</a>' +
     '</div>';
 
     root.innerHTML = html;
@@ -360,12 +360,12 @@
           '<p>' + esc(m.tagline) + '</p>' +
           chips +
           '<div class="mission-progress"><div class="bar"><div class="bar-fill" style="width:' + prog.pct + '%"></div></div>' +
-          '<span class="mission-progress-text">' + prog.done + ' / ' + prog.total + ' · +' + partBaseXp(m) + ' XP/part</span></div>' +
+          '<span class="mission-progress-text">' + prog.done + ' / ' + prog.total + ' � +' + partBaseXp(m) + ' XP/part</span></div>' +
         '</div>' +
       '</a>';
     }
     return '<div class="mission-card locked">' +
-      '<div class="mission-icon"><span class="lock">🔒</span></div>' +
+      '<div class="mission-icon"><span class="lock">??</span></div>' +
       '<div class="mission-body">' +
         '<div class="mission-top"><span class="mission-num">Mission ' + m.num + '</span>' + kindBadge + '</div>' +
         '<h3>' + esc(m.title) + '</h3>' +
@@ -473,7 +473,7 @@
       return '<a class="feat-card" href="practice.html?c=' + item.id + '">' +
         '<span class="feat-label">' + label + '</span>' +
         '<h3>' + esc(item.title) + '</h3>' +
-        '<span class="feat-go">+ ' + item.xp + ' XP →</span></a>';
+        '<span class="feat-go">+ ' + item.xp + ' XP ?</span></a>';
     }
     html += featCard('Daily', daily);
     html += featCard('Weekly', weekly);
@@ -519,7 +519,7 @@
     var p = load();
     var html = '<div class="page-head"><h1>Projects</h1><p>Projects combine the skills you\'ve learned. Each one unlocks when you own all its skills.</p></div>';
 
-    var projectDna = '<div class="project-dna"><div class="sec-title"><h2>🧬 Project DNA</h2><p>Every project has a DNA: the skills it needs. Unlock the skills, unlock the project.</p></div></div>';
+    var projectDna = '<div class="project-dna"><div class="sec-title"><h2>?? Project DNA</h2><p>Every project has a DNA: the skills it needs. Unlock the skills, unlock the project.</p></div></div>';
 
     html += projectDna;
 
@@ -529,7 +529,7 @@
       var seriesLabel = proj.series === "portfolio" ? "Portfolio Series" : null;
       if (seriesLabel !== lastSeries) {
         if (seriesLabel) {
-          html += '<div class="sec-title series-sec"><h2>🚀 Portfolio Series</h2><p>Bigger builds that combine skills from your paths.</p></div>';
+          html += '<div class="sec-title series-sec"><h2>?? Portfolio Series</h2><p>Bigger builds that combine skills from your paths.</p></div>';
         }
         lastSeries = seriesLabel;
       }
@@ -538,7 +538,7 @@
       var skillHtml = "";
       for (var s = 0; s < proj.skills.length; s++) {
         var has = hasSkill(p, proj.skills[s]);
-        skillHtml += '<span class="skill-dot' + (has ? ' has' : '') + '">' + (has ? "✓" : "·") + ' ' + proj.skills[s] + '</span>';
+        skillHtml += '<span class="skill-dot' + (has ? ' has' : '') + '">' + (has ? "?" : "�") + ' ' + proj.skills[s] + '</span>';
       }
 
       if (unlocked) {
@@ -551,7 +551,7 @@
           '</div></a>';
       } else {
         html += '<div class="project-card locked">' +
-          '<div class="project-emoji">🔒</div>' +
+          '<div class="project-emoji">??</div>' +
           '<div class="project-body">' +
             '<div class="project-top"><h3>' + esc(proj.title) + '</h3><span class="badge badge-muted">Locked</span></div>' +
             '<p>' + esc(proj.desc) + '</p>' +
@@ -563,8 +563,8 @@
 
     html += '<div class="future-paths"><div class="sec-title"><h2>Coming Later</h2></div>' +
       '<div class="future-list">' +
-        '<div class="future-item"><span class="future-emoji">🤝</span><div><h3>Community</h3><p>Share builds and remix others.</p></div><span class="badge badge-muted">Later</span></div>' +
-        '<div class="future-item"><span class="future-emoji">🏪</span><div><h3>Marketplace</h3><p>Trade and sell what you build.</p></div><span class="badge badge-muted">Later</span></div>' +
+        '<div class="future-item"><span class="future-emoji">??</span><div><h3>Community</h3><p>Share builds and remix others.</p></div><span class="badge badge-muted">Later</span></div>' +
+        '<div class="future-item"><span class="future-emoji">??</span><div><h3>Marketplace</h3><p>Trade and sell what you build.</p></div><span class="badge badge-muted">Later</span></div>' +
       '</div></div>';
 
     root.innerHTML = html;
@@ -590,12 +590,12 @@
       '<div class="profile-info">' +
         '<div class="pf-name-row">' +
           '<input type="text" id="pf-name" maxlength="20" value="' + esc(displayName(p)) + '" aria-label="Your name">' +
-          '<button class="ob-dice" id="pf-dice" type="button" title="Random name">🎲</button>' +
+          '<button class="ob-dice" id="pf-dice" type="button" title="Random name">??</button>' +
           '<button class="btn-small" id="pf-save" type="button">Save</button>' +
         '</div>' +
-        '<div class="profile-level">Level ' + lvl + ' · ' + p.xp + ' XP</div>' +
+        '<div class="profile-level">Level ' + lvl + ' � ' + p.xp + ' XP</div>' +
         '<div class="bar"><div class="bar-fill" style="width:' + pct + '%"></div></div>' +
-        '<div class="streak"><span class="streak-flame">🔥</span> ' + p.streak.count + ' day streak</div>' +
+        '<div class="streak"><span class="streak-flame">??</span> ' + p.streak.count + ' day streak</div>' +
       '</div></div>';
 
     html += '<div class="profile-stats">' +
@@ -643,7 +643,7 @@
 
     htmlRest += '<div class="sec-title"><h2>Skills</h2></div>';
     if (p.skills.length === 0) {
-      htmlRest += '<div class="card muted-card">No skills yet — complete missions to unlock skills.</div>';
+      htmlRest += '<div class="card muted-card">No skills yet � complete missions to unlock skills.</div>';
     } else {
       htmlRest += '<div class="skill-list">';
       for (var i = 0; i < p.skills.length; i++) {
@@ -683,7 +683,7 @@
         var ach = achGroups[g][aj];
         var got = hasAchievement(p, ach.id);
         htmlRest += '<div class="ach' + (got ? ' got' : '') + '">' +
-          '<div class="ach-emoji">' + (got ? ach.emoji : "🔒") + '</div>' +
+          '<div class="ach-emoji">' + (got ? ach.emoji : "??") + '</div>' +
           '<div><h3>' + esc(ach.title) + '</h3><p>' + esc(ach.desc) + '</p></div>' +
           (got ? '<span class="badge badge-green">Unlocked</span>' : '<span class="badge badge-muted">Locked</span>') +
         '</div>';
@@ -732,9 +732,9 @@
      ============================================================ */
 
   function medalFor(i) {
-    if (i === 0) { return "🥇"; }
-    if (i === 1) { return "🥈"; }
-    if (i === 2) { return "🥉"; }
+    if (i === 0) { return "??"; }
+    if (i === 1) { return "??"; }
+    if (i === 2) { return "??"; }
     return '<span class="lb-rank">' + (i + 1) + '</span>';
   }
 
@@ -749,7 +749,7 @@
       var last = parseInt(localStorage.getItem("skillrun_lb_post") || "0", 10);
       if (now - last < 60000) { return; }
       localStorage.setItem("skillrun_lb_post", String(now));
-      fetch("api/leaderboard", {
+      fetch("/api/leaderboard", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -765,7 +765,7 @@
   }
 
   function renderLbShell(kind) {
-    return '<div class="page-head"><h1>Leaderboard</h1><p>' + (kind === "week" ? "This week" : "This month") + ' — highest XP wins.</p></div>' +
+    return '<div class="page-head"><h1>Leaderboard</h1><p>' + (kind === "week" ? "This week" : "This month") + ' � highest XP wins.</p></div>' +
       '<div class="lb-switch">' +
         '<a class="lb-btn' + (kind === "week" ? ' active' : '') + '" href="?tab=leaderboard&lb=week">Weekly</a>' +
         '<a class="lb-btn' + (kind === "month" ? ' active' : '') + '" href="?tab=leaderboard&lb=month">Monthly</a>' +
@@ -787,10 +787,10 @@
 
     var html = renderLbShell(kind);
     html += '<div class="lb-top">' +
-      '<div class="lb-top-medal">' + (topIsMe ? "👑" : "🥇") + '</div>' +
+      '<div class="lb-top-medal">' + (topIsMe ? "??" : "??") + '</div>' +
       '<div class="lb-top-name">' + avatarHtml(top.avatar) + ' ' + esc(top.name) + (topIsMe ? ' <span class="badge badge-green">You</span>' : '') + '</div>' +
       '<div class="lb-top-xp">' + top.xp + ' XP</div>' +
-      '<p>' + (topIsMe ? 'You hold the highest XP. Legend. 👑' : 'Highest XP this ' + kind + '. Can you take the crown?') + '</p>' +
+      '<p>' + (topIsMe ? 'You hold the highest XP. Legend. ??' : 'Highest XP this ' + kind + '. Can you take the crown?') + '</p>' +
     '</div>';
 
     html += '<div class="lb-list">';
@@ -807,11 +807,11 @@
     html += '</div>';
 
     html += '<div class="lb-note">' + (rank <= 5
-      ? '<div class="card muted-card">You are #' + rank + ' — keep pushing! 🚀</div>'
+      ? '<div class="card muted-card">You are #' + rank + ' � keep pushing! ??</div>'
       : '<div class="card muted-card">You are #' + rank + ' of ' + rows.length + '. Grind some missions to climb.</div>') + '</div>';
 
     if (persisted === false) {
-      html += '<div class="card muted-card lb-warn">⚠️ Storage not configured on the server yet — scores reset on redeploy. Connect Vercel KV to persist.</div>';
+      html += '<div class="card muted-card lb-warn">?? Storage not configured on the server yet � scores reset on redeploy. Connect Vercel KV to persist.</div>';
     }
 
     root.innerHTML = html;
@@ -821,12 +821,12 @@
   function renderLbOffline(root, p, kind, meXp) {
     var html = renderLbShell(kind);
     html += '<div class="lb-top">' +
-      '<div class="lb-top-medal">👑</div>' +
+      '<div class="lb-top-medal">??</div>' +
       '<div class="lb-top-name">' + esc(displayName(p)) + ' <span class="badge badge-green">You</span></div>' +
       '<div class="lb-top-xp">' + meXp + ' XP</div>' +
-      '<p>Your real ' + kind + ' XP — this device only.</p>' +
+      '<p>Your real ' + kind + ' XP � this device only.</p>' +
     '</div>';
-    html += '<div class="card muted-card">Offline mode — no internet or not hosted yet, so there is nobody else to rank against (no fake players). Host the app on Vercel and the world leaderboard goes live.</div>';
+    html += '<div class="card muted-card">Offline mode � no internet or not hosted yet, so there is nobody else to rank against (no fake players). Host the app on Vercel and the world leaderboard goes live.</div>';
     root.innerHTML = html;
     renderHeaderChip(p);
   }
@@ -836,14 +836,14 @@
     var kind = (getQueryParam("lb") === "month") ? "month" : "week";
     var meXp = kind === "month" ? xpThisMonth(p) : xpThisWeek(p);
 
-    root.innerHTML = renderLbShell(kind) + '<div class="card muted-card">Loading leaderboard…</div>';
+    root.innerHTML = renderLbShell(kind) + '<div class="card muted-card">Loading leaderboard�</div>';
     renderHeaderChip(p);
 
     submitScore(p);
 
     var controller = new AbortController();
     var timer = setTimeout(function () { controller.abort(); }, 8000);
-    fetch("api/leaderboard?scope=" + kind, { headers: { Accept: "application/json" }, signal: controller.signal })
+    fetch("/api/leaderboard?scope=" + kind, { headers: { Accept: "application/json" }, signal: controller.signal })
       .then(function (res) { return res.json(); })
       .then(function (data) {
         clearTimeout(timer);
@@ -886,7 +886,7 @@
   function renderHeaderChip(p) {
     var chips = document.querySelectorAll("[data-xp-chip]");
     for (var i = 0; i < chips.length; i++) {
-      chips[i].textContent = "Lv " + levelOf(p.xp) + " · " + p.xp + " XP";
+      chips[i].textContent = "Lv " + levelOf(p.xp) + " � " + p.xp + " XP";
     }
     var avs = document.querySelectorAll("[data-header-avatar]");
     for (var j = 0; j < avs.length; j++) {
@@ -925,17 +925,17 @@
     var body = document.getElementById("onboard-body");
     var p = load();
 
-    var html = '<div class="ob-logo"><span class="ob-mark">⚡</span> SkillRun</div>';
+    var html = '<div class="ob-logo"><span class="ob-mark">?</span> SkillRun</div>';
     html += '<h1>Welcome to SkillRun</h1>';
     html += '<p class="ob-sub">Pick a course, set your name, start building. It takes 20 seconds.</p>';
 
     html += '<div class="ob-identity">';
     html += '<button class="ob-avatar" id="ob-avatar" type="button" title="Upload a picture">' +
-      (p.avatar ? '<img src="' + esc(p.avatar) + '" alt="">' : '<span class="ob-avatar-plus">📷</span>') + '</button>';
+      (p.avatar ? '<img src="' + esc(p.avatar) + '" alt="">' : '<span class="ob-avatar-plus">??</span>') + '</button>';
     html += '<input type="file" id="ob-avatar-file" accept="image/*" style="display:none">';
     html += '<div class="ob-name-wrap"><label>Your runner name</label>' +
       '<input type="text" id="ob-name" maxlength="20" value="' + esc(displayName(p)) + '" placeholder="SpeedRunner1234">' +
-      '<button class="ob-dice" id="ob-dice" type="button" title="Random name">🎲</button></div>';
+      '<button class="ob-dice" id="ob-dice" type="button" title="Random name">??</button></div>';
     html += '</div>';
 
     html += '<div class="ob-label">Choose your course</div>';
@@ -945,11 +945,11 @@
       html += '<button class="ob-option' + (i === 0 ? ' picked' : '') + '" data-course="' + path.id + '" type="button">' +
         '<span class="ob-emoji">' + path.emoji + '</span>' +
         '<span class="ob-text"><strong>' + esc(path.title) + '</strong><br><small>' + esc(path.desc) + '</small></span>' +
-        '<span class="ob-go">→</span></button>';
+        '<span class="ob-go">?</span></button>';
     }
     html += '</div>';
 
-    html += '<button class="btn-primary btn-block" id="ob-start" type="button">Start building →</button>';
+    html += '<button class="btn-primary btn-block" id="ob-start" type="button">Start building ?</button>';
 
     body.innerHTML = html;
 
