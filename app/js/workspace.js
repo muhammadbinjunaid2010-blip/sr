@@ -35,11 +35,43 @@
 
   function save(p) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } catch (e) {} }
 
+  function postScore() {
+    try {
+      var p = load();
+      var now = Date.now();
+      var last = parseInt(localStorage.getItem("skillrun_lb_post") || "0", 10);
+      if (now - last < 60000) { return; }
+      localStorage.setItem("skillrun_lb_post", String(now));
+      var name = (p.name && String(p.name)) || "SpeedRunner";
+      var avatar = (p.avatar || "").length > 20000 ? "" : (p.avatar || "");
+      fetch("/api/leaderboard", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: p.playerId,
+          name: name,
+          avatar: avatar,
+          xp: p.xp || 0,
+          weekXp: typeof xpThisWeek === "function" ? xpThisWeek(p) : (p.xp || 0),
+          monthXp: typeof xpThisMonth === "function" ? xpThisMonth(p) : (p.xp || 0)
+        })
+      }).catch(function () {});
+    } catch (e) { /* offline */ }
+  }
+
   function esc(str) {
     return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
   function escapeScript(str) { return String(str).replace(/<\/script/gi, "<\\/script"); }
   function svgIcon(path) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + path + "</svg>"; }
+  function fileChipFor(type) {
+    if (type === "html") { return "index.html"; }
+    if (type === "python") { return "script.py"; }
+    if (type === "circuit") { return "circuit.c"; }
+    return "script.js";
+  }
+  var ICON_HINT = '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-6 6c0 3.2 2.4 4.4 3.2 6.4a2 2 0 0 0 1.9 1.4h1.8a2 2 0 0 0 1.9-1.4C15.6 13.4 18 12.2 18 9a6 6 0 0 0-6-6z"/>';
+  var ICON_EYE = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
 
   function levelOf(xp) { return Math.floor(xp / XP_PER_LEVEL) + 1; }
   function xpIntoLevel(xp) { return xp % XP_PER_LEVEL; }
@@ -225,7 +257,7 @@
     var kindTag = meta.kind === "boss" ? ' <span class="badge badge-yellow">BOSS</span>' : "";
     var spacedNote = "";
     if (meta.revisit && meta.revisit.length) {
-      spacedNote = '<div class="spaced-note">🧠 <strong>Spaced practice:</strong> this mission revisits ' +
+      spacedNote = '<div class="spaced-note">' + svgIcon(ICON_LIGHT) + ' <strong>Spaced practice:</strong> this mission revisits ' +
         esc(meta.revisit.join(", ")) + '. Solid recall = higher mastery.</div>';
     }
 
@@ -244,11 +276,11 @@
         '</div>' +
         (spacedNote) +
         '<div class="mission-parts">' +
-          '<div class="part"><span class="part-emoji">📖</span><strong>Learn</strong><small>' + mission.challenges.length + ' lessons</small></div>' +
-          '<div class="part"><span class="part-emoji">🔨</span><strong>Build</strong><small>Build Challenge</small></div>' +
-          '<div class="part"><span class="part-emoji">🏆</span><strong>Reward</strong><small>+' + partBaseXp(mission) + ' XP/part · unlock "' + esc(mission.unlock) + '"</small></div>' +
+          '<div class="part"><span class="part-emoji">' + svgIcon('<path d="M2 4h20v14H2z"/><path d="M2 8h20"/><path d="M7 14h10"/>') + '</span><strong>Learn</strong><small>' + mission.challenges.length + ' lessons</small></div>' +
+          '<div class="part"><span class="part-emoji">' + svgIcon('<path d="M14 4l6 6-3 3-6-6z"/><path d="M5 19l6-6"/>') + '</span><strong>Build</strong><small>Build Challenge</small></div>' +
+          '<div class="part"><span class="part-emoji">' + svgIcon('<path d="M8 21h8M12 17v4M7 4h10v6a5 5 0 0 1-10 0z"/>') + '</span><strong>Reward</strong><small>+' + partBaseXp(mission) + ' XP/part · unlock "' + esc(mission.unlock) + '"</small></div>' +
         '</div>' +
-        (meta.focusLock ? '<div class="lock-note">🎯 Focus mission — switching away or blurring the window costs 20% XP.</div>' : '') +
+        (meta.focusLock ? '<div class="lock-note">' + svgIcon('<path d="M12 11V7a4 4 0 0 0-8 0v4M4 11h16v10H4z"/>') + ' Focus mission — switching away or blurring the window costs 20% XP.</div>' : '') +
         '<button class="btn-primary btn-block" id="btn-start">Start Mission →</button>' +
       '</div>';
 
@@ -317,7 +349,7 @@
       '</div>' +
       '<div class="ws-panel" data-wspanel="editor">' +
         '<div class="editor-toolbar">' +
-          '<span class="file-chip">' + (mission.type === "html" ? "index.html" : (mission.type === "python" ? "script.py" : (mission.type === "circuit" ? "circuit.c" : "script.js"))) + '</span>' +
+          '<span class="file-chip">' + fileChipFor(mission.type) + '</span>' +
           '<span class="timer-chip" id="timer-chip"></span>' +
           '<button class="btn-small" id="btn-reset">Reset</button>' +
         '</div>' +
@@ -326,8 +358,8 @@
           '<button class="btn-secondary" id="btn-run">Run</button>' +
           '<button class="btn-primary" id="btn-check">Check</button>' +
           '<div class="help-btns">' +
-            '<button class="help-btn" id="btn-hint">💡 Hint</button>' +
-            '<button class="help-btn" id="btn-solution">👀 Solution</button>' +
+            '<button class="help-btn" id="btn-hint">' + svgIcon(ICON_HINT) + ' Hint</button>' +
+            '<button class="help-btn" id="btn-solution">' + svgIcon(ICON_EYE) + ' Solution</button>' +
           '</div>' +
         '</div>' +
         '<div id="help-panel"></div>' +
@@ -371,7 +403,7 @@
         '<pre class="build-prompt">' + esc(build.prompt) + '</pre>' +
       '</div>' +
       '<div class="editor-toolbar">' +
-        '<span class="file-chip">' + (mission.type === "html" ? "index.html" : (mission.type === "python" ? "script.py" : (mission.type === "circuit" ? "circuit.c" : "script.js"))) + '</span>' +
+        '<span class="file-chip">' + fileChipFor(mission.type) + '</span>' +
         '<span class="timer-chip" id="timer-chip"></span>' +
         '<button class="btn-small" id="btn-reset">Reset</button>' +
       '</div>' +
@@ -380,8 +412,8 @@
         '<button class="btn-secondary" id="btn-run">Run</button>' +
         '<button class="btn-primary" id="btn-check">Check</button>' +
         '<div class="help-btns">' +
-          '<button class="help-btn" id="btn-hint">💡 Hint</button>' +
-          '<button class="help-btn" id="btn-solution">👀 Solution</button>' +
+          '<button class="help-btn" id="btn-hint">' + svgIcon(ICON_HINT) + ' Hint</button>' +
+          '<button class="help-btn" id="btn-solution">' + svgIcon(ICON_EYE) + ' Solution</button>' +
         '</div>' +
       '</div>' +
       '<div id="help-panel"></div>' +
@@ -560,7 +592,7 @@
     if (!cover || !card) { return; }
     card.className = "cover-card hint";
     card.innerHTML =
-      '<div class="cover-emoji">💡</div>' +
+      '<div class="cover-emoji">' + svgIcon(ICON_HINT) + '</div>' +
       '<h2>' + label + '</h2>' +
       '<p>' + esc(text) + '</p>';
     cover.style.display = "flex";
@@ -776,7 +808,7 @@
             p.doneBuilds.push(mission.id);
             p.xp += earned;
             skillrunRecordXp(p, earned);
-            unlockAchievement(p, "builder");
+            unlockAchievement(p, "first-build");
             save(p);
             newXp = true;
           }
@@ -839,7 +871,7 @@
         var breakdownHtml = newXp ? xpBreakdownHtml(bd) : '';
 
         showCover(
-          '<div class="cover-emoji">✅</div>' +
+          '<div class="cover-emoji">' + svgIcon('<path d="M20 6L9 17l-5-5"/>') + '</div>' +
           '<h2>Completed!</h2>' +
           '<p>' + result.message + '</p>' +
           '<div class="cover-rewards">' + xpHtml +
@@ -861,6 +893,7 @@
         }
 
         if (newXp) { toast("+" + earned + " XP"); }
+        if (newXp) { postScore(); }
         renderHeaderChip(p);
       } else if (current.kind === "practice") {
         handlePracticePass(p, result);
@@ -888,12 +921,12 @@
       if (p.doneMissions.indexOf(MISSIONS[i].id) === -1) { allDone = false; break; }
     }
     if (allDone) {
-      var got = unlockAchievement(p, "web-runner");
-      if (got) { toast("Achievement: Web Runner 🚀"); }
+      var got = unlockAchievement(p, "series-complete");
+      if (got) { toast("Achievement unlocked: Series Finisher"); }
     }
 
     showCover(
-      '<div class="cover-emoji">🏆</div>' +
+      '<div class="cover-emoji">' + svgIcon('<path d="M8 21h8M12 17v4M7 4h10v6a5 5 0 0 1-10 0z"/>') + '</div>' +
       '<h2>Completed!</h2>' +
       '<p>' + esc(mission.title) + ' — ' + esc(mission.unlock) + ' unlocked!</p>' +
       '<div class="cover-rewards">' +
@@ -927,7 +960,7 @@
     save(p);
 
     showCover(
-      '<div class="cover-emoji">✅</div>' +
+      '<div class="cover-emoji">' + svgIcon('<path d="M20 6L9 17l-5-5"/>') + '</div>' +
       '<h2>Completed!</h2>' +
       '<p>' + result.message + '</p>' +
       '<div class="cover-rewards">' +
@@ -938,6 +971,7 @@
       '</div>',
       "pass");
     if (newXp) { toast("+" + earned + " XP"); }
+    if (newXp) { postScore(); }
     renderHeaderChip(p);
   }
 
@@ -957,7 +991,7 @@
       newXp = true;
     }
     showCover(
-      '<div class="cover-emoji">🏆</div>' +
+      '<div class="cover-emoji">' + svgIcon('<path d="M8 21h8M12 17v4M7 4h10v6a5 5 0 0 1-10 0z"/>') + '</div>' +
       '<h2>Completed!</h2>' +
       '<p>' + result.message + '</p>' +
       '<div class="cover-rewards">' +
@@ -968,6 +1002,7 @@
       '</div>',
       "pass");
     if (newXp) { toast("+" + earned + " XP"); }
+    if (newXp) { postScore(); }
     renderHeaderChip(p);
   }
 
@@ -984,6 +1019,8 @@
     current = { kind: "practice", practiceItem: item, isBuild: false, step: "challenge", task: item };
     resetRunState();
 
+    var type = item.type || "js";
+
     var headerTitle = document.getElementById("ws-title");
     if (headerTitle) { headerTitle.textContent = "Practice"; }
     renderHeaderChip(p);
@@ -996,15 +1033,16 @@
         '<h3>' + esc(item.tagline) + '</h3>' +
         '<p>' + esc(item.prompt) + '</p>' +
       '</div>' +
-      '<div class="editor-toolbar"><span class="file-chip">script.js</span>' +
+      '<div class="editor-toolbar"><span class="file-chip">' + fileChipFor(type) + '</span>' +
+      '<span class="timer-chip" id="timer-chip"></span>' +
       '<button class="btn-small" id="btn-reset">Reset</button></div>' +
       '<textarea id="editor" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>' +
       '<div class="run-bar">' +
         '<button class="btn-secondary" id="btn-run">Run</button>' +
         '<button class="btn-primary" id="btn-check">Check</button>' +
         '<div class="help-btns">' +
-          (item.hints ? '<button class="help-btn" id="btn-hint">💡 Hint</button>' : '') +
-          (item.solution ? '<button class="help-btn" id="btn-solution">👀 Solution</button>' : '') +
+          (item.hints ? '<button class="help-btn" id="btn-hint">' + svgIcon(ICON_HINT) + ' Hint</button>' : '') +
+          (item.solution ? '<button class="help-btn" id="btn-solution">' + svgIcon(ICON_EYE) + ' Solution</button>' : '') +
         '</div>' +
       '</div>' +
       '<div id="help-panel"></div>' +
@@ -1017,8 +1055,8 @@
     var back = document.getElementById("btn-back");
     if (back) { back.addEventListener("click", function () { window.location.href = "index.html?tab=practice"; }); }
 
-    // re-use editor setup with a fake mission object (JS type)
-    var fakeMission = { id: "practice", type: "js", build: item };
+    // re-use editor setup with a fake mission object
+    var fakeMission = { id: "practice", type: type, build: item };
     current.mission = fakeMission;
     setupEditor(fakeMission, item, false);
   }
@@ -1038,11 +1076,11 @@
     if (headerTitle) { headerTitle.textContent = "Project"; }
     renderHeaderChip(p);
 
-    var fileChip = proj.type === "html" ? "index.html" : "script.js";
+    var fileChip = fileChipFor(proj.type);
     var el = document.getElementById("ws-content");
     el.innerHTML =
       '<div class="ws-head"><button class="back-btn" id="btn-back">←</button>' +
-      '<div class="ws-head-info"><div class="ws-tag build-tag">PROJECT</div><h1>' + proj.emoji + ' ' + esc(proj.title) + '</h1></div></div>' +
+      '<div class="ws-head-info"><div class="ws-tag build-tag">PROJECT</div><h1>' + esc(proj.title) + '</h1></div></div>' +
       '<div class="build-card">' +
         '<h3>Project Brief</h3>' +
         '<p>' + esc(proj.desc) + '</p>' +
@@ -1054,8 +1092,8 @@
         '<button class="btn-secondary" id="btn-run">Run</button>' +
         '<button class="btn-primary" id="btn-check">Check</button>' +
         '<div class="help-btns">' +
-          (task.hints ? '<button class="help-btn" id="btn-hint">💡 Hint</button>' : '') +
-          (task.solution ? '<button class="help-btn" id="btn-solution">👀 Solution</button>' : '') +
+          (task.hints ? '<button class="help-btn" id="btn-hint">' + svgIcon(ICON_HINT) + ' Hint</button>' : '') +
+          (task.solution ? '<button class="help-btn" id="btn-solution">' + svgIcon(ICON_EYE) + ' Solution</button>' : '') +
         '</div>' +
       '</div>' +
       '<div id="help-panel"></div>' +

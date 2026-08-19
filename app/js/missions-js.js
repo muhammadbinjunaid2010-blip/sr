@@ -622,7 +622,8 @@ var PROJECTS = [
   {
     id: "personal-site",
     title: "Personal Website",
-    emoji: "🌐",
+    icon: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>',
+    pathId: "web",
     desc: "A complete about-you page with headings, a styled look and a link.",
     skills: ["HTML Foundations", "CSS Foundations"],
     xp: 150,
@@ -640,7 +641,8 @@ var PROJECTS = [
   {
     id: "todo-app",
     title: "Todo App",
-    emoji: "✅",
+    icon: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+    pathId: "web",
     desc: "A working todo list with add, done and save. Your first app!",
     skills: ["JavaScript Foundations", "Data & Storage"],
     xp: 200,
@@ -658,7 +660,8 @@ var PROJECTS = [
   {
     id: "quiz-app",
     title: "Quiz App",
-    emoji: "🧠",
+    icon: '<circle cx="12" cy="12" r="10"/><path d="M12 11v4M12 7h.01"/>',
+    pathId: "web",
     desc: "A quiz that checks answers, scores you and shows results.",
     skills: ["JavaScript Logic", "JavaScript Foundations"],
     xp: 200,
@@ -672,6 +675,44 @@ var PROJECTS = [
       "scorePercent: Math.round((correct / answers.length) * 100)."
     ],
     solution: "var quiz = [\n  { q: 'What is 2 + 2?', answer: '4' },\n  { q: 'What color is grass?', answer: 'green' }\n];\nfunction checkAnswers(answers) {\n  var correct = 0;\n  for (var i = 0; i < quiz.length; i++) {\n    if (String(answers[i]).toLowerCase() === quiz[i].answer.toLowerCase()) correct++;\n  }\n  return correct;\n}\nfunction scorePercent(answers) {\n  return Math.round((checkAnswers(answers) / quiz.length) * 100);\n}"
+  },
+  {
+    id: "text-analyzer",
+    title: "Text Analyzer",
+    icon: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/>',
+    pathId: "programming",
+    desc: "A small Python program that analyzes a block of text.",
+    skills: ["Python Basics", "Python Data"],
+    xp: 200,
+    kind: "project",
+    type: "python",
+    starter: "def word_count(text):\n    # return the number of words in text\n    return 0\n\ndef letter_count(text):\n    # return the number of letters (a-z) ignoring spaces\n    return 0\n\ndef shout(text):\n    # return the text in uppercase with an exclamation mark\n    return text",
+    test: "function t() {\n  if (PythonEval.call('word_count', ['the quick brown fox']) !== 4) return { passed: false, message: 'word_count should count 4 words.' };\n  if (PythonEval.call('letter_count', ['ab cd']) !== 4) return { passed: false, message: 'letter_count should ignore spaces.' };\n  if (PythonEval.call('shout', ['hello']) !== 'HELLO!') return { passed: false, message: 'shout should uppercase and add !.' };\n  return { passed: true, message: 'Your text analyzer works!' };\n}",
+    hints: [
+      "word_count: text.split(' ') has one entry per word.",
+      "letter_count: loop the characters and count only a-z (use: ch.lower() in 'abcdefghijklmnopqrstuvwxyz').",
+      "shout: text.upper() + '!'"
+    ],
+    solution: "def word_count(text):\n    return len(text.split())\n\ndef letter_count(text):\n    n = 0\n    for ch in text:\n        if ch.lower() in 'abcdefghijklmnopqrstuvwxyz':\n            n += 1\n    return n\n\ndef shout(text):\n    return text.upper() + '!'"
+  },
+  {
+    id: "ohm-decoder",
+    title: "Ohm Decoder",
+    icon: '<path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/>',
+    pathId: "electronics",
+    desc: "Decode resistor color bands into real ohm values.",
+    skills: ["Circuits", "Voltage & Ohm"],
+    xp: 200,
+    kind: "project",
+    type: "circuit",
+    starter: "// Use Circuit.bandValue and Circuit.resistorOhms\n// to decode resistor color bands.\nfunction decode(bands) {\n  // bands: [color1, color2, multiplier]\n  return 0;\n}\nsetPin(C, 'a0', 5);\nled(C, 'a0', 'red');",
+    test: "function t() {\n  var one = decode(['red', 'red', 'red']);\n  if (one !== 2200) return { passed: false, message: 'red red red should be 2200 ohms.' };\n  var two = decode(['brown', 'black', 'red']);\n  if (two !== 1000) return { passed: false, message: 'brown black red should be 1000 ohms.' };\n  var C = window.__C;\n  if (!C || !Circuit.isLit(C, 0)) return { passed: false, message: 'The demo LED should be lit.' };\n  return { passed: true, message: 'Your Ohm decoder works!' };\n}",
+    hints: [
+      "Circuit.resistorOhms(bands) computes value x multiplier for you.",
+      "Circuit.bandValue(color) maps a color to its digit.",
+      "red=2, brown=1, black=0 -> 22 x 100 = 2200 ohms."
+    ],
+    solution: "function decode(bands) {\n  return Circuit.resistorOhms(bands);\n}\nsetPin(C, 'a0', 5);\nled(C, 'a0', 'red');"
   }
 ];
 
@@ -680,31 +721,28 @@ var PROJECTS = [
    ============================================================ */
 
 var ACHIEVEMENTS = [
-  { id: "first-run", title: "First Run", emoji: "🏁", desc: "Complete your first challenge." },
-  { id: "builder", title: "Builder", emoji: "🔨", desc: "Complete your first Build Challenge." },
-  { id: "debugger", title: "Debugger", emoji: "🐞", desc: "Complete a Fix the Code practice." },
-  { id: "web-runner", title: "Web Runner", emoji: "🚀", desc: "Complete all 10 missions." }
+  { id: "first-run", title: "First Run", desc: "Complete your first challenge." },
+  { id: "builder", title: "Builder", desc: "Complete your first Build Challenge." },
+  { id: "debugger", title: "Debugger", desc: "Complete a Fix the Code practice." },
+  { id: "web-runner", title: "Web Runner", desc: "Complete all 10 missions." }
 ];
 
 var START_POINTS = [
   {
     id: "new",
     title: "I'm completely new",
-    emoji: "🌱",
     desc: "Never written code before. We start from zero.",
     startMission: 0
   },
   {
     id: "little",
     title: "I know a little",
-    emoji: "⚡",
     desc: "I've seen some code. Skip the very basics.",
     startMission: 1
   },
   {
     id: "coder",
     title: "I already code",
-    emoji: "🔥",
     desc: "I'm comfortable coding. Give me the real stuff.",
     startMission: 3
   }

@@ -1,0 +1,10 @@
+# Local tooling / reference copies — never deployed to Vercel
+desktop/node_modules
+desktop/dist/win-unpacked
+desktop/dist/*.blockmap
+desktop/dist/builder-debug.yml
+inspiritional website
+tools
+.git
+*.log
+.vercel

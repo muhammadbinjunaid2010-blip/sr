@@ -2136,3 +2136,90 @@ a.feat-card:hover { transform: translateY(-2px); border-color: rgba(48, 208, 92,
   .course-card { flex-direction: column; text-align: center; align-items: center; }
   .course-top { flex-direction: column; }
 }
+
+/* ---------- Inline SVG icons ---------- */
+.tab-icon svg { width: 20px; height: 20px; }
+.stat-pill svg { width: 14px; height: 14px; display: inline-block; vertical-align: -2px; }
+.streak-flame svg { width: 16px; height: 16px; display: inline-block; vertical-align: -2px; color: #ffb454; }
+.course-emoji svg { width: 22px; height: 22px; }
+.course-pill svg { width: 16px; height: 16px; display: inline-block; vertical-align: -2px; }
+.path-emoji svg, .series-emoji svg { width: 22px; height: 22px; }
+.project-emoji svg { width: 24px; height: 24px; }
+.ob-emoji svg { width: 26px; height: 26px; }
+.ob-mark svg { width: 18px; height: 18px; vertical-align: -3px; }
+.ob-avatar-plus svg, .ob-dice svg { width: 20px; height: 20px; display: block; }
+.ob-avatar-plus { display: flex; align-items: center; justify-content: center; }
+.quick-link svg { width: 16px; height: 16px; display: inline-block; vertical-align: -3px; }
+.cover-emoji svg { width: 30px; height: 30px; }
+.part-emoji svg { width: 18px; height: 18px; }
+.lock svg { width: 20px; height: 20px; }
+.future-item svg { width: 16px; height: 16px; margin-top: 0.2rem; color: var(--muted-foreground); flex-shrink: 0; }
+.skill-dot svg { width: 12px; height: 12px; display: inline-block; vertical-align: -2px; }
+.lock-note svg { width: 14px; height: 14px; display: inline-block; vertical-align: -2px; }
+.help-btn svg { width: 14px; height: 14px; display: inline-block; vertical-align: -2px; }
+.ach-emoji svg { width: 20px; height: 20px; }
+.lb-medal svg { width: 26px; height: 26px; }
+.lb-top-medal svg { width: 56px; height: 56px; }
+.lb-medal { display: inline-flex; align-items: center; justify-content: center; }
+
+/* ---------- Course pills ---------- */
+.course-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.course-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0.45rem 0.85rem;
+  cursor: pointer;
+}
+.course-pill.active { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+.course-pill-meta { font-size: 11px; font-weight: 700; color: var(--muted-foreground); background: var(--muted); border-radius: 999px; padding: 0.1rem 0.45rem; }
+
+/* ---------- Achievements V2 ---------- */
+.ach-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.ach-group-head h3 { margin: 0; }
+.ach-count { font-size: 11px; font-weight: 800; color: var(--muted-foreground); background: var(--muted); border-radius: 999px; padding: 0.2rem 0.55rem; }
+.ach.ach-rare .ach-emoji { background: rgba(56, 132, 255, 0.12); color: #4f8cff; }
+.ach.ach-epic .ach-emoji { background: rgba(167, 139, 250, 0.14); color: #a78bfa; }
+.ach.ach-legendary .ach-emoji { background: rgba(255, 209, 102, 0.14); color: #ffd154; }
+.ach.ach-got.ach-common .ach-emoji { background: rgba(48, 208, 92, 0.12); color: var(--primary); }
+.ach.ach-got.ach-rare .ach-emoji { background: rgba(56, 132, 255, 0.18); color: #6ea4ff; }
+.ach.ach-got.ach-epic .ach-emoji { background: rgba(167, 139, 250, 0.2); color: #b79cff; }
+.ach.ach-got.ach-legendary .ach-emoji { background: rgba(255, 209, 102, 0.2); color: #ffd154; }
+.ach .badge { text-transform: capitalize; }
+
+/* ---------- Course progress (profile) ---------- */
+.course-progress-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
+.course-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+.course-progress-icon {
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--muted);
+}
+.course-progress-icon svg { width: 20px; height: 20px; }
+.course-green .course-progress-icon { background: rgba(48, 208, 92, 0.12); color: var(--primary); }
+.course-purple .course-progress-icon { background: rgba(167, 139, 250, 0.14); color: #a78bfa; }
+.course-cyan .course-progress-icon { background: rgba(77, 216, 255, 0.12); color: #4dd8ff; }
+.course-progress-body { flex: 1; min-width: 0; }
+.course-progress-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; font-size: 13px; font-weight: 700; margin-bottom: 0.35rem; }

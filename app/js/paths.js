@@ -9,9 +9,9 @@
 /* ---------------- Paths ---------------- */
 
 var PATHS = [
-  { id: "web",          title: "Web Development", emoji: "🌐", accent: "green",  desc: "HTML, CSS, JavaScript and the practical skills to ship real websites." },
-  { id: "programming",  title: "Programming",     emoji: "💻", accent: "purple", desc: "Python from your first print to classes, APIs and automation." },
-  { id: "electronics",  title: "Electronics",     emoji: "🔌", accent: "cyan",   desc: "Build real circuits and Arduino projects with the built-in simulator." }
+  { id: "web",          title: "Web Development",     icon: '<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>', accent: "green",  desc: "HTML, CSS, JavaScript and the practical skills to ship real websites." },
+  { id: "programming",  title: "Programming",         icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>', accent: "purple", desc: "Python from your first print to classes, APIs and automation." },
+  { id: "electronics",  title: "Electronics",         icon: '<path d="M2 12h4l2-6 4 12 2-6h6"/>', accent: "cyan",   desc: "Build real circuits and Arduino projects with the built-in simulator." }
 ];
 
 function pathOf(id) {
@@ -19,16 +19,30 @@ function pathOf(id) {
   return PATHS[0];
 }
 
+/* The course the learner is currently studying. Persisted as
+   p.selectedCourse (p.path is kept in sync for backwards compat). */
+function selectedCourseId(p) {
+  var id = (p && (p.selectedCourse || p.path)) || "web";
+  for (var i = 0; i < PATHS.length; i++) { if (PATHS[i].id === id) { return id; } }
+  return "web";
+}
+
+function setSelectedCourse(p, id) {
+  if (!id) { return; }
+  p.selectedCourse = id;
+  p.path = id;
+}
+
 /* ---------------- Series ---------------- */
 
 var SERIES = [
-  { id: "web-runner",       pathId: "web",         order: 1, emoji: "🌐", title: "Web Runner",           desc: "10 missions from your first HTML page to a full application." },
-  { id: "code-to-internet", pathId: "web",         order: 2, emoji: "🚀", title: "From Code to Internet", desc: "17 missions + boss. Take a project live: Git, GitHub, Vercel, SEO and analytics.", unlockSeries: "web-runner" },
-  { id: "speed-runner",     pathId: "web",         order: 3, emoji: "⚡", title: "Speed Runner",         desc: "Practice series. Beat the clock on tiny challenges." },
-  { id: "bug-hunter",       pathId: "web",         order: 4, emoji: "🐞", title: "Bug Hunter",           desc: "Practice series. Fix broken code like a pro." },
-  { id: "builder",          pathId: "web",         order: 5, emoji: "🔨", title: "Builder",              desc: "Practice series. Ship small builds from scratch." },
-  { id: "programmer",       pathId: "programming", order: 1, emoji: "💻", title: "Programmer",           desc: "Python, from print to classes, files and real automation." },
-  { id: "circuit-runner",   pathId: "electronics", order: 1, emoji: "🔌", title: "Circuit Runner",       desc: "Power, breadboards, sensors and Arduino builds." }
+  { id: "web-runner",       pathId: "web",         order: 1, icon: '<path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 5l-2 14"/>', title: "Web Runner",           desc: "10 missions from your first HTML page to a full application." },
+  { id: "code-to-internet", pathId: "web",         order: 2, icon: '<path d="M12 3a9 9 0 1 0 9 9h-9V3z"/><path d="M12 12l6-6M12 12h9"/>', title: "From Code to Internet", desc: "17 missions + boss. Take a project live: Git, GitHub, Vercel, SEO and analytics.", unlockSeries: "web-runner" },
+  { id: "speed-runner",     pathId: "web",         order: 3, icon: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6M22 6l-3-3M6 2l-4 4M18 2l4 4M2 13h2M20 13h2"/>', title: "Speed Runner",         desc: "Practice series. Beat the clock on tiny challenges." },
+  { id: "bug-hunter",       pathId: "web",         order: 4, icon: '<rect x="8" y="6" width="8" height="14" rx="4"/><path d="M19 7l-3 3M5 7l3 3M12 3v3M2 13h2M20 13h2M8 21v-2M16 21v-2M8 6V4M16 6V4"/>', title: "Bug Hunter",           desc: "Practice series. Fix broken code like a pro." },
+  { id: "builder",          pathId: "web",         order: 5, icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>', title: "Builder",              desc: "Practice series. Ship small builds from scratch." },
+  { id: "programmer",       pathId: "programming", order: 1, icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>', title: "Programmer",           desc: "Python, from print to classes, files and real automation." },
+  { id: "circuit-runner",   pathId: "electronics", order: 1, icon: '<path d="M2 12h4l2-6 4 12 2-6h6"/>', title: "Circuit Runner",       desc: "Power, breadboards, sensors and Arduino builds." }
 ];
 
 function seriesOf(id) {
@@ -67,6 +81,26 @@ function pathMissions(pathId) {
     if (SERIES[i].pathId === pathId) {
       var ids = seriesMissions(SERIES[i].id);
       for (var j = 0; j < ids.length; j++) { out.push(ids[j]); }
+    }
+  }
+  return out;
+}
+
+function courseProgress(p, pathId) {
+  var ids = pathMissions(pathId);
+  var done = 0;
+  for (var i = 0; i < ids.length; i++) { if (p.doneMissions.indexOf(ids[i]) !== -1) { done++; } }
+  return { total: ids.length, done: done, pct: ids.length ? Math.round((done / ids.length) * 100) : 0 };
+}
+
+function courseSkillNames(pathId) {
+  var out = [];
+  for (var i = 0; i < MISSIONS.length; i++) {
+    var m = MISSIONS[i];
+    var meta = MISSION_META[m.id] || {};
+    var series = meta.series ? seriesOf(meta.series) : null;
+    if (series && series.pathId === pathId && m.unlock && out.indexOf(m.unlock) === -1) {
+      out.push(m.unlock);
     }
   }
   return out;
