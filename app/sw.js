@@ -3,7 +3,7 @@
    NOTE: service workers only run over http(s), not file:// .
 */
 
-const CACHE = 'skillrun-v6';
+const CACHE = 'skillrun-v7';
 const ASSETS = [
   './',
   './index.html',
@@ -15,6 +15,7 @@ const ASSETS = [
   './js/missions-js.js',
   './js/missions-web.js',
   './js/missions-web2.js',
+  './js/missions-webcourse.js',
   './js/missions-python.js',
   './js/missions-electronics.js',
   './js/missions-portfolio.js',

@@ -831,11 +831,11 @@
       "<\/script>";
 
     var checkScript = "<script>window.__SkillRunCheck = " + checkLit + ";<\/script>";
-    var srcScript = "<script>window.__SkillRunSource = " + JSON.stringify(code) + ";<\/script>";
+    var srcScript = "<script>window.__SkillRunSource = " + JSON.stringify(code).replace(/<\/script/gi, "<\\/script") + ";<\/script>";
 
     var doc;
     if (mission.type === "html") {
-      var body = safe.replace(/<\/body/gi, "").replace(/<\/html/gi, "").replace(/<\/head/gi, "");
+      var body = code.replace(/<\/body/gi, "").replace(/<\/html/gi, "").replace(/<\/head/gi, "");
       doc = '<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{font-family:sans-serif;padding:16px}</style></head><body>' + body + srcScript + checkScript + controller + "</body></html>";
     } else {
       doc = '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body><script>' + safe + "<\/script>" + checkScript + controller + "</body></html>";

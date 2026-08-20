@@ -12,6 +12,8 @@
 <meta name="google-site-verification" content="YOPqs3wMxtGv0wx4PCkoWHpHRwMMOK87FDxmgTftstw" />
 <link rel="icon" href="skillrun-icon.svg" type="image/svg+xml"/>
 <link rel="apple-touch-icon" href="skillrun-logo.jpg"/>
+<link rel="manifest" href="app/manifest.webmanifest"/>
+<script>if ((window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true) { location.replace('app/index.html'); }</script>
 </head>
 <body class="manrope_d9dd7f6a-module__WQkY-q__variable hagrid_5eee8a36-module__OfsgEG__variable font-sans antialiased">
 <main class="flex flex-col min-h-screen">
@@ -72,9 +74,94 @@
       <p class="text-lg md:text-xl text-muted-foreground font-sans leading-relaxed">SkillRun turns programming and technology into missions. Learn what you need, use it immediately, complete the challenge, and unlock what comes next.</p>
     </div>
 
-    <div class="flex flex-row gap-4 mb-20">
-      <a class="sr-btn sr-btn-green h-12 px-8 text-sm" href="index.html#download">Start Learning &#128640;</a>
-      <a class="sr-btn sr-btn-outline h-12 px-8 text-sm" href="index.html#how-it-works">See How It Works</a>
+    <div class="flex flex-col sm:flex-row gap-4 mb-20 w-full sm:w-auto items-stretch sm:items-center justify-center">
+      <a class="sr-btn sr-btn-green h-12 px-8 text-sm inline-flex items-center justify-center" href="index.html#download">Start Learning &#128640;</a>
+      <a class="sr-btn sr-btn-outline h-12 px-8 text-sm inline-flex items-center justify-center" href="index.html#how-it-works">See How It Works</a>
+    </div>
+
+    <!-- Mobile: skill card first, leaderboard below (revealed as you scroll) -->
+    <div class="relative block md:hidden w-full space-y-8" style="max-width:360px">
+      <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 -z-10 rounded-full w-4/5 h-14" style="background:rgba(22,163,74,0.16);filter:blur(40px)"></div>
+
+      <!-- Skill card: skill unlocked, achievement n/40, current course -->
+      <div class="w-full rounded-2xl relative overflow-hidden" style="background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 10px 32px rgba(22,163,74,0.35),0 2px 8px rgba(0,0,0,0.14);animation:skillrun-card-pulse 2.8s ease-in-out infinite">
+        <div class="absolute inset-0 pointer-events-none" style="background-image:radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);background-size:18px 18px;z-index:1"></div>
+        <div class="absolute inset-0 rounded-2xl pointer-events-none" style="background:radial-gradient(ellipse 60% 40% at 25% 25%, rgba(255,255,255,0.22) 0%, transparent 65%);z-index:4"></div>
+        <div class="relative flex items-center gap-2 px-4" style="height:40px;background:rgba(0,0,0,0.18);border-bottom:1px solid rgba(255,255,255,0.1);z-index:5">
+          <span class="flex items-center justify-center rounded-full" style="width:22px;height:22px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25)">
+            <svg width="12" height="12" viewBox="0 0 11 11" fill="none"><path d="M5.5 1L10 3.5V7.5L5.5 10L1 7.5V3.5Z" stroke="rgba(255,255,255,0.8)" stroke-width="0.9" fill="none"></path></svg>
+          </span>
+          <span style="font-size:9px;letter-spacing:0.16em;color:rgba(255,255,255,0.7);text-transform:uppercase">Skill Card</span>
+          <span class="ml-auto rounded-full px-2.5 py-1 font-bold" style="font-size:10px;color:#fff;background:rgba(255,255,255,0.22);border:1px solid rgba(255,255,255,0.3)">Unlocked</span>
+        </div>
+        <div class="relative p-4" style="z-index:5">
+          <div class="flex items-center gap-3">
+            <div class="flex items-center justify-center rounded-lg" style="width:44px;height:52px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18)">
+              <span style="font-size:20px">&#127793;</span>
+            </div>
+            <div>
+              <div style="font-size:8px;letter-spacing:0.14em;color:rgba(255,255,255,0.7);text-transform:uppercase">Skill unlocked</div>
+              <div class="font-bold text-white" style="font-size:18px;font-family:var(--font-heading);line-height:1.1">Web Development</div>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <span style="font-size:11px;color:rgba(255,255,255,0.85)">Achievement</span>
+            <span class="font-bold text-white" style="font-size:13px">14 / 40</span>
+          </div>
+          <div class="mt-1.5 rounded-full" style="height:8px;background:rgba(0,0,0,0.25)">
+            <div class="rounded-full" style="height:8px;width:35%;background:#ffffff"></div>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <span style="font-size:11px;color:rgba(255,255,255,0.85)">Current course</span>
+            <span class="rounded-full px-2.5 py-1 font-bold" style="font-size:10px;color:#fff;background:rgba(255,255,255,0.2)">HTML &rarr; CSS</span>
+          </div>
+          <div class="mt-1.5 rounded-full" style="height:8px;background:rgba(0,0,0,0.25)">
+            <div class="rounded-full" style="height:8px;width:62%;background:#ffffff"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leaderboard card -->
+      <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h4 class="font-heading font-bold text-lg text-foreground">Campus Top Builders</h4>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-medal w-5 h-5 text-yellow-500"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"></path><path d="M11 12 5.12 2.2"></path><path d="m13 12 5.88-9.8"></path><path d="M8 7h8"></path><circle cx="12" cy="17" r="5"></circle><path d="M12 18v-2h-.5"></path></svg>
+        </div>
+        <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100" data-lb-row>
+          <div class="sr-leader-rank sr-leader-rank-gold">#1</div>
+          <div class="flex-1">
+            <div class="font-bold text-sm text-foreground" data-lb-name>SpeedRunner</div>
+          </div>
+          <div class="font-bold text-primary text-sm font-sans" data-lb-xp>4500 XP</div>
+        </div>
+        <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100" data-lb-row>
+          <div class="sr-leader-rank sr-leader-rank-gray">#2</div>
+          <div class="flex-1">
+            <div class="font-bold text-sm text-foreground" data-lb-name>SpeedRunner</div>
+          </div>
+          <div class="font-bold text-primary text-sm font-sans" data-lb-xp>4000 XP</div>
+        </div>
+        <div class="flex items-center gap-3" data-lb-row>
+          <div class="sr-leader-rank sr-leader-rank-gray">#3</div>
+          <div class="flex-1">
+            <div class="font-bold text-sm text-foreground" data-lb-name>SpeedRunner</div>
+          </div>
+          <div class="font-bold text-primary text-sm font-sans" data-lb-xp>3500 XP</div>
+        </div>
+      </div>
+
+      <!-- Rewards card -->
+      <div class="sr-rewards-card rounded-2xl p-6 text-white transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-6 h-6"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+          </div>
+          <div>
+            <h4 class="font-heading font-bold text-lg">Leaderboard Rewards</h4>
+            <p class="text-xs text-white/80 font-sans">Top Builder 2026</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Desktop: Leaderboard + Rewards cards -->
@@ -180,38 +267,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Mobile: leaderboard card only -->
-    <div class="relative block md:hidden w-full max-w-[340px]">
-      <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 -z-10 rounded-full w-4/5 h-14" style="background:rgba(22,163,74,0.16);filter:blur(40px)"></div>
-      <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
-        <div class="flex items-center justify-between mb-4">
-          <h4 class="font-heading font-bold text-lg text-foreground">Campus Top Builders</h4>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-medal w-5 h-5 text-yellow-500"><path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"></path><path d="M11 12 5.12 2.2"></path><path d="m13 12 5.88-9.8"></path><path d="M8 7h8"></path><circle cx="12" cy="17" r="5"></circle><path d="M12 18v-2h-.5"></path></svg>
-        </div>
-        <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100" data-lb-row>
-          <div class="sr-leader-rank sr-leader-rank-gold">#1</div>
-          <div class="flex-1">
-            <div class="font-bold text-sm text-foreground" data-lb-name>SpeedRunner</div>
-          </div>
-          <div class="font-bold text-primary text-sm font-sans" data-lb-xp>4500 XP</div>
-        </div>
-        <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100" data-lb-row>
-          <div class="sr-leader-rank sr-leader-rank-gray">#2</div>
-          <div class="flex-1">
-            <div class="font-bold text-sm text-foreground" data-lb-name>SpeedRunner</div>
-          </div>
-          <div class="font-bold text-primary text-sm font-sans" data-lb-xp>4000 XP</div>
-        </div>
-        <div class="flex items-center gap-3" data-lb-row>
-          <div class="sr-leader-rank sr-leader-rank-gray">#3</div>
-          <div class="flex-1">
-            <div class="font-bold text-sm text-foreground" data-lb-name>SpeedRunner</div>
-          </div>
-          <div class="font-bold text-primary text-sm font-sans" data-lb-xp>3500 XP</div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -258,7 +313,7 @@
   <div class="container px-0 mx-auto">
     <div class="sr-stats-band grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 divide-y md:divide-y-0">
       <div class="flex flex-col items-center px-4 py-10 text-center md:px-14 md:py-14">
-        <div class="num text-[clamp(40px,5.5vw,62px)]">47</div>
+        <div class="num text-[clamp(40px,5.5vw,62px)]">152</div>
         <div class="label mt-3">Missions available</div>
       </div>
       <div class="flex flex-col items-center px-4 py-10 text-center md:px-14 md:py-14">
@@ -1026,8 +1081,8 @@
       </div>
       <h2 class="relative text-4xl md:text-6xl font-heading font-extrabold tracking-tight text-white leading-[1.05]">Stop watching tutorials.<br/>Start building. &#128640;</h2>
       <p class="relative mt-4 max-w-[520px] mx-auto text-white/80 md:text-lg/relaxed">SkillRun is built for people who want to turn technology skills into things they can actually make.</p>
-      <div class="relative mt-8 flex flex-row gap-4 justify-center">
-        <a class="sr-btn sr-btn-dark h-12 px-8 text-sm" href="index.html#download">Start Learning</a>
+      <div class="relative mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+        <a class="sr-btn sr-btn-dark h-12 px-8 text-sm inline-flex items-center justify-center" href="index.html#download">Start Learning</a>
         <a class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm transition-all hover:scale-105 h-12 rounded-md px-8 bg-white/10 text-white font-bold border border-white/40" href="index.html#inside">See the App</a>
       </div>
     </div>
@@ -1065,7 +1120,7 @@
       <ol class="flex flex-col gap-4 text-sm">
         <li class="flex gap-3">
           <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">1</span>
-          <p class="text-muted-foreground leading-relaxed">Open SkillRun at <a class="text-primary font-bold hover:underline" href="app/index.html">skillrun.com</a> in <strong class="text-foreground">Chrome</strong>.</p>
+          <p class="text-muted-foreground leading-relaxed">Open SkillRun at <a class="text-primary font-bold hover:underline" href="app/index.html">skillrun.com/app</a> in <strong class="text-foreground">Chrome</strong>.</p>
         </li>
         <li class="flex gap-3">
           <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">2</span>
@@ -1095,7 +1150,7 @@
       <ol class="flex flex-col gap-4 text-sm">
         <li class="flex gap-3">
           <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">1</span>
-          <p class="text-muted-foreground leading-relaxed">Open SkillRun at <a class="text-primary font-bold hover:underline" href="app/index.html">skillrun.com</a> in <strong class="text-foreground">Safari</strong>.</p>
+          <p class="text-muted-foreground leading-relaxed">Open SkillRun at <a class="text-primary font-bold hover:underline" href="app/index.html">skillrun.com/app</a> in <strong class="text-foreground">Safari</strong>.</p>
         </li>
         <li class="flex gap-3">
           <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0" style="font-size:12px">2</span>
